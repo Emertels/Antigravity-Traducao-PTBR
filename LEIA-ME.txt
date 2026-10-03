@@ -1,0 +1,139 @@
+==============================================================================
+         PACOTE PORTÁTIL DE TRADUÇÃO GOOGLE ANTIGRAVITY - PT-BR 🇧🇷
+==============================================================================
+  Desenvolvido e Personalizado por: Emerson Teles
+  Versão de Referência: Google Antigravity v2.x (versão detectada dinamicamente; bundle web compatível necessário)
+  Idioma: Português do Brasil (pt-BR)
+  Status: Localização PT-BR com backups por versão e auditoria de interface
+------------------------------------------------------------------------------
+  1. SOBRE ESTE PACOTE
+------------------------------------------------------------------------------
+Este pacote aplica a localização PT-BR ao Google Antigravity Desktop para
+Português do Brasil com instalação e restauração automatizadas.
+
+Ele foi construído no mesmo padrão de excelência e segurança:
+pode ser executado a partir de qualquer pasta, disco rígido (C:, D:, Área de
+Trabalho, Downloads, Pen-drive, HD externo, etc.) sem qualquer necessidade de
+conexão com a internet.
+
+O pacote traduz todas as áreas do aplicativo:
+• Auditoria da interface: tools\scan-untranslated.cjs (rótulos, descrições e placeholders do web-bundle).
+• Tela de Início / Boas-Vindas: "Bem-vindo ao Antigravity", "Entrar", botões Google
+  e conta corporativa, assistente de primeiro uso em português.
+• Barra Lateral e Navegação: Nova conversa, Conversas, Fixados, Recentes, etc.
+• Painel de Chat e Agentes: Prompts, Avaliação, Feedback, Execução de Ferramentas.
+• Telas de Configurações: Geral, Aparência, Temas, Regras, Skills, Servidores MCP.
+• Menus Nativos do Windows: Arquivo, Nova Janela, Editar, Exibir, Janela e Ajuda.
+• Ícone da Bandeja do Sistema (Tray): Status de agentes em execução traduzidos.
+• Assistente de Instalação e IDE: Telas de boas-vindas e IDE em português.
+
+------------------------------------------------------------------------------
+  2. ARQUIVOS INCLUÍDOS NESTA PASTA
+------------------------------------------------------------------------------
+• Instalar-Traducao.bat   -> Dê 2 cliques para aplicar a tradução automaticamente.
+• Restaurar-Original.bat  -> Dê 2 cliques para voltar ao original de fábrica.
+• patch-antigravity.cjs   -> Motor dinâmico automatizado sem downgrade.
+• app-pt.asar             -> Saída compilada gerada localmente; ignorada no GitHub.
+• web-bundle/             -> Pasta contendo a interface web traduzida por Emerson Teles.
+• aplicar-traducao.ps1    -> Script PowerShell de instalação com barra de progresso.
+• restaurar-original.ps1  -> Script PowerShell de restauração do backup original modular.
+• README.md               -> Guia completo em formato Markdown moderno (Português).
+• README.ag               -> Documento de metadados para Antigravity.
+• AGENTS_PTBR.md          -> Diretrizes operacionais para subagentes em Português.
+• LEIA-ME.txt             -> Este manual de instruções e referência em texto puro.
+
+------------------------------------------------------------------------------
+  3. DIRETÓRIOS NO COMPUTADOR (ONDE OS ARQUIVOS FICAM)
+------------------------------------------------------------------------------
+O instalador localiza automaticamente a pasta do Antigravity no seu computador.
+Por padrão no Windows, os arquivos ficam localizados em:
+
+  • Diretório Principal do Antigravity:
+    %LOCALAPPDATA%\Programs\antigravity\
+
+  • Diretório de Recursos do Electron:
+    %LOCALAPPDATA%\Programs\antigravity\resources\
+
+  • Pasta Segura de Backup Original Modular:
+    %LOCALAPPDATA%\Programs\antigravity\_backups\<versão>\app.asar
+
+------------------------------------------------------------------------------
+  4. COMO FUNCIONA O BACKUP MODULAR E A RESTAURAÇÃO
+------------------------------------------------------------------------------
+• O BACKUP ORIGINAL MODULAR:
+  Antes de fazer qualquer alteração, o instalador preserva uma cópia idêntica do
+  arquivo "app.asar" original dentro da pasta "_backups\<versão>\".
+
+  * O backup original de fábrica fica guardado com segurança.
+  * Ele NUNCA é sobrescrito por arquivos modificados.
+  * A restauração rápida pode ser feita em 1 clique.
+
+• A RESTAURAÇÃO:
+  Se em qualquer momento você quiser voltar ao Antigravity em inglês, basta dar
+  dois cliques no arquivo "Restaurar-Original.bat". Ele restaurará o seu
+  backup original de volta e removerá a pasta "web-bundle", deixando o
+  aplicativo exatamente como veio de fábrica.
+
+------------------------------------------------------------------------------
+  5. PASSO A PASSO PARA USAR
+------------------------------------------------------------------------------
+COMO APLICAR A TRADUÇÃO:
+  1. Feche o Antigravity caso ele esteja aberto no momento.
+  2. Dê dois cliques no arquivo "Instalar-Traducao.bat".
+  3. O instalador detectará a pasta do Antigravity, preservará o backup modular da
+     versão ativa e aplicará os arquivos traduzidos sem alterar o número de versão.
+  4. Ao finalizar, digite S para abrir; N, Enter ou Esc fecha sem abrir.
+
+COMO RESTAURAR O ORIGINAL:
+  1. Dê dois cliques no arquivo "Restaurar-Original.bat".
+  2. O script detectará a versão, restaurará o backup modular e removerá as customizações.
+  3. O Antigravity voltará ao seu estado original imediatamente.
+
+------------------------------------------------------------------------------
+  6. CRÉDITOS E AUTORIA
+------------------------------------------------------------------------------
+Tradução PTBR - Emerson Teles
+Engenharia e Arquitetura: Emerson Teles
+
+Destaques da Tradução:
+• Tradução da interface web e das mensagens do agente, com varredura de rótulos e descrições.
+• Todas as instâncias padronizadas rigorosamente com "aplicativo" / "aplicativos".
+• Sincronização modular automatizada de versão: detecta e sincroniza a versão do aplicativo automaticamente em futuras atualizações.
+• Tela de boas-vindas ("Bem-vindo ao Antigravity") e fluxo de autenticação traduzidos.
+• Suporte integrado para backup original automático e restauração rápida em 1 clique.
+
+==============================================================================
+ Tradução criada e otimizada por Emerson Teles.
+==============================================================================
+### Exibição correta de acentos no terminal
+
+Os atalhos de instalação e restauração ativam a página de código UTF-8, e os scripts PowerShell definem entrada e saída UTF-8. Os arquivos PowerShell são salvos com BOM para compatibilidade com Windows PowerShell 5.1. Isso corrige textos como `versão`, `tradução` e `instalação` que antes podiam aparecer como `versÃ£o`.
+## Codificação e backups por versão
+
+Os atalhos `.bat` são arquivos ASCII sem BOM e ativam a página de código UTF-8. Os scripts PowerShell são UTF-8 com BOM e definem entrada e saída UTF-8, para manter acentos e cedilhas corretos no Windows PowerShell 5.1. Os backups originais ficam dentro da pasta do programa, separados pela versão (e pelo commit quando o aplicativo fornece essa identificação), e não devem ser substituídos por uma cópia já traduzida. Ao executar a tradução novamente, o patch deve partir do backup original confiável para evitar empilhar alterações. Se a cópia original estiver ausente, inválida ou não corresponder à versão instalada, o instalador deve parar antes de sobrescrever os arquivos e explicar como recuperar uma origem limpa.
+
+
+Backups: scripts, documentation, and translation files stay in this project folder. Raw originals are stored and restored only from the Antigravity installation's _backups folder, separated by version.
+Se a instalação já estiver traduzida, o instalador reaplica a tradução a partir do backup limpo da mesma versão. Se o `web-bundle` estiver traduzido e esse backup não existir, ele para; restaure ou reinstale a mesma versão original antes de tentar novamente.
+## Reexecução e restauração
+- Ao executar novamente, o instalador reconhece uma tradução completa e informa que não precisa reaplicá-la. Se estiver parcial, recompõe a tradução a partir do backup original limpo e exato da versão.
+- O backup original é criado uma única vez em `<pasta instalada>\_backups\<versão>` e nunca é substituído pela tradução. Se uma instalação já modificada não tiver backup confiável, o instalador interrompe e informa isso.
+- Na restauração, arquivos que já correspondem ao original são identificados e não são copiados novamente. Sem backup, o script só informa que já está original quando o ASAR da versão ativa passa na verificação de limpeza e o web-bundle não contém marcadores conhecidos da tradução; se houver sinais de modificação ou backup inválido, interrompe sem alterar os arquivos.
+- O crédito de localização é exibido como `Tradução PT-BR: Emerson Teles`, na cor turquesa `#00adb5`, no local de crédito disponível na interface.
+### Mensagens do instalador e créditos
+- Se já estiver traduzido, o instalador mostra uma mensagem ciano clara e não reaplica o pacote.
+- Se já estiver original, a restauração avisa em ciano que não é necessária; uma restauração real termina com a confirmação verde de sucesso.
+- No prompt final, S abre o aplicativo em processo independente e a janela do CMD iniciada pelo atalho fecha automaticamente; N, Enter ou Esc encerra sem abrir o aplicativo.
+- Crédito: Tradução PT-BR: Emerson Teles, em turquesa #00adb5. O crédito fica somente em Configurações → Aplicativo; ele não aparece no menu superior.
+
+------------------------------------------------------------------------------
+ 7. PUBLICAÇÃO NO GITHUB
+------------------------------------------------------------------------------
+Inclua: .gitignore, LICENSE, README.md, README.ag, AGENTS_PTBR.md, este LEIA-ME,
+os atalhos .bat, os scripts PowerShell/JavaScript, tools e web-bundle.
+Não inclua: app-pt.asar, web-bundle\main.js.bak, backups, arquivos .bak,
+temporários, logs ou dados pessoais. O ASAR traduzido é gerado localmente e não é
+necessário para o instalador.
+A licença MIT cobre somente scripts, documentação e materiais originais de
+tradução de Emerson Teles; não relicencia o Antigravity nem terceiros.
+Antes do commit, confira os arquivos preparados e não force itens ignorados.

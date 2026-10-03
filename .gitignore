@@ -1,0 +1,19 @@
+# Windows/macOS/editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
+# Temporary and runtime files
+*.log
+*.tmp
+*.temp
+*.bak
+__pycache__/
+
+# User-specific backups created by installers
+**/_backups/
+# Locally generated/compiled application package and unused backup copy
+/app-pt.asar
+/web-bundle/main.js.bak
