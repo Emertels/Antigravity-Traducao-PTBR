@@ -2,9 +2,6 @@
 
 ![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge)
 ![Idioma](https://img.shields.io/badge/Idioma-Português%20(Brasil)-green?style=for-the-badge)
-![Autor](https://img.shields.io/badge/Desenvolvido%20por-Emerson%20Teles-gold?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Localização%20PT-BR%20com%20backup%20versionado-brightgreen?style=for-the-badge)
-![Segurança](https://img.shields.io/badge/Backup-Modular%20por%20Versão-orange?style=for-the-badge)
 
 Pacote portátil definitivo de localização completa do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
 
@@ -171,22 +168,35 @@ Este pacote segue rigorosamente os padrões de qualidade e naturalidade definido
 
 ---
 
-## Auditoria de textos sem tradução
+## 👤 Sobre o Autor
 
-Use `tools/scan-untranslated.cjs` para varrer rótulos, descrições, títulos, placeholders e mensagens do `web-bundle/main.js`. A busca é estática e pode listar nomes de produtos, termos internos ou textos já em português; revise o contexto antes de tratá-los como lacunas reais.
-### Exibição correta de acentos no terminal
+Desenvolvido e mantido por **Emerson Teles** (conhecido na comunidade como **Emertels**).
 
-Os atalhos de instalação e restauração ativam a página de código UTF-8, e os scripts PowerShell definem entrada e saída UTF-8. Os arquivos PowerShell são salvos com BOM para compatibilidade com Windows PowerShell 5.1. Isso corrige textos como `versão`, `tradução` e `instalação` que antes podiam aparecer como `versÃ£o`.
-## Codificação e backups por versão
+Apaixonado por tecnologia, informática, jogos, manutenção de sistemas e tradução/localização de softwares e emuladores para o Português do Brasil (PT-BR).
 
-Os atalhos `.bat` são arquivos ASCII sem BOM e ativam a página de código UTF-8. Os scripts PowerShell são UTF-8 com BOM e definem entrada e saída UTF-8, para manter acentos e cedilhas corretos no Windows PowerShell 5.1. Os backups originais ficam dentro da pasta do programa, separados pela versão (e pelo commit quando o aplicativo fornece essa identificação), e não devem ser substituídos por uma cópia já traduzida. Ao executar a tradução novamente, o patch deve partir do backup original confiável para evitar empilhar alterações. Se a cópia original estiver ausente, inválida ou não corresponder à versão instalada, o instalador deve parar antes de sobrescrever os arquivos e explicar como recuperar uma origem limpa.
-## Reexecução e restauração
-- Ao executar novamente, o instalador reconhece uma tradução completa e informa que não precisa reaplicá-la. Se estiver parcial, recompõe a tradução a partir do backup original limpo e exato da versão.
-- O backup original é criado uma única vez em `<pasta instalada>\_backups\<versão>` e nunca é substituído pela tradução. Se uma instalação já modificada não tiver backup confiável, o instalador interrompe e informa isso.
-- Na restauração, arquivos que já correspondem ao original são identificados e não são copiados novamente. Sem backup, o script só informa que já está original quando o ASAR da versão ativa passa na verificação de limpeza e o web-bundle não contém marcadores conhecidos da tradução; se houver sinais de modificação ou backup inválido, interrompe sem alterar os arquivos.
-- O crédito de localização é exibido como `Tradução PT-BR: Emerson Teles`, na cor turquesa `#00adb5`, no local de crédito disponível na interface.
-### Mensagens do instalador e créditos
-- Se já estiver traduzido, o instalador mostra uma mensagem ciano clara e não reaplica o pacote.
-- Se já estiver original, a restauração avisa em ciano que não é necessária; uma restauração real termina com a confirmação verde de sucesso.
-- No prompt final, S abre o aplicativo em processo independente e a janela do CMD iniciada pelo atalho fecha automaticamente; N, Enter ou Esc encerra sem abrir o aplicativo.
-- Crédito: Tradução PT-BR: Emerson Teles, em turquesa #00adb5. O crédito fica somente em Configurações → Aplicativo; ele não aparece no menu superior.
+### 🛠️ Projetos & Contribuições Notáveis:
+- **Suítes de Automação & Utilitários no GitHub:**
+  - **[Suite-Emuladores](https://github.com/Emertels/Suite-Emuladores)** — Suíte inteligente em PowerShell para download e atualização autônoma de 56 emuladores e frontends.
+  - **[PSBBN-Translator](https://github.com/Emertels/PSBBN-Translator)** — Suíte corporativa de tradução e localização para o PSBBN Definitive Project no PS2 (40 idiomas).
+  - **[AI-Chat-Vault](https://github.com/Emertels/AI-Chat-Vault)** — Backup portátil e recuperação de conversas locais de 20 IAs agênticas e ferramentas de programação.
+  - **[Microsoft-Photos-Fix](https://github.com/Emertels/Microsoft-Photos-Fix)** — Correção avançada em PowerShell e C# para rota de abertura e papel de parede no Microsoft Fotos.
+  - **[Roccat-Syn-Pro-Air-Fix](https://github.com/Emertels/Roccat-Syn-Pro-Air-Fix)** — Suíte definitiva de estabilização, áudio e blindagem anti-queda para headset sem fio.
+- **Emulação & Consoles:** Criador e arquiteto da **[PSBBN-Translator](https://github.com/Emertels/PSBBN-Translator)** para o PS2 (40 idiomas); localização e suporte a emuladores como **PSBBN**, **PCSX2**, **Dolphin**, **shadPS4**, **Azahar** e **RetroArch**.
+- **Softwares & Utilitários:** Tradução 100% de **DSX** (DualSense X - Trusted Translator), **ASUS GPU Tweak III**, **dnGrep**, **XWidget** e ferramentas web (**DualSense Tester**, **DualShock Tools**).
+- **Jogos:** Tradução de **Silent Hill 5: Homecoming**, projetos em andamento em **Silent Hill 4: The Room** e diversos outros aplicativos.
+
+---
+
+### 🌐 Conecte-se comigo & Comunidades Oficiais:
+
+<div align="left">
+
+[![GitHub](https://img.shields.io/badge/GitHub-Emertels-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/emertels)
+[![Website](https://img.shields.io/badge/Website-Emerson_Teles-0070F3?style=for-the-badge&logo=googlechrome&logoColor=white)](https://emertels.github.io)
+[![Discord](https://img.shields.io/badge/Discord-Emertels%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://emertels.github.io/discord)
+[![X / Twitter](https://img.shields.io/badge/X_Twitter-@emertels-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/emertels)
+[![YouTube](https://img.shields.io/badge/YouTube-Emerson_Teles-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@emersonteles2379)
+[![Telegram](https://img.shields.io/badge/Telegram-Aplicativos%20Mods-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/apksmodsandroid)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Apoiar%20Projeto-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/emertels)
+
+</div>
