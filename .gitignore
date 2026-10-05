@@ -17,3 +17,5 @@ __pycache__/
 # Locally generated/compiled application package and unused backup copy
 /app-pt.asar
 /web-bundle/main.js.bak
+# Internal team logs
+TEAMLOG.md

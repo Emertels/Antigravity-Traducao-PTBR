@@ -3,6 +3,7 @@
 ## [1.1.0] - 2026-10-05
 
 ### Interface Web
+- O usuário confirmou que as correções e traduções desta atualização estão funcionando no Antigravity.
 - Acrescentadas traduções para o seletor `Google (internal)`, mensagens de erro interno e estados de sidecar (`Running`, `Stopped`, `Errored`, `Backoff` e `Unknown`).
 - Traduzidas as instruções, ações e mensagens de configuração da tela Jetski Chat, mantendo nomes técnicos e comandos originais.
 - Traduzidas as descrições das habilidades `automation`, `ui-extension` e `ui-plugin-navigation`, além das habilidades do Data Agent Kit: Bigtable, Airflow, Spark, segurança do GCS, autenticação do Google Cloud, Cloud Storage, Cloud Storage FUSE, configuração regional de MCP e mapeamento de esquemas.
