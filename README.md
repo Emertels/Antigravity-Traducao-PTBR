@@ -1,6 +1,6 @@
 # 🌐 Google Antigravity — Tradução para Português do Brasil (PT-BR) 🇧🇷
 
-![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge)
+![Versão](https://img.shields.io/badge/Versão-v1.1.0-blue?style=for-the-badge)
 ![Idioma](https://img.shields.io/badge/Idioma-Português%20(Brasil)-green?style=for-the-badge)
 
 Pacote portátil definitivo de localização completa do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
