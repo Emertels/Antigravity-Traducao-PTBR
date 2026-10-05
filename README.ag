@@ -2,7 +2,6 @@
 
 ![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge)
 ![Idioma](https://img.shields.io/badge/Idioma-Português%20(Brasil)-green?style=for-the-badge)
-[![Vídeo no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=jZhrmjrK5p4)
 
 Pacote portátil definitivo de localização completa do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
 
@@ -13,10 +12,6 @@ Pacote portátil definitivo de localização completa do **Google Antigravity De
 <p align="center">
   <a href="https://www.youtube.com/watch?v=jZhrmjrK5p4" target="_blank">
     <img src="https://img.youtube.com/vi/jZhrmjrK5p4/maxresdefault.jpg" alt="Vídeo Tutorial da Tradução Google Antigravity no YouTube" width="95%">
-  </a>
-  <br>
-  <a href="https://www.youtube.com/watch?v=jZhrmjrK5p4" target="_blank">
-    <img src="https://img.shields.io/badge/Assistir_no_YouTube-Vídeo_Oficial_PT--BR-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Assistir no YouTube">
   </a>
 </p>
 
