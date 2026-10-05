@@ -2,8 +2,23 @@
 
 ![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?style=for-the-badge)
 ![Idioma](https://img.shields.io/badge/Idioma-Português%20(Brasil)-green?style=for-the-badge)
+[![Vídeo no YouTube](https://img.shields.io/badge/YouTube-Assistir_Vídeo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=jZhrmjrK5p4)
 
 Pacote portátil definitivo de localização completa do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
+
+---
+
+## 🎥 Vídeo Tutorial & Demonstração
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=jZhrmjrK5p4" target="_blank">
+    <img src="https://img.youtube.com/vi/jZhrmjrK5p4/maxresdefault.jpg" alt="Vídeo Tutorial da Tradução Google Antigravity no YouTube" width="95%">
+  </a>
+  <br>
+  <a href="https://www.youtube.com/watch?v=jZhrmjrK5p4" target="_blank">
+    <img src="https://img.shields.io/badge/Assistir_no_YouTube-Vídeo_Oficial_PT--BR-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Assistir no YouTube">
+  </a>
+</p>
 
 ---
 
@@ -25,15 +40,16 @@ Pacote portátil definitivo de localização completa do **Google Antigravity De
 
 ## 📋 Índice
 1. [Sobre o Pacote](#-sobre-o-pacote)
-2. [Demonstração Visual](#-demonstração-visual)
-3. [O que Foi Traduzido](#-o-que-foi-traduzido)
-4. [Estrutura da Pasta](#-estrutura-da-pasta)
-5. [Como Instalar](#-como-instalar-em-2-cliques)
-6. [Como Restaurar o Original de Fábrica](#-como-restaurar-o-original-de-fábrica)
-7. [Sistema de Backup Modular e Segurança](#-sistema-de-backup-modular-e-segurança)
-8. [Diretórios do Sistema](#-diretórios-no-computador)
-9. [Padrão de Terminologia Oficial](#-padrão-de-terminologia-oficial)
-10. [Créditos e Autoria](#-créditos-e-autoria)
+2. [Vídeo Tutorial & Demonstração](#-vídeo-tutorial--demonstração)
+3. [Demonstração Visual](#-demonstração-visual)
+4. [O que Foi Traduzido](#-o-que-foi-traduzido)
+5. [Estrutura da Pasta](#-estrutura-da-pasta)
+6. [Como Instalar](#-como-instalar-em-2-cliques)
+7. [Como Restaurar o Original de Fábrica](#-como-restaurar-o-original-de-fábrica)
+8. [Sistema de Backup Modular e Segurança](#-sistema-de-backup-modular-e-segurança)
+9. [Diretórios do Sistema](#-diretórios-no-computador)
+10. [Padrão de Terminologia Oficial](#-padrão-de-terminologia-oficial)
+11. [Créditos e Autoria](#-créditos-e-autoria)
 
 ---
 
