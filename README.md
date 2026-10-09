@@ -116,6 +116,9 @@ Este pacote foi arquitetado para oferecer uma experiência nativa em português 
    - Renovar o cache do Chromium para que a tradução apareça de imediato.
 3. Ao concluir, digite `S` para abrir o **Google Antigravity com a tradução PT-BR aplicada à versão instalada**!
 
+> [!NOTE]
+> **Atualizações do aplicativo:** Sempre que o Google Antigravity receber uma atualização oficial, os arquivos originais serão reinstalados pelo próprio aplicativo. Para manter o programa em português, basta executar o `Instalar-Traducao.bat` novamente após a atualização.
+
 ---
 
 ## 🔄 Como Restaurar o Original de Fábrica
