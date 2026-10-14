@@ -17,14 +17,14 @@ function Read-OpenChoice([string]$Prompt) {
         if ($key.Key -eq [ConsoleKey]::Escape) { Write-Host 'Esc'; return $false }
     }
 }
-$Host.UI.RawUI.WindowTitle = "Instalador Antigravity PT-BR - Emerson Teles"
+$Host.UI.RawUI.WindowTitle = "Instalador PT-BR - Antigravity - Emerson Teles"
 
 function Write-Header {
     Clear-Host
     Write-Host ""
     Write-Host " ==================================================================== " -ForegroundColor Cyan
-    Write-Host "        TRADUÇÃO GOOGLE ANTIGRAVITY PARA PORTUGUÊS DO BRASIL          " -ForegroundColor Green
-    Write-Host "            Desenvolvido e Personalizado por: Emerson Teles           " -ForegroundColor Yellow
+    Write-Host "        TRADUÇÃO GOOGLE ANTIGRAVITY PARA PORTUGUÊS DO BRASIL          " -ForegroundColor Cyan
+    Write-Host "            Desenvolvido e Personalizado por: Emerson Teles           " -ForegroundColor Cyan
     Write-Host " ==================================================================== " -ForegroundColor Cyan
     Write-Host ""
 }
@@ -93,8 +93,8 @@ function Copy-FileWithProgress {
     }
 
     if (-not $success) {
-        Write-Host "[x] Erro: Não foi possivel copiar para $Destination. Verifique se ha processos abertos." -ForegroundColor Red
-        throw "Falha na copia do arquivo"
+        Write-Host "[x] Erro: Não foi possível copiar para $Destination. Verifique se há processos abertos." -ForegroundColor Red
+        throw "Falha na cópia do arquivo"
     }
 }
 
@@ -193,14 +193,14 @@ public class FastFuse {
 
         $res = [FastFuse]::FindAndPatch($ExePath)
         if ($res -eq 1) {
-            Write-Host "    [OK] Verificação de integridade ASAR desativada com sucesso no executavel." -ForegroundColor Green
+            Write-Host "    [OK] Verificação de integridade ASAR desativada com sucesso no executável." -ForegroundColor Green
         } elseif ($res -eq 0) {
-            Write-Host "    [OK] Executavel ja esta configurado para aceitar pacotes personalizados." -ForegroundColor Green
+            Write-Host "    [OK] Executável já está configurado para aceitar pacotes personalizados." -ForegroundColor Green
         } else {
-            Write-Host "    [i] Executavel verificado com sucesso." -ForegroundColor Green
+            Write-Host "    [i] Executável verificado com sucesso." -ForegroundColor Green
         }
     } catch {
-        Write-Host "    [!] Aviso ao verificar integridade do executavel: $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Host "    [!] Aviso ao verificar integridade do executável: $($_.Exception.Message)" -ForegroundColor Yellow
     }
 }
 
@@ -286,12 +286,10 @@ function Update-AsarPackageVersion {
 }
 
 function Find-AntigravityInstallation {
+    . (Join-Path $PSScriptRoot 'Find-Installations.ps1')
     $candidates = @()
 
-    $proc = Get-Process -Name "Antigravity" -ErrorAction SilentlyContinue | Select-Object -First 1
-    if ($proc -and $proc.Path) {
-        $candidates += (Split-Path $proc.Path -Parent)
-    }
+    if ($script:preferredAgyDir) { $candidates += $script:preferredAgyDir }
 
     $candidates += "$env:LOCALAPPDATA\Programs\antigravity"
     $candidates += "$env:LOCALAPPDATA\Programs\Antigravity"
@@ -321,62 +319,95 @@ function Find-AntigravityInstallation {
         } catch { }
     }
 
-    $drives = Get-PSDrive -PSProvider FileSystem | Select-Object -ExpandProperty Root
-    foreach ($d in $drives) {
-        $candidates += (Join-Path $d "antigravity")
-        $candidates += (Join-Path $d "Programs\antigravity")
+    # Primeiro valida caminhos conhecidos; só faz busca profunda quando nenhum deles serve.
+    $quickValid = @($candidates | Where-Object {
+        $candidatePath = ([string]$_).Trim().Trim('"')
+        (Test-Path -LiteralPath (Join-Path $candidatePath 'Antigravity.exe') -PathType Leaf) -and
+        (Test-Path -LiteralPath (Join-Path $candidatePath 'resources\app.asar') -PathType Leaf)
+    } | Select-Object -Unique)
+    if ($quickValid.Count -gt 0) {
+        $candidates = $quickValid
+    } else {
+        Write-Host "    Nenhum caminho conhecido validado; iniciando busca em todas as unidades..." -ForegroundColor DarkGray
+        $candidates += @(Find-ExecutableDirectoriesOnAllDrives -ExecutableName 'Antigravity.exe' -ProductLabel 'Antigravity' -ValidationRelativePath 'resources\app.asar')
     }
-
+    $candidates = @($candidates | Where-Object { $_ } | Select-Object -Unique)
+    $validCandidates = @()
+    $seenPaths = @{}
     foreach ($cand in ($candidates | Where-Object { $_ } | Select-Object -Unique)) {
-        if ((Test-Path (Join-Path $cand "resources\app.asar")) -or (Test-Path (Join-Path $cand "Antigravity.exe"))) {
-            return $cand
+        try {
+            $normalizedPath = [System.IO.Path]::GetFullPath(([string]$cand).Trim().Trim('"'))
+            $canonicalPath = (Resolve-Path -LiteralPath $normalizedPath -ErrorAction Stop).Path.TrimEnd('\')
+            if (-not $seenPaths.ContainsKey($canonicalPath) -and
+                (Test-Path (Join-Path $canonicalPath "resources\app.asar") -PathType Leaf) -and
+                (Test-Path (Join-Path $canonicalPath "Antigravity.exe") -PathType Leaf)) {
+                $seenPaths[$canonicalPath] = $true
+                $validCandidates += $canonicalPath
+            }
+        } catch { }
         }
+
+    if ($script:preferredAgyDir) {
+        try {
+            $preferredPath = [System.IO.Path]::GetFullPath(([string]$script:preferredAgyDir).Trim().Trim('"')).TrimEnd('\')
+            foreach ($validPath in $validCandidates) {
+                if ([string]::Equals($validPath, $preferredPath, [System.StringComparison]::OrdinalIgnoreCase)) {
+                    return $validPath
+                }
+            }
+        } catch { }
+    }
+    if ($validCandidates.Count -eq 1) { return $validCandidates[0] }
+    if ($validCandidates.Count -gt 1) {
+        Write-Host "[i] Mais de uma instalação válida foi encontrada:" -ForegroundColor Yellow
+        for ($i = 0; $i -lt $validCandidates.Count; $i++) {
+            Write-Host "    [$($i + 1)] $($validCandidates[$i])" -ForegroundColor Cyan
+        }
+        do {
+            $choice = Read-Host "Digite o número da instalação que deseja usar"
+            $selection = 0
+        } while (-not [int]::TryParse($choice, [ref]$selection) -or $selection -lt 1 -or $selection -gt $validCandidates.Count)
+        return $validCandidates[$selection - 1]
     }
 
     return $null
 }
 
-# Inicio da Execucao
+# Início da execução
 Write-Header
 
-# 1. Fechar processos da interface grafica do Antigravity (preservando servicos de fundo como language_server)
-$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
-if ($running) {
-    Write-Host "[-] Fechando janela ativa do Antigravity para atualizar arquivos com segurança..." -ForegroundColor Yellow
-    $running | Stop-Process -Force -ErrorAction SilentlyContinue
-    
-    $timeout = 10
-    while ($timeout -gt 0) {
-        $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
-        if (-not $check) { break }
-        Start-Sleep -Seconds 1
-        $timeout--
-    }
-    Start-Sleep -Seconds 2
+# Guardar o caminho da janela ativa antes de encerrá-la, para selecionar a mesma instalação.
+$script:preferredAgyDir = $null
+$activeProcess = Get-Process -Name "Antigravity" -ErrorAction SilentlyContinue | Select-Object -First 1
+if ($activeProcess -and $activeProcess.Path) {
+    $script:preferredAgyDir = Split-Path $activeProcess.Path -Parent
 }
 
-# 2. Localizar instalação do Antigravity
+# 1. Localizar instalação do Antigravity antes de fechar o aplicativo
 Write-Host "[1/4] Procurando instalação do Antigravity no computador..." -ForegroundColor White
 $agyDir = Find-AntigravityInstallation
 
 while (-not $agyDir -or -not (Test-Path $agyDir)) {
     Write-Host ""
-    Write-Host "[!] Não foi possivel detectar a pasta do Antigravity automaticamente." -ForegroundColor Yellow
-    $userInput = Read-Host "Por favor, digite ou cole o caminho da pasta onde o Antigravity esta instalado"
+    Write-Host "[!] Não foi possível detectar a pasta do Antigravity automaticamente." -ForegroundColor Yellow
+    Write-Host "Se o Antigravity não estiver instalado, instale-o primeiro. Se estiver em uma pasta personalizada, informe o caminho dela." -ForegroundColor Gray
+    $userInput = Read-Host "Digite ou cole o caminho da pasta do Antigravity"
     if ([string]::IsNullOrWhiteSpace($userInput)) {
-        Write-Host "[x] Operacao cancelada pelo usuario." -ForegroundColor Red
+        Write-Host "[x] Nenhuma instalação foi selecionada. O Antigravity pode não estar instalado." -ForegroundColor Red
         Exit 1
     }
-    if (Test-Path (Join-Path $userInput "resources\app.asar")) {
+    $userInput = $userInput.Trim().Trim('"')
+    if ((Test-Path (Join-Path $userInput "resources\app.asar") -PathType Leaf) -and
+        (Test-Path (Join-Path $userInput "Antigravity.exe") -PathType Leaf)) {
         $agyDir = $userInput
     } else {
-        Write-Host "[x] Caminho invalido ou 'resources\app.asar' não encontrado nessa pasta!" -ForegroundColor Red
+        Write-Host "[x] Caminho inválido: confirme se a pasta contém Antigravity.exe e resources\app.asar." -ForegroundColor Red
     }
 }
 
 Write-Host "    -> Antigravity localizado em: $agyDir" -ForegroundColor Green
 
-# 2.1 Desativar verificação de integridade no executavel (Electron Fuse)
+# 2.1 Desativar verificação de integridade no executável (Electron Fuse)
 $exePath = Join-Path $agyDir "Antigravity.exe"
 if (Test-Path $exePath) {
 }
@@ -401,7 +432,7 @@ $resourcesDir = Join-Path $agyDir "resources"
 $targetAsar = Join-Path $resourcesDir "app.asar"
 $targetWebBundle = Join-Path $resourcesDir "web-bundle"
 
-# Pasta padronizada de backup dentro do diretorio do programa
+# Pasta padronizada de backup dentro do diretório do programa
 $backupDir = Join-Path $agyDir "_backups"
 
 # 3. Localizar arquivos desta pasta
@@ -416,6 +447,37 @@ if (-not (Test-Path $sourceWebBundle)) {
     Exit 1
 }
 
+# Conferir a compatibilidade do bundle antes de fechar o app, alterar o Fuse ou criar backups.
+$patcherScript = Join-Path $scriptDir "patch-antigravity.cjs"
+$nodeCmd = Get-Command "node" -ErrorAction SilentlyContinue
+if (-not $nodeCmd -or -not (Test-Path $patcherScript)) {
+    Write-Host "[x] Node.js ou patch-antigravity.cjs não encontrado; nenhum arquivo foi alterado." -ForegroundColor Red
+    Pause
+    Exit 1
+}
+Write-Host "[1/4] Conferindo compatibilidade da interface e do modo Turbo..." -ForegroundColor White
+& $nodeCmd.Source $patcherScript --preflight "$agyDir"
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[x] O pacote não é compatível com esta interface do Antigravity. O aplicativo permaneceu aberto e sem alterações." -ForegroundColor Red
+    Pause
+    Exit 12
+}
+
+# 2. Fechar processos da interface gráfica somente depois da validação do bundle.
+$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+if ($running) {
+    Write-Host "[-] Fechando janela ativa do Antigravity para atualizar arquivos com segurança..." -ForegroundColor Yellow
+    $running | Stop-Process -Force -ErrorAction SilentlyContinue
+    $timeout = 10
+    while ($timeout -gt 0) {
+        $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+        if (-not $check) { break }
+        Start-Sleep -Seconds 1
+        $timeout--
+    }
+    Start-Sleep -Seconds 2
+}
+
 # 4. Preservar os arquivos originais da instalação dentro da pasta do programa.
 Write-Host ""; Write-Host "[2/4] Verificando backups imutáveis desta versão..." -ForegroundColor White
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -426,7 +488,7 @@ $versionBackupAsar = Join-Path $versionBackupDir "app.asar"
 $backupExe = Join-Path $versionBackupDir "Antigravity.exe"
 $backupWebBundle = Join-Path $versionBackupDir "web-bundle-original"
 $webBundleWasAbsent = Join-Path $versionBackupDir "web-bundle-was-absent.txt"
- $installedWebBundleMarker = Join-Path $targetWebBundle ".agy-ptbr-installed"
+$installedWebBundleMarker = Join-Path $targetWebBundle ".agy-ptbr-installed"
 if ((Test-Path $installedWebBundleMarker) -and -not (Test-Path $backupWebBundle) -and -not (Test-Path $webBundleWasAbsent)) {
     Write-Host "[x] A pasta web-bundle já está traduzida, mas não existe uma cópia original salva para a versão $detectedVersion." -ForegroundColor Red
     Write-Host "    Instalação interrompida; não vou salvar os arquivos traduzidos como backup original." -ForegroundColor Yellow
@@ -481,7 +543,26 @@ if (-not $patchedDynamically) {
         Pause
         Exit 1
     }
-    Write-Host "[x] Patch seguro da versão atual indisponível. O ASAR estático não será usado para evitar downgrade." -ForegroundColor Red
+    Write-Host "[x] Não há patch dinâmico compatível com o Antigravity $detectedVersion. Nenhum ASAR estático será aplicado para evitar downgrade." -ForegroundColor Red
+    Write-Host "    Restaurando os arquivos da instalação antes de sair..." -ForegroundColor Yellow
+    try {
+        if ((Test-Path $backupExe) -and (Test-Path $exePath)) {
+            Copy-Item -LiteralPath $backupExe -Destination $exePath -Force -ErrorAction Stop
+        }
+        if ((Test-Path $versionBackupAsar) -and (Test-Path $targetAsar)) {
+            Copy-Item -LiteralPath $versionBackupAsar -Destination $targetAsar -Force -ErrorAction Stop
+        }
+        if (Test-Path $backupWebBundle) {
+            if (Test-Path $targetWebBundle) { Remove-Item -LiteralPath $targetWebBundle -Recurse -Force -ErrorAction Stop }
+            Copy-Item -LiteralPath $backupWebBundle -Destination $targetWebBundle -Recurse -Force -ErrorAction Stop
+        } elseif ((Test-Path $webBundleWasAbsent) -and (Test-Path $targetWebBundle)) {
+            Remove-Item -LiteralPath $targetWebBundle -Recurse -Force -ErrorAction Stop
+        }
+        Write-Host "    [OK] Arquivos originais restaurados; nenhuma tradução parcial foi mantida." -ForegroundColor Green
+    } catch {
+        Write-Host "    [!] A restauração automática encontrou um erro: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    Os backups desta versão foram preservados em: $versionBackupDir" -ForegroundColor Yellow
+    }
     Pause
     Exit 1
 }
@@ -524,7 +605,7 @@ Write-Host ""
 
 $exePath = Join-Path $agyDir "Antigravity.exe"
 if (Test-Path $exePath) {
-    if (Read-OpenChoice "Deseja iniciar o Antigravity? [S = abrir | N/Enter/Esc = fechar]: ") {
+    if (Read-OpenChoice "Deseja abrir o Antigravity? [S = sim | N/Enter/Esc = sair]: ") {
         Write-Host "Iniciando Antigravity de forma independente..." -ForegroundColor Cyan
         Start-Process -FilePath "explorer.exe" -ArgumentList "`"$exePath`""
         Start-Sleep -Milliseconds 400

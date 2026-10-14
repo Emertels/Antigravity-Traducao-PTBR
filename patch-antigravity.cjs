@@ -7,14 +7,43 @@ console.log("===================================================================
 console.log("    PATCHER DINAMICO AUTOMATIZADO ANTIGRAVITY PT-BR - EMERSON TELES  ");
 console.log("====================================================================");
 
-const agyDir = process.argv[2] || path.join(process.env.LOCALAPPDATA, "Programs", "antigravity");
+const preflightOnly = process.argv[2] === "--preflight";
+const agyArg = process.argv[preflightOnly ? 3 : 2];
+const agyDir = agyArg || path.join(process.env.LOCALAPPDATA, "Programs", "antigravity");
 const scriptDir = __dirname;
 const webBundleDir = path.join(scriptDir, "web-bundle");
+const sourceWebBundleMain = path.join(webBundleDir, "main.js");
 
 if (!fs.existsSync(webBundleDir)) {
     console.error("[x] Erro: Pasta web-bundle não encontrada em:", webBundleDir);
     process.exit(1);
 }
+if (!fs.existsSync(sourceWebBundleMain)) {
+    console.error("[x] Erro: web-bundle/main.js não encontrado em:", sourceWebBundleMain);
+    process.exit(1);
+}
+const sourceMainText = fs.readFileSync(sourceWebBundleMain, "utf8");
+const targetInjectionPoint = "'--enable_sidecars',";
+const turboPreservationChecks = [
+    ['rótulo PT-BR de Request Review', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
+    ['rótulo PT-BR de Default', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
+    ['campo de busca PT-BR', 'placeholder:"Pesquisar abas, arquivos, plugins, subagentes, artefatos e tarefas..."'],
+    ['tradução do rótulo Turbo', '"Turbo": "Turbo"'],
+    ['tradução da descrição do perfil Turbo', '"Run all commands without restrictions.": "Executar todos os comandos sem restrições."'],
+    ['perfil Turbo na estrutura atual', /turbo:\{label:"Turbo",description:"Run all commands without restrictions\.",prefValues:\{/],
+    ['identificador atual do perfil Turbo', /AgentPermissionPreset\.TURBO/],
+    ['Turbo habilitado no seletor principal', /R1a=\["request_review","default","turbo"\]/]
+];
+const missingTurboParts = turboPreservationChecks.filter(([, marker]) =>
+    marker instanceof RegExp ? !marker.test(sourceMainText) : !sourceMainText.includes(marker)
+);
+if (missingTurboParts.length) {
+    console.error("[x] O bundle de origem não contém todos os elementos do modo Turbo:");
+    for (const [label] of missingTurboParts) console.error(`    - ${label}`);
+    console.error("Nenhum arquivo da instalação foi alterado. Verifique se o web-bundle pertence à versão compatível do Antigravity.");
+    process.exit(1);
+}
+const sourceWebBundleHash = crypto.createHash("sha256").update(fs.readFileSync(sourceWebBundleMain)).digest("hex");
 
 const resourcesDir = path.join(agyDir, "resources");
 const srcAsar = path.join(resourcesDir, "app.asar");
@@ -58,6 +87,59 @@ function getAgyAsarVersion(filePath) {
     } catch (e) {
         return null;
     }
+}
+
+function getAgyAsarEntryText(filePath, entryPath) {
+    let fd;
+    try {
+        fd = fs.openSync(filePath, "r");
+        const sBuf = Buffer.alloc(16);
+        fs.readSync(fd, sBuf, 0, 16, 0);
+        const s2 = sBuf.readUInt32LE(4);
+        const jSize = sBuf.readUInt32LE(12);
+        const hBuf = Buffer.alloc(jSize);
+        fs.readSync(fd, hBuf, 0, jSize, 16);
+        let entry = JSON.parse(hBuf.toString("utf8"));
+        for (const segment of entryPath) {
+            entry = entry && entry.files && entry.files[segment];
+            if (!entry) return null;
+        }
+        if (entry.files || !Number.isFinite(Number(entry.size)) || !Number.isFinite(Number(entry.offset))) return null;
+        const baseOffset = 8 + s2;
+        const data = Buffer.alloc(entry.size);
+        fs.readSync(fd, data, 0, entry.size, baseOffset + Number(entry.offset));
+        return data.toString("utf8");
+    } catch (_) {
+        return null;
+    } finally {
+        if (fd !== undefined) fs.closeSync(fd);
+    }
+}
+
+function getTurboUiCompatibilityIssues(version, bundleText) {
+    const parts = String(version || "").split(".").map(Number);
+    const isAtLeast223 = parts.length >= 2 &&
+        (parts[0] > 2 || (parts[0] === 2 && (parts[1] > 23 || (parts[1] === 23 && (parts[2] || 0) >= 0))));
+    if (!isAtLeast223) return [];
+
+    const start = bundleText.indexOf("var CM={");
+    const end = start >= 0 ? bundleText.indexOf('R1a=["request_review","default","turbo"]', start) : -1;
+    const presetTable = start >= 0 && end > start ? bundleText.slice(start, end) : "";
+    const required = [
+        ['estrutura atual dos perfis de segurança', 'var CM={'],
+        ['perfil Request Review com rótulo PT-BR e descrição atual', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
+        ['perfil Default com rótulo PT-BR e descrição atual', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
+        ['perfil Turbo e sua descrição atual', 'turbo:{label:"Turbo",description:"Run all commands without restrictions."'],
+        ['identificador atual do perfil Turbo', 'AgentPermissionPreset.TURBO']
+    ];
+    const issues = required.filter(([, marker]) => !presetTable.includes(marker)).map(([label]) => label);
+    if (!/R1a=\["request_review","default","turbo"\]/.test(bundleText)) {
+        issues.push('Turbo habilitado na lista de perfis visíveis');
+    }
+    if (!bundleText.includes('placeholder:"Pesquisar abas, arquivos, plugins, subagentes, artefatos e tarefas..."')) {
+        issues.push('placeholder de busca traduzido');
+    }
+    return issues;
 }
 
 function isAlreadyTranslatedAgy(filePath) {
@@ -105,6 +187,30 @@ function isAlreadyTranslatedAgy(filePath) {
 // 1. Detectar versão atual instalada
 const currentVersion = getAgyAsarVersion(srcAsar);
 if (!currentVersion) { console.error("[x] Não foi possível detectar a versão do app.asar instalado."); process.exit(1); }
+const turboUiIssues = getTurboUiCompatibilityIssues(currentVersion, sourceMainText);
+if (turboUiIssues.length) {
+    console.error(`[x] O web-bundle do projeto não corresponde à interface de segurança do Antigravity ${currentVersion}.`);
+    console.error("    A instalação foi interrompida antes de criar backup, alterar o ASAR ou substituir arquivos.");
+    console.error("    O bundle atual não contém estes pontos da interface usada por essa versão:");
+    for (const issue of turboUiIssues) console.error(`    - ${issue}`);
+    console.error("    Mantenha o Antigravity original até atualizar o web-bundle para uma compilação compatível.");
+    process.exit(12);
+}
+const installedLanguageServer = getAgyAsarEntryText(srcAsar, ["dist", "languageServer.js"]);
+if (!installedLanguageServer) {
+    console.error(`[x] Não encontrei dist/languageServer.js no Antigravity ${currentVersion}.`);
+    console.error("    O instalador parou antes de fechar o aplicativo ou alterar arquivos.");
+    process.exit(13);
+}
+if (!installedLanguageServer.includes("--web_bundle_path") && !installedLanguageServer.includes(targetInjectionPoint)) {
+    console.error(`[x] O patch dinâmico ainda não reconhece a estrutura do Antigravity ${currentVersion}.`);
+    console.error("    Nenhum arquivo foi alterado; o ASAR estático foi bloqueado para evitar downgrade.");
+    process.exit(13);
+}
+if (preflightOnly) {
+    console.log(`[OK] A estrutura do patch corresponde ao Antigravity ${currentVersion}; verificação do seletor Turbo aprovada.`);
+    process.exit(0);
+}
 const isSrcTranslated = isAlreadyTranslatedAgy(srcAsar);
 
 console.log(`[*] Versão do Google Antigravity instalada detectada: ${currentVersion}`);
@@ -132,10 +238,17 @@ if (!isSrcTranslated && cleanAsarPath === versionBackupAsar) {
     console.log("[OK] Backup original em inglês desta versão encontrado e validado; ele será mantido sem substituição.");
 }
 const installedWebBundleMarker = path.join(agyDir, "resources", "web-bundle", ".agy-ptbr-installed");
-if (isSrcTranslated && fs.existsSync(installedWebBundleMarker) && cleanAsarPath === versionBackupAsar) {
+const installedWebBundleMain = path.join(agyDir, "resources", "web-bundle", "main.js");
+let installedWebBundleIsCurrent = false;
+try {
+    const markerText = fs.readFileSync(installedWebBundleMarker, "utf8");
+    const installedMainHash = crypto.createHash("sha256").update(fs.readFileSync(installedWebBundleMain)).digest("hex");
+    installedWebBundleIsCurrent = markerText.includes(`main.js SHA256: ${sourceWebBundleHash}`) && installedMainHash === sourceWebBundleHash;
+} catch (_) { }
+if (isSrcTranslated && installedWebBundleIsCurrent && cleanAsarPath === versionBackupAsar) {
     process.exit(10);
 }
-if (isSrcTranslated) console.log("[i] Tradução anterior detectada, mas incompleta; será reconstruída a partir do backup limpo.");
+if (isSrcTranslated) console.log("[i] Tradução anterior detectada; verificando e atualizando o pacote a partir do backup limpo.");
 console.log(`[*] Usando base limpa original: ${cleanAsarPath}`);
 // 4. Ler cabeçalho ASAR da base limpa original
 const cleanFd = fs.openSync(cleanAsarPath, "r");
@@ -164,7 +277,7 @@ function getCleanFile(p) {
     return getCleanFileData(cur).toString("utf8");
 }
 
-// 5. Aplicar patches nas funcoes a partir do codigo limpo original
+// 5. Aplicar patches nas funções a partir do código limpo original
 // 5.1 dist/languageServer.js: injetar --web_bundle_path
 const lsEntry = cleanHeader.files.dist && cleanHeader.files.dist.files && cleanHeader.files.dist.files["languageServer.js"];
 if (!lsEntry) {
@@ -173,7 +286,6 @@ if (!lsEntry) {
 }
 let lsCode = getCleanFileData(lsEntry).toString("utf8");
 
-const targetInjectionPoint = "'--enable_sidecars',";
 const injectionCode = `'--enable_sidecars',
         ];
         // Injetar web_bundle_path para interface traduzida PT-BR (Emerson Teles)
@@ -188,6 +300,10 @@ const injectionCode = `'--enable_sidecars',
 if (lsCode.includes(targetInjectionPoint) && !lsCode.includes("--web_bundle_path")) {
     lsCode = lsCode.replace(targetInjectionPoint, injectionCode);
     console.log("    -> Injetado carregador do web-bundle em dist/languageServer.js");
+} else if (!lsCode.includes("--web_bundle_path")) {
+    console.error(`[x] O patch dinâmico não reconhece dist/languageServer.js do Antigravity ${currentVersion}.`);
+    console.error("    Nenhum ASAR foi substituído; atualize o patch para esta compilação.");
+    process.exit(13);
 }
 
 // 5.2 dist/tray.js e dist/main.js
@@ -269,10 +385,10 @@ try {
     fs.writeFileSync(tempCheck, lsCode, "utf8");
     execSync(`node --check "${tempCheck}"`, { stdio: "ignore" });
     fs.unlinkSync(tempCheck);
-    console.log("    [OK] Verificação sintatica de dist/languageServer.js aprovada!");
+    console.log("    [OK] Verificação sintática de dist/languageServer.js aprovada!");
 } catch (e) {
     try { fs.unlinkSync(tempCheck); } catch {}
-    console.error("[x] Falha na verificação sintatica:", e.message);
+    console.error("[x] Falha na verificação sintática:", e.message);
     process.exit(1);
 }
 
@@ -285,7 +401,7 @@ const patchedMenuBuf = menuCode ? Buffer.from(menuCode, "utf8") : null;
 const patchedWizHtmlBuf = wizHtmlCode ? Buffer.from(wizHtmlCode, "utf8") : null;
 const patchedProvSplashBuf = provSplashCode ? Buffer.from(provSplashCode, "utf8") : null;
 
-// 6. Escanear e reconstruir arvore ASAR estritamente a partir da base limpa original
+// 6. Escanear e reconstruir árvore ASAR estritamente a partir da base limpa original
 function scan(node, prefix = "") {
     let items = [];
     for (const [k, v] of Object.entries(node.files || {})) {
@@ -394,7 +510,7 @@ for (const item of allItems) {
     }
 }
 
-// 7. Serializar novo cabecalho
+// 7. Serializar novo cabeçalho
 const newJsonStr = JSON.stringify(newHeader);
 const newJsonBuf = Buffer.from(newJsonStr, "utf8");
 const newJsonSize = newJsonBuf.length;
@@ -464,7 +580,7 @@ function copyDirRecursive(src, dest) {
 }
 
 copyDirRecursive(webBundleDir, targetWebBundle);
-fs.writeFileSync(path.join(targetWebBundle, ".agy-ptbr-installed"), "PT-BR translation marker\\n", "utf8");
+fs.writeFileSync(path.join(targetWebBundle, ".agy-ptbr-installed"), `PT-BR translation marker\nmain.js SHA256: ${sourceWebBundleHash}\n`, "utf8");
 console.log("    [OK] Pasta web-bundle traduzida instalada com sucesso em resources/web-bundle!");
 
 console.log("====================================================================");

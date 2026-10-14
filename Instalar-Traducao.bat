@@ -1,5 +1,5 @@
 @echo off
-title Antigravity PT-BR - Emerson Teles
+title Instalador PT-BR - Antigravity - Emerson Teles
 cls
 echo ================================================================
 echo      ANTIGRAVITY - TRADUCAO PT-BR - EMERSON TELES
