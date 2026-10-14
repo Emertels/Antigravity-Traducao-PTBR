@@ -6,8 +6,9 @@
 Pacote portátil de localização PT-BR do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
 
 <!-- antigravity-status -->
-- Revisão dos prints e auditoria de interface (13/10/2026): corrigidos Review, Nova guia, formulário de feedback, Política de revisão do plano, permissões globais, detalhamento de tokens, busca, Google Workspace, automação, plugin, WSL e Gemini 4 Argon. A auditoria analisou 834 candidatos e a varredura final não encontrou candidatos sem mapeamento. O observador acompanha alterações de texto/atributos e descrições truncadas recebem correspondência por prefixo. Crédito restaurado em Configurações → Versão, dentro do mesmo cartão da versão, com contorno cinza translúcido e texto turquesa #00adb5.
+- Revisão dos prints e auditoria de interface (13/10/2026): corrigidos Review, Nova guia, formulário de feedback, Política de revisão do plano, permissões globais, detalhamento de tokens, busca, Google Workspace, automação, plugin, WSL e Gemini 4 Argon. A auditoria analisou 834 candidatos e a varredura final não encontrou candidatos sem mapeamento. O observador acompanha alterações de texto/atributos em blocos incrementais por quadro; descrições truncadas recebem correspondência por prefixo. Crédito restaurado em Configurações → Versão, dentro do mesmo cartão da versão, com contorno cinza translúcido e texto turquesa #00adb5.
 - Em 14/10/2026, o usuário confirmou o teste da tradução no Antigravity 2.23.0 e informou que está funcionando.
+- Ajuste de desempenho do tradutor DOM (14/10/2026): a leitura inicial e as alterações dinâmicas agora são processadas em pequenos blocos por quadro, reduzindo picos que podiam congelar a interface; editores permanecem excluídos.
 ## Estado da atualização — 13/10/2026 · Antigravity 2.23.0
 
 - O frontend correspondente ao Antigravity 2.23.0 foi incorporado ao pacote a partir do cache local do aplicativo. O seletor exibe Solicitar revisão, Padrão, Verificado (prévia), Automático (prévia) e Turbo. Já haviam sido acrescentadas 4 traduções para Vetted/Auto (prévia) e suas descrições. Nesta revisão, foram aplicadas diretamente no frontend mais 4 strings: Solicitar revisão, Padrão, o placeholder de pesquisa (“Pesquisar abas, arquivos, plugins, subagentes, artefatos e tarefas...”) e seu nome acessível. As descrições e a visibilidade do Turbo permanecem preservadas.
@@ -67,7 +68,7 @@ Este pacote foi arquitetado para oferecer uma experiência nativa em português 
 * **Patcher dinâmico do núcleo Electron:** Detecta a versão instalada e preserva o número oficial. Para a versão 2.23.0, o pré-teste confere a tabela atual do seletor, a lista de modos visíveis e o identificador Turbo antes de qualquer alteração. Versões posteriores que mudarem essa estrutura são bloqueadas até o bundle ser atualizado.
 * **Execução Independente e Desacoplada:** O inicializador integrado executa o aplicativo em processo isolado, sem poluir seu terminal com logs de debug e sem fechar o Antigravity ao fechar o script.
 * **Segurança do Motor do Agente:** Preserva estritamente os processos em background do `language_server.exe` para que seus assistentes de IA nunca sejam interrompidos abruptamente.
-* **Blindagem dos Editores de Chat:** Proteção avançada que garante que componentes de texto rico (Lexical, Slate e Monaco Editor) nunca sofram quebras de concorrência DOM ou travamentos nas conversas.
+* **Blindagem dos Editores de Chat:** Os componentes de texto rico (Lexical, Slate e Monaco Editor) são excluídos da tradução DOM; a varredura ocorre em blocos incrementais para preservar a responsividade.
 
 ---
 
@@ -234,7 +235,7 @@ Entusiasta de tecnologia, informática, jogos, manutenção de sistemas e tradu�
 Pacote portátil de localização PT-BR do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
 
 <!-- antigravity-status -->
-- Revisão dos prints e auditoria de interface (13/10/2026): corrigidos Review, Nova guia, formulário de feedback, Política de revisão do plano, permissões globais, detalhamento de tokens, busca, Google Workspace, automação, plugin, WSL e Gemini 4 Argon. A auditoria analisou 834 candidatos e a varredura final não encontrou candidatos sem mapeamento. O observador acompanha alterações de texto/atributos e descrições truncadas recebem correspondência por prefixo. Crédito restaurado em Configurações → Versão, dentro do mesmo cartão da versão, com contorno cinza translúcido e texto turquesa #00adb5.
+- Revisão dos prints e auditoria de interface (13/10/2026): corrigidos Review, Nova guia, formulário de feedback, Política de revisão do plano, permissões globais, detalhamento de tokens, busca, Google Workspace, automação, plugin, WSL e Gemini 4 Argon. A auditoria analisou 834 candidatos e a varredura final não encontrou candidatos sem mapeamento. O observador acompanha alterações de texto/atributos em blocos incrementais por quadro; descrições truncadas recebem correspondência por prefixo. Crédito restaurado em Configurações → Versão, dentro do mesmo cartão da versão, com contorno cinza translúcido e texto turquesa #00adb5.
 - Em 14/10/2026, o usuário confirmou o teste da tradução no Antigravity 2.23.0 e informou que está funcionando.
 ## Estado da atualização — 13/10/2026 · Antigravity 2.23.0
 
@@ -295,7 +296,7 @@ Este pacote foi arquitetado para oferecer uma experiência nativa em português 
 * **Patcher dinâmico do núcleo Electron:** Detecta a versão instalada e preserva o número oficial. Para a versão 2.23.0, o pré-teste confere a tabela atual do seletor, a lista de modos visíveis e o identificador Turbo antes de qualquer alteração. Versões posteriores que mudarem essa estrutura são bloqueadas até o bundle ser atualizado.
 * **Execução Independente e Desacoplada:** O inicializador integrado executa o aplicativo em processo isolado, sem poluir seu terminal com logs de debug e sem fechar o Antigravity ao fechar o script.
 * **Segurança do Motor do Agente:** Preserva estritamente os processos em background do `language_server.exe` para que seus assistentes de IA nunca sejam interrompidos abruptamente.
-* **Blindagem dos Editores de Chat:** Proteção avançada que garante que componentes de texto rico (Lexical, Slate e Monaco Editor) nunca sofram quebras de concorrência DOM ou travamentos nas conversas.
+* **Blindagem dos Editores de Chat:** Os componentes de texto rico (Lexical, Slate e Monaco Editor) são excluídos da tradução DOM; a varredura ocorre em blocos incrementais para preservar a responsividade.
 
 ---
 

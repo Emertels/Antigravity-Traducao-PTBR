@@ -1,3 +1,8 @@
+### Interface responsiva após a tradução — Antigravity 2.23.0 — 14/10/2026
+- Substituída a varredura síncrona e recursiva de todo o `document.body` por uma fila incremental processada em quadros de animação, limitada a 250 nós ou aproximadamente 6 ms por quadro.
+- Mantido o acompanhamento de conteúdo dinâmico e atributos. Editores e áreas de código continuam excluídos da tradução.
+- Validado com 1.000 nós em uma simulação, com tradução distribuída por quadros, sem alterações no Monaco e com novos textos dinâmicos traduzidos. O pré-teste e a recompilação da instalação 2.23.0 também passaram.
+
 ### Organização visual do crédito — Antigravity 2.23.0 — 13/10/2026
 - O crédito “Tradução PT-BR: Emerson Teles” agora fica dentro do mesmo cartão da versão do aplicativo, abaixo do número, com separador e fundo cinza translúcido; o texto turquesa foi preservado.
 

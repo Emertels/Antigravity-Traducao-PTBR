@@ -5,6 +5,7 @@
   Versão de Referência: Google Antigravity v2.x (versão detectada dinamicamente; bundle web compatível necessário)
   Idioma: Português do Brasil (pt-BR)
   Status: Localização PT-BR com backups por versão e auditoria de interface
+  Atualização 14/10/2026: varredura da tradução DOM distribuída por quadros para manter a interface responsiva; editores e áreas de código continuam protegidos.
   Atualização 13/10/2026: 834 candidatos de rótulos e descrições auditados; a varredura final não apontou itens sem mapeamento. Automação, WSL, Gemini 4 Argon e crédito em Configurações → Versão agrupado no cartão da versão, com contorno cinza translúcido e texto turquesa. Teste do usuário confirmado em 14/10/2026 no Antigravity 2.23.0.
 ------------------------------------------------------------------------------
   1. SOBRE ESTE PACOTE

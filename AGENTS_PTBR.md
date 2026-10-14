@@ -16,6 +16,7 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 
 - `web-bundle/main.js` é a fonte PT-BR da interface web. Adicione mapeamentos exatos dos textos originais e preserve o comportamento da aplicação.
 - Não altere nós de texto em editores ricos, campos de entrada, Monaco, Lexical ou Slate. Evite observadores DOM que possam modificar o estado do editor.
+- A varredura inicial do DOM deve ser incremental e limitada por quadro (sem percorrer sincronicamente todo o `document.body`). Agrupe mutações em fila, limite o trabalho por quadro e mantenha os editores excluídos.
 - Não encerre `language_server.exe` ao fechar janelas do Antigravity.
 - Atualize as variantes do README, `LEIA-ME.txt` e estas instruções sempre que o comportamento mudar.
 

@@ -4077,7 +4077,7 @@ if (typeof window !== "undefined") {
 }
 
 
-// Antigravity DOM MutationObserver (Emerson Teles - Protegido contra quebra em editores)
+// Antigravity DOM translator (time-sliced to keep the UI responsive; editors are protected)
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   function _isEditableOrCode(el) {
     if (!el || el.nodeType !== 1) return false;
@@ -4085,9 +4085,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "CODE" || tag === "PRE" || tag === "SCRIPT" || tag === "STYLE") return true;
     if (el.isContentEditable || el.getAttribute("contenteditable") === "true") return true;
     if (typeof el.className === "string" && (el.className.includes("monaco") || el.className.includes("slate") || el.className.includes("lexical") || el.className.includes("prism") || el.className.includes("syntax") || el.className.includes("editor"))) return true;
-    if (typeof el.closest === "function") {
-      if (el.closest("[contenteditable='true'], .monaco-editor, [data-slate-editor], [data-lexical-editor], input, textarea, pre, code")) return true;
-    }
+    if (typeof el.closest === "function" && el.closest("[contenteditable='true'], .monaco-editor, [data-slate-editor], [data-lexical-editor], input, textarea, pre, code")) return true;
     return false;
   }
 
@@ -4101,63 +4099,88 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     });
   }
 
-  function _scanAgDom(node) {
-    if (!node) return;
-    if (node.nodeType === 3) {
-      var parent = node.parentElement;
-      if (parent && _isEditableOrCode(parent)) return;
-      var v = node.nodeValue;
-      if (v && v.trim()) {
-        if (v.trim().includes("Tradução PT-BR") || v.trim().includes("Translation PT-BR")) {
-          if (parent) {
-            parent.style.color = "#00adb5";
-            parent.style.fontWeight = "400";
-            parent.style.letterSpacing = "0.02em";
-          }
-        }
-        var tr = _trAgy(v.trim());
-        if (tr !== v.trim()) {
-          node.nodeValue = v.replace(v.trim(), tr);
-        }
-      }
-    } else if (node.nodeType === 1) {
-      _translateAgAttributes(node);
-      if (_isEditableOrCode(node)) return;
-      var children = node.childNodes;
-      if (children) {
-        for (var i = 0; i < children.length; i++) {
-          _scanAgDom(children[i]);
-        }
-      }
+  function _translateAgText(node) {
+    var parent = node && node.parentElement;
+    if (!parent || _isEditableOrCode(parent)) return;
+    var value = node.nodeValue;
+    if (!value || !value.trim()) return;
+    if (value.trim().includes("Tradução PT-BR") || value.trim().includes("Translation PT-BR")) {
+      parent.style.color = "#00adb5";
+      parent.style.fontWeight = "400";
+      parent.style.letterSpacing = "0.02em";
     }
+    var translated = _trAgy(value.trim());
+    if (translated !== value.trim()) node.nodeValue = value.replace(value.trim(), translated);
+  }
+
+  var _agNodeQueue = [];
+  var _agQueueIndex = 0;
+  var _agQueuedNodes = new WeakSet();
+  var _agQueueScheduled = false;
+  function _enqueueAgNode(node) {
+    if (!node || _agQueuedNodes.has(node)) return;
+    _agQueuedNodes.add(node);
+    _agNodeQueue.push(node);
+    _scheduleAgQueue();
+  }
+
+  function _scheduleAgQueue() {
+    if (_agQueueScheduled || _agQueueIndex >= _agNodeQueue.length) return;
+    _agQueueScheduled = true;
+    var run = function() {
+      _agQueueScheduled = false;
+      var startedAt = typeof performance !== "undefined" ? performance.now() : Date.now();
+      var processed = 0;
+      while (_agQueueIndex < _agNodeQueue.length && processed < 250) {
+        if (processed > 0 && (typeof performance !== "undefined" ? performance.now() : Date.now()) - startedAt >= 6) break;
+        var node = _agNodeQueue[_agQueueIndex++];
+        _agQueuedNodes.delete(node);
+        processed++;
+        if (node.nodeType === 3) {
+          _translateAgText(node);
+        } else if (node.nodeType === 1) {
+          _translateAgAttributes(node);
+          if (_isEditableOrCode(node)) continue;
+          var children = node.childNodes;
+          for (var i = 0; children && i < children.length; i++) _enqueueAgNode(children[i]);
+        }
+      }
+      if (_agQueueIndex >= _agNodeQueue.length) {
+        _agNodeQueue = [];
+        _agQueueIndex = 0;
+      } else if (_agQueueIndex > 2048) {
+        _agNodeQueue = _agNodeQueue.slice(_agQueueIndex);
+        _agQueueIndex = 0;
+      }
+      _scheduleAgQueue();
+    };
+    if (typeof window.requestAnimationFrame === "function") window.requestAnimationFrame(run);
+    else window.setTimeout(run, 16);
   }
 
   function _startAgObserver() {
     if (!document.body) {
-      setTimeout(_startAgObserver, 50);
+      window.setTimeout(_startAgObserver, 50);
       return;
     }
     var obs = new MutationObserver(function(mutations) {
       for (var i = 0; i < mutations.length; i++) {
-        var m = mutations[i];
-        if (m.type === 'childList') {
-          for (var j = 0; j < m.addedNodes.length; j++) _scanAgDom(m.addedNodes[j]);
-        } else if (m.type === 'characterData') {
-          _scanAgDom(m.target);
-        } else if (m.type === 'attributes') {
-          _translateAgAttributes(m.target);
+        var mutation = mutations[i];
+        if (mutation.type === "childList") {
+          for (var j = 0; j < mutation.addedNodes.length; j++) _enqueueAgNode(mutation.addedNodes[j]);
+        } else if (mutation.type === "characterData") {
+          _enqueueAgNode(mutation.target);
+        } else if (mutation.type === "attributes") {
+          _translateAgAttributes(mutation.target);
         }
       }
     });
     obs.observe(document.body, { childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "title", "aria-label", "alt"], subtree: true });
-    _scanAgDom(document.body);
+    _enqueueAgNode(document.body);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', _startAgObserver);
-  } else {
-    _startAgObserver();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", _startAgObserver, { once: true });
+  else _startAgObserver();
 }
 
 'use strict';var aa;function aaa(){return d}function d(a){return a};/*
