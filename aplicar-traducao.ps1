@@ -2,6 +2,7 @@
 #  Instalador Universal de Tradução PT-BR para Google Antigravity
 #  Tradução e Personalizacao por: Emerson Teles
 # ==============================================================================
+$null = & chcp.com 65001
 $utf8Console = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8Console
 [Console]::OutputEncoding = $utf8Console
@@ -440,6 +441,8 @@ $scriptDir = $PSScriptRoot
 if (-not $scriptDir) { $scriptDir = (Get-Location).Path }
 
 $sourceWebBundle = Join-Path $scriptDir "web-bundle"
+$sidecarHelper = Join-Path $scriptDir "sync-biomolecular-sidecar.ps1"
+$sidecarPackage = Join-Path $scriptDir "biomolecular-sidecar"
 
 if (-not (Test-Path $sourceWebBundle)) {
     Write-Host "[x] Erro: Pasta 'web-bundle' não encontrada nesta pasta!" -ForegroundColor Red
@@ -462,20 +465,40 @@ if ($LASTEXITCODE -ne 0) {
     Pause
     Exit 12
 }
+if (-not (Test-Path -LiteralPath $sidecarHelper -PathType Leaf)) {
+    Write-Host "[x] O sincronizador do Visualizador Biomolecular não foi encontrado; nenhum arquivo foi alterado." -ForegroundColor Red
+    Pause
+    Exit 1
+}
+try {
+    $null = & $sidecarHelper -Mode Preflight -AntigravityInstallDir $agyDir -PackageRoot $sidecarPackage
+} catch {
+    Write-Host "[x] Pré-teste do Visualizador Biomolecular falhou: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "    Nenhum arquivo foi alterado." -ForegroundColor Yellow
+    Pause
+    Exit 1
+}
 
-# 2. Fechar processos da interface gráfica somente depois da validação do bundle.
+# 2. Forçar o fechamento dos processos da interface somente depois da validação do bundle.
 $running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
 if ($running) {
-    Write-Host "[-] Fechando janela ativa do Antigravity para atualizar arquivos com segurança..." -ForegroundColor Yellow
-    $running | Stop-Process -Force -ErrorAction SilentlyContinue
-    $timeout = 10
+    Write-Host "[-] Encerrando processos do Antigravity para atualizar arquivos com segurança..." -ForegroundColor Yellow
+    foreach ($process in $running) {
+        try { Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue } catch { }
+    }
+    $timeout = 30
     while ($timeout -gt 0) {
         $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
         if (-not $check) { break }
-        Start-Sleep -Seconds 1
-        $timeout--
+        Start-Sleep -Milliseconds 100
+        $timeout -= 1
     }
-    Start-Sleep -Seconds 2
+    $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+    if ($check) {
+        $remaining = ($check | ForEach-Object { "$($_.ProcessName) (PID $($_.Id))" }) -join ", "
+        Write-Host "[x] Não foi possível encerrar estes processos do Antigravity: $remaining. Nenhum arquivo foi alterado." -ForegroundColor Red
+        Exit 1
+    }
 }
 
 # 4. Preservar os arquivos originais da instalação dentro da pasta do programa.
@@ -566,18 +589,25 @@ if (-not $patchedDynamically) {
     Pause
     Exit 1
 }
-# 6.1 Limpar cache de bytecode (V8 Code Cache) para carregar a interface traduzida imediatamente
-if (-not $translationAlreadyInstalled) {
-    $roamingAgy = Join-Path $env:APPDATA "Antigravity"
-    $cachesToClean = @("Cache", "Code Cache", "GPUCache", "DawnGraphiteCache", "DawnWebGPUCache")
-    foreach ($cName in $cachesToClean) {
-        $cPath = Join-Path $roamingAgy $cName
-        if (Test-Path $cPath) {
-            Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
-        }
-    }
-    Write-Host "    [OK] Cache de interface renovado para carregar a tradução sem resíduos anteriores." -ForegroundColor Green
+try {
+    $null = & $sidecarHelper -Mode Install -AntigravityInstallDir $agyDir -PackageRoot $sidecarPackage
+} catch {
+    Write-Host "[x] Não foi possível instalar a tradução do Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "    O pacote principal foi aplicado; os arquivos do visualizador e os backups existentes foram preservados." -ForegroundColor Yellow
+    Pause
+    Exit 1
 }
+# 6.1 Limpar os caches após cada execução para carregar traduções atualizadas,
+# inclusive quando o patch principal e o sidecar já estavam instalados.
+$roamingAgy = Join-Path $env:APPDATA "Antigravity"
+$cachesToClean = @("Cache", "Code Cache", "GPUCache", "DawnGraphiteCache", "DawnWebGPUCache")
+foreach ($cName in $cachesToClean) {
+    $cPath = Join-Path $roamingAgy $cName
+    if (Test-Path $cPath) {
+        Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+Write-Host "    [OK] Cache de interface renovado para carregar as traduções atualizadas." -ForegroundColor Green
 
 # Conclusao
 Write-Host ""

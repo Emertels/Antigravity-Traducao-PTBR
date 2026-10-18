@@ -2,6 +2,7 @@
 #  Restaurador do Google Antigravity Original de Fabrica
 #  Pacote de Tradução por: Emerson Teles
 # ==============================================================================
+$null = & chcp.com 65001
 $utf8Console = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8Console
 [Console]::OutputEncoding = $utf8Console
@@ -161,12 +162,26 @@ if ($activeProcess -and $activeProcess.Path) {
     $script:preferredAgyDir = Split-Path $activeProcess.Path -Parent
 }
 
-# 1. Fechar processos do Antigravity
+# 1. Forçar o fechamento dos processos da interface do Antigravity
 $running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
 if ($running) {
-    Write-Host "[-] Fechando processos da janela do Antigravity para restaurar arquivos..." -ForegroundColor Yellow
-    $running | Stop-Process -Force -ErrorAction SilentlyContinue
-    Start-Sleep -Seconds 3
+    Write-Host "[-] Encerrando processos do Antigravity para restaurar arquivos..." -ForegroundColor Yellow
+    foreach ($process in $running) {
+        try { Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue } catch { }
+    }
+    $timeout = 30
+    while ($timeout -gt 0) {
+        $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+        if (-not $check) { break }
+        Start-Sleep -Milliseconds 100
+        $timeout -= 1
+    }
+    $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+    if ($check) {
+        $remaining = ($check | ForEach-Object { "$($_.ProcessName) (PID $($_.Id))" }) -join ", "
+        Write-Host "[x] Não foi possível encerrar estes processos do Antigravity: $remaining. Nenhum arquivo foi alterado." -ForegroundColor Red
+        Exit 1
+    }
 }
 
 # 2. Localizar instalação
@@ -198,6 +213,8 @@ $targetWebBundle = Join-Path $resourcesDir "web-bundle"
 
 $backupDir = Join-Path $agyDir "_backups"
 $installedWebBundleMarker = Join-Path $targetWebBundle ".agy-ptbr-installed"
+$sidecarHelper = Join-Path $PSScriptRoot "sync-biomolecular-sidecar.ps1"
+$sidecarPackage = Join-Path $PSScriptRoot "biomolecular-sidecar"
 
 $detectedVersion = $null
 $exePath = Join-Path $agyDir "Antigravity.exe"
@@ -219,6 +236,7 @@ if ($detectedVersion) {
 
 $versionBackupDir = Join-Path $backupDir $detectedVersion
 $foundBackup = Join-Path $versionBackupDir "app.asar"
+$restoreChanged = $false
 if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
     # Uma instalação recém-reparada/reinstalada pode já estar original sem ter
     # criado _backups ainda. Só classificar como original após validar o ASAR
@@ -244,6 +262,24 @@ if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
         }
     }
     if ($installedAsarClean -and -not $webBundleTranslated) {
+        if (Test-Path -LiteralPath $sidecarHelper -PathType Leaf) {
+            try {
+                $sidecarRestored = & $sidecarHelper -Mode Restore -AntigravityInstallDir $agyDir -PackageRoot $sidecarPackage
+                if ($sidecarRestored -contains $true) { $restoreChanged = $true }
+            } catch {
+                Write-Host "[!] Não foi possível restaurar o Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Yellow
+                Pause
+                Exit 1
+            }
+        }
+        if ($restoreChanged) {
+            $roamingAgy = Join-Path $env:APPDATA "Antigravity"
+            foreach ($cName in @("Cache", "Code Cache", "GPUCache", "DawnGraphiteCache", "DawnWebGPUCache")) {
+                $cPath = Join-Path $roamingAgy $cName
+                if (Test-Path $cPath) { Remove-Item -LiteralPath $cPath -Recurse -Force -ErrorAction SilentlyContinue }
+            }
+            Write-Host "[OK] Visualizador biomolecular restaurado; o restante do Antigravity já estava original." -ForegroundColor Green
+        }
         Write-Host "[i] Antigravity já está original. Nenhuma restauração necessária." -ForegroundColor Cyan
         if (Test-Path $exePath) {
             if (Read-OpenChoice "Deseja abrir o Antigravity? [S = sim | N/Enter/Esc = sair]: ") {
@@ -285,7 +321,6 @@ if ((Test-Path $installedWebBundleMarker) -and -not (Test-Path $backupWebBundle)
     Pause
     Exit 1
 }
-$restoreChanged = $false
 Write-Host "    -> Restaurando backup exato: $foundBackup" -ForegroundColor Cyan
 Copy-FileWithProgress -Source $foundBackup -Destination $targetAsar -Label "Restaurando app.asar original"
 $backupExe = Join-Path $versionBackupDir "Antigravity.exe"
@@ -316,6 +351,17 @@ if (Test-Path $backupWebBundle) {
     Remove-Item -LiteralPath $targetWebBundle -Recurse -Force
     $restoreChanged = $true
     Write-Host "    -> web-bundle criado pela tradução removido." -ForegroundColor Green
+}
+if (Test-Path -LiteralPath $sidecarHelper -PathType Leaf) {
+    try {
+        $sidecarRestored = & $sidecarHelper -Mode Restore -AntigravityInstallDir $agyDir -PackageRoot $sidecarPackage
+        if ($sidecarRestored -contains $true) { $restoreChanged = $true }
+    } catch {
+        Write-Host "[!] Não foi possível restaurar o Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    Os arquivos do app e os backups foram preservados." -ForegroundColor Yellow
+        Pause
+        Exit 1
+    }
 }
 # 4.1 Limpar cache de bytecode para restaurar a interface original sem resíduos
 $roamingAgy = Join-Path $env:APPDATA "Antigravity"

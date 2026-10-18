@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biomolecular Structure Viewer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <!-- Shared sidecar theme (variables, layout, dark mode, status badges) -->
+    <link rel="stylesheet" href="/shell.css" />
+
+    <!-- PDBe Mol* styles and UMD plugin (exposes window.PDBeMolstarPlugin).
+         Loaded async; viewer.ts awaits the script by id via scriptReady(). -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.12.0/build/pdbe-molstar.css"
+    />
+    <script
+      async
+      id="pdbe-molstar-js"
+      src="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.12.0/build/pdbe-molstar-plugin.js"
+    ></script>
+
+    <!-- Import map for externalized packages -->
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.1.2/+esm",
+          "lit/decorators": "https://cdn.jsdelivr.net/npm/lit@3.1.2/decorators.js/+esm",
+          "lit/decorators.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/decorators.js/+esm",
+          "lit/directives/repeat": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/repeat.js/+esm",
+          "lit/": "https://cdn.jsdelivr.net/npm/lit@3.1.2/"
+        }
+      }
+    </script>
+
+    <!-- Antigravity sidecar bridge for iframe communication -->
+    <script src="/preload.js"></script>
+    <script type="module" src="/main.js"></script>
+    <script>
+      // Fallback: if the module bundle fails to initialise within 10 s,
+      // replace the loading shimmer with a recovery message.
+      (() => {
+        setTimeout(() => {
+          if (!window.__sidecarReady) {
+            const wordmark = document.querySelector(".canvas-wordmark");
+            const loadingBar = document.querySelector(".loading-bar");
+            if (wordmark) {
+              wordmark.textContent =
+                "Something went wrong. Try closing and reopening the Biomolecular Structure Viewer.";
+              wordmark.classList.add("error");
+            }
+            if (loadingBar) {
+              loadingBar.style.display = "none";
+            }
+          }
+        }, 10000);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="canvas-root">
+      <div id="canvas">
+        <div class="canvas-placeholder">
+          <div class="canvas-wordmark">Biomolecular Structure Viewer</div>
+          <div class="loading-bar"></div>
+        </div>
+      </div>
+      <div id="ui-overlay"></div>
+    </div>
+  </body>
+</html>

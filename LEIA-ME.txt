@@ -2,10 +2,13 @@
          PACOTE PORTÁTIL DE TRADUÇÃO GOOGLE ANTIGRAVITY - PT-BR 🇧🇷
 ==============================================================================
   Desenvolvido e Personalizado por: Emerson Teles
+  Versão do pacote de tradução: 1.4.0 (16/10/2026)
   Versão de Referência: Google Antigravity v2.x (versão detectada dinamicamente; bundle web compatível necessário)
   Idioma: Português do Brasil (pt-BR)
   Status: Localização PT-BR com backups por versão e auditoria de interface
+  Atualização 17/10/2026: 382 entradas de mapeamento acrescentadas ou ampliadas nesta revisão. Foram revisadas 441 linhas e 5.016 palavras do texto copiado de Modern Web Guidance e os prints de Google Workspace, Firebase, Android CLI, Google Developer Knowledge, Google Cloud Developer, Google Maps Platform, Dart e Flutter, Data Agent Kit e Visualizador Biomolecular, além dos textos anteriores. Instalador/restaurador integram o sidecar biomolecular 1.3.0 com 39 substituições de interface, pré-teste, backup por versão e restauração protegida por hashes. O sincronizador atualiza tanto o cache de marketplaces quanto o pacote ativo em `~/.gemini/config/plugins/science`, validando a versão por `plugin.json` e usando backup separado. Após o pré-teste, encerra à força os processos da interface, preserva `language_server.exe`, configura o console em UTF-8 e limpa os caches mesmo quando o pacote já está instalado. O servidor ativo foi consultado após reinstalação: `/ui.html` e `/main.js` retornaram HTTP 200 com os textos PT-BR esperados. Compatibilidade estrutural do ASAR 2.24.0 conferida.
   Atualização 14/10/2026: varredura da tradução DOM distribuída por quadros para manter a interface responsiva; editores e áreas de código continuam protegidos.
+  Traduções novas: Hide Whitespace Changes, Good Response, Bad Response, “6h ago” e rótulos variáveis de linhas/itens extras; proteção restrita a editores identificados.
   Atualização 13/10/2026: 834 candidatos de rótulos e descrições auditados; a varredura final não apontou itens sem mapeamento. Automação, WSL, Gemini 4 Argon e crédito em Configurações → Versão agrupado no cartão da versão, com contorno cinza translúcido e texto turquesa. Teste do usuário confirmado em 14/10/2026 no Antigravity 2.23.0.
 ------------------------------------------------------------------------------
   1. SOBRE ESTE PACOTE

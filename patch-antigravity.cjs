@@ -187,6 +187,30 @@ function isAlreadyTranslatedAgy(filePath) {
 // 1. Detectar versão atual instalada
 const currentVersion = getAgyAsarVersion(srcAsar);
 if (!currentVersion) { console.error("[x] Não foi possível detectar a versão do app.asar instalado."); process.exit(1); }
+const currentVersionParts = currentVersion.split(".").map(Number);
+const isAgy224OrNewer = currentVersionParts[0] > 2 || (currentVersionParts[0] === 2 && currentVersionParts[1] >= 24);
+if (isAgy224OrNewer) {
+    const newUiTranslationChecks = [
+        ['personalizações adicionais', '"Other Customizations": "Outras personalizações"'],
+        ['Visualizador Biomolecular', '"Biomolecular Structure Viewer": "Visualizador de Estruturas Biomoleculares"'],
+        ['disponibilidade do Gemini 4 Argon para Ultra e Pro', '"Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers."'],
+        ['descrição do Google Agenda', '"Verify availability, schedule events, and RSVP."'],
+        ['ajuda jurídica', '"Visit Legal Help to ask for content changes for legal reasons."'],
+        ['trechos da ajuda jurídica', '"to ask for content changes for legal reasons.": "para solicitar alterações de conteúdo por motivos legais."'],
+        ['aviso de anexos de log', '"Attaching logs requires an email address": "Para anexar logs, é necessário informar um endereço de e-mail"'],
+        ['observador de Shadow DOM e iframes', 'function _observeAgRoot(root)'],
+        ['raiz Shadow DOM adicionada dinamicamente', 'if (node.shadowRoot) _observeAgRoot(node.shadowRoot);'],
+        ['fragmento da descrição de permissões do projeto', 'projectPermissionsText.includes("This project was created for")'],
+        ['seletor de idioma dos limites', 'var resetTime = t.match(/^Resets in\\s+(.+)$/i);']
+    ];
+    const missingNewUiTranslations = newUiTranslationChecks.filter(([, marker]) => !sourceMainText.includes(marker));
+    if (missingNewUiTranslations.length) {
+        console.error(`[x] Faltam traduções novas exigidas para o Antigravity ${currentVersion}:`);
+        for (const [label] of missingNewUiTranslations) console.error(`    - ${label}`);
+        console.error("Nenhum arquivo da instalação foi alterado.");
+        process.exit(14);
+    }
+}
 const turboUiIssues = getTurboUiCompatibilityIssues(currentVersion, sourceMainText);
 if (turboUiIssues.length) {
     console.error(`[x] O web-bundle do projeto não corresponde à interface de segurança do Antigravity ${currentVersion}.`);

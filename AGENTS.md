@@ -10,6 +10,10 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 - Nunca use o `app-pt.asar` do repositório como backup original ou fallback para uma versão mais nova.
 - Se o `web-bundle` instalado tiver a marca PT-BR, mas não houver backup limpo dessa versão, interrompa a instalação antes de aplicar o patch. Nunca registre um bundle traduzido como original.
 - Preserve a versão do aplicativo e o fluxo de instalar/restaurar em um clique.
+- O sidecar do Visualizador Biomolecular é um pacote independente: mantenha o pacote original e traduzido versionados em `biomolecular-sidecar`, valide versão e hashes no pré-teste, salve backups em `<pasta-do-Antigravity>\\_backups\\biomolecular-sidecar` e restaure somente quando os arquivos ativos forem o original, a tradução atual ou uma tradução anterior identificada por hash exato no manifesto. Atualize o manifesto de hashes traduzidos após a cópia. Se a versão do plugin mudar, não sobrescreva; atualize primeiro os originais e traduções correspondentes.
+- Procure o sidecar tanto no cache de marketplaces quanto no pacote ativo `~/.gemini/config/plugins/science/sidecars/biomolecular_structure_viewer`. Nesse local, leia a versão de `plugin.json`, valide os arquivos por hash antes de alterar e mantenha backup próprio sob `gemini-config`; o cache não é necessariamente a cópia servida pelo Antigravity.
+- Depois de todos os pré-testes e imediatamente antes de alterar arquivos, instalador e restaurador encerram à força os processos da interface do Antigravity, sem encerrar `language_server.exe`. Verifique por até 3 segundos em intervalos curtos; se algum processo não terminar, aborte sem alterar arquivos e mostre nome e PID.
+- Após toda instalação bem-sucedida, limpe os caches de interface do Antigravity mesmo se o patch principal e o sidecar já estiverem instalados; isso permite carregar novas traduções do web-bundle e do sidecar.
 - Instalador e restaurador validam primeiro caminhos do processo, registro e locais conhecidos; só quando nenhum candidato válido contém Antigravity.exe e `resources\app.asar` iniciam a busca profunda em unidades fixas e removíveis. A busca ignora pastas raiz do sistema e junctions, valida também o arquivo-chave, deduplica caminhos, mantém instalações distintas selecionáveis e exibe o progresso no título da janela, nunca com `Write-Progress`. Mantenha `Find-Installations.ps1` ao lado dos scripts.
 
 ## Segurança da interface
@@ -17,6 +21,7 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 - `web-bundle/main.js` é a fonte PT-BR da interface web. Adicione mapeamentos exatos dos textos originais e preserve o comportamento da aplicação.
 - Não altere nós de texto em editores ricos, campos de entrada, Monaco, Lexical ou Slate. Evite observadores DOM que possam modificar o estado do editor.
 - A varredura inicial do DOM deve ser incremental e limitada por quadro (sem percorrer sincronicamente todo o `document.body`). Agrupe mutações em fila, limite o trabalho por quadro e mantenha os editores excluídos.
+- Não exclua elementos por uma classe genérica contendo `editor`; restrinja a proteção a editores/campos identificáveis para que barras de ferramentas e diffs continuem traduzidos.
 - Não encerre `language_server.exe` ao fechar janelas do Antigravity.
 - Atualize as variantes do README, `LEIA-ME.txt` e estas instruções sempre que o comportamento mudar.
 

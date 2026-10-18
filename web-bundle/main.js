@@ -136,6 +136,9 @@ var _ptAgyDict = {
   "Export transcript": "Exportar transcrição",
   "Share conversation": "Compartilhar conversa",
   "Show more lines": "Mostrar mais linhas",
+  "Hide Whitespace Changes": "Ocultar alterações de espaços em branco",
+  "Good Response": "Boa resposta",
+  "Bad Response": "Resposta ruim",
   "Hide lines": "Ocultar linhas",
   "Collapse lines": "Recolher linhas",
   "Expand lines": "Expandir linhas",
@@ -1004,6 +1007,119 @@ var _ptAgyDict = {
   "Search, upload, download, and share files.": "Pesquise, envie, baixe e compartilhe arquivos.",
   "Google Calendar": "Agenda Google",
   "Verify availability, schedule events, and RSVP.": "Verifique a disponibilidade, agende eventos e confirme presença.",
+  "Install this plugin to use this prompt": "Instale este plugin para usar esta sugestão",
+  "Dart & Flutter": "Dart e Flutter",
+  "Summarize this design doc and list the open questions": "Resuma este documento de design e liste as perguntas em aberto",
+  "Draft a launch announcement in a new doc from my notes": "Redija um anúncio de lançamento em um novo documento com base nas minhas anotações",
+  "Reply to the open comments on my doc and resolve them": "Responda aos comentários em aberto no meu documento e resolva-os",
+  "Read and write your Google Docs. Summarize any doc from its link, draft proposals and announcements in a new doc, and reply to and resolve open comments.": "Leia e edite seus Documentos Google. Resuma documentos a partir dos links, redija propostas e anúncios em novos documentos e responda aos comentários em aberto.",
+  "Locate the trends and outliers in this sales sheet": "Encontre tendências e valores atípicos nesta planilha de vendas",
+  "Compile a monthly budget tracker with formulas and a chart": "Monte um controle mensal de orçamento com fórmulas e um gráfico",
+  "Compilar a monthly budget tracker with formulas and a chart": "Monte um controle mensal de orçamento com fórmulas e um gráfico",
+  "Import this CSV and turn it into a pivot table by region": "Importe este CSV e transforme os dados em uma tabela dinâmica por região",
+  "Read, write, and format your Google Sheets. Fill in formulas, sort and clean columns, import CSVs, build charts and pivot tables, and export the result.": "Leia, edite e formate suas Planilhas Google. Insira fórmulas, ordene e organize colunas, importe arquivos CSV, crie gráficos e tabelas dinâmicas e exporte o resultado.",
+  "Turn my project notes into a 10-slide pitch deck": "Transforme as anotações do meu projeto em uma apresentação de 10 slides",
+  "Add a summary slide and speaker notes to my review deck": "Adicione um slide de resumo e notas do apresentador à minha apresentação de revisão",
+  "Adicionar a summary slide and speaker notes to my review deck": "Adicione um slide de resumo e notas do apresentador à minha apresentação de revisão",
+  "Export the final deck as a PDF": "Exporte a apresentação final como PDF",
+  "Compile and polish your Google Slides. Turn notes into a deck, add slides, images, and speaker notes, and export the result to PDF or PowerPoint.": "Crie e aprimore suas Apresentações Google. Transforme anotações em uma apresentação, adicione slides, imagens e notas do apresentador e exporte o resultado para PDF ou PowerPoint.",
+  "Locate and organize your Google Drive. Search across your files, tidy up folders, share them with the right people, and download or export them as PDF, CSV, or Markdown.": "Localize e organize seu Google Drive. Pesquise arquivos, organize pastas, compartilhe com as pessoas certas e baixe ou exporte em PDF, CSV ou Markdown.",
+  "Locate last quarter's budget and share it with Alex": "Localize o orçamento do último trimestre e compartilhe com Alex",
+  "Move this week's design exports into the Launch pasta": "Mova as exportações de design desta semana para a pasta Lançamento",
+  "Baixar the Q3 report as a PDF": "Baixe o relatório do terceiro trimestre em PDF",
+  "Book 30 minutes with Priya and Sam next week": "Agende 30 minutos com Priya e Sam na próxima semana",
+  "What's on my calendar today? Flag any conflicts": "O que tenho na agenda hoje? Aponte possíveis conflitos",
+  "Block focus time before Friday's launch review": "Reserve um período de foco antes da revisão de lançamento de sexta-feira",
+  "Execute your Google Calendar. Find a time that works for everyone, send invites, block focus time, and get briefed on your day with any conflicts flagged.": "Use sua Agenda Google: encontre um horário conveniente para todos, envie convites, reserve períodos de foco e veja um resumo do dia com possíveis conflitos destacados.",
+  "Compile applications with the Gemini Interactions API and Live API, including text, image, video, and speech generation, managed agents, and real-time multimodal streaming.": "Desenvolva aplicativos com as APIs Gemini Interactions e Live, incluindo geração de texto, imagens, vídeos e fala, agentes gerenciados e transmissão multimodal em tempo real.",
+  "Compile a stateful multi-turn chat script using the Interactions API and the latest models": "Crie um script de conversa com várias etapas e estado usando a Interactions API e os modelos mais recentes",
+  "Create a real-time voice agent using the Gemini Live API and non-blocking function calling": "Crie um agente de voz em tempo real usando a Gemini Live API e chamadas de função não bloqueantes",
+  "Migrate my project from client.models.generate_content to the Interactions API": "Migre meu projeto de client.models.generate_content para a Interactions API",
+  "Equip your agent with current SDK patterns, model identifiers, and live documentation lookup for building applications with the Gemini API.": "Dê ao seu agente acesso aos padrões atuais do SDK, identificadores de modelos e consulta à documentação atualizada para desenvolver aplicativos com a Gemini API.",
+  "What's included": "O que está incluído",
+  "Prerequisites": "Pré-requisitos",
+  "API key: Set the GEMINI_API_KEY environment variable with a key from Google AI Studio.": "Chave de API: defina a variável de ambiente GEMINI_API_KEY com uma chave do Google AI Studio.",
+  "SDK installation:": "Instalação do SDK:",
+  "Example prompts": "Exemplos de instruções",
+  "Resources": "Recursos",
+  "Gemini API Documentation in Google AI Studio": "Documentação da Gemini API no Google AI Studio",
+  "Interactions API Guide": "Guia da Interactions API",
+  "GitHub Repository": "Repositório do GitHub",
+  "Context usage": "Uso do contexto",
+  "Enable this plugin to use this prompt": "Ative este plugin para usar esta sugestão",
+  "Create a new Android project called MyFirstApp using the empty-activity template": "Crie um projeto Android chamado MyFirstApp usando o modelo de atividade vazia",
+  "Run my app on a Samsung Galaxy Ultra device.": "Execute meu aplicativo em um dispositivo Samsung Galaxy Ultra.",
+  "Test my app and make sure that it's ready to publish to Google Play.": "Teste meu aplicativo e confirme se está pronto para publicação no Google Play.",
+  "CLI do Android is the official command-line interface that standardizes core Android development competencies for agent-first workflows. It gives coding agents and developers an entry point to the official tools, skills, and documentation needed to build for Android efficiently.": "A CLI do Android é a interface oficial de linha de comando que padroniza as principais tarefas de desenvolvimento Android para fluxos de trabalho com agentes. Ela oferece aos agentes de código e desenvolvedores acesso às ferramentas, habilidades e documentação oficiais necessárias para criar aplicativos Android com eficiência.",
+  "Whether you are scaffolding a new app, launching virtual devices, running fast incremental builds, inspecting live device layouts, or evaluating user journeys, the Android CLI streamlines development directly from your workspace.": "Seja para iniciar um aplicativo, abrir dispositivos virtuais, executar compilações incrementais, inspecionar a interface de um dispositivo ou avaliar jornadas do usuário, a CLI do Android simplifica o desenvolvimento diretamente no seu espaço de trabalho.",
+  "Key Capabilities": "Principais recursos",
+  "Project Scaffolding": "Estrutura inicial do projeto",
+  "Initialize modern Android projects from official templates using ": "Inicie projetos Android modernos a partir de modelos oficiais usando ",
+  "Pre-configured with the latest Android Gradle Plugin (AGP), Jetpack Compose, and best practices.": "Pré-configurado com a versão mais recente do Android Gradle Plugin (AGP), Jetpack Compose e boas práticas.",
+  "Print environment information including SDK location, connected devices, and configuration variables using ": "Exiba informações do ambiente, como local do SDK, dispositivos conectados e variáveis de configuração, usando ",
+  " (use specific fields to narrow the output).": " (use campos específicos para limitar os resultados).",
+  "Device & Emulator Management": "Gerenciamento de dispositivos e emuladores",
+  "Inspect, create, and launch Android Virtual Devices (AVDs) directly from the terminal with ": "Inspecione, crie e inicie dispositivos virtuais Android (AVDs) diretamente pelo terminal com ",
+  "Deploy and launch applications with fast delta installs using ": "Implante e inicie aplicativos com instalações incrementais rápidas usando ",
+  "Agent Skills Management": "Gerenciamento de habilidades do agente",
+  " command provides an official way to discover, install, update, and manage recommended skills.": " oferece uma forma oficial de descobrir, instalar, atualizar e gerenciar habilidades recomendadas.",
+  "Skills installed using this command aren't removed if the Android plugin for Antigravity is uninstalled.": "As habilidades instaladas com este comando não são removidas se o plugin Android do Antigravity for desinstalado.",
+  "UI Layout Inspection & Screen Analysis": "Inspeção do layout da interface e análise da tela",
+  "Extract the live application layout tree in structured JSON using ": "Extraia a árvore de layout atual do aplicativo em JSON estruturado usando ",
+  "Inspect UI hierarchies, interactive bounds, accessibility attributes, and focus states.": "Inspecione hierarquias da interface, limites de elementos interativos, atributos de acessibilidade e estados de foco.",
+  "Capture device screenshots and resolve visual coordinates for automated interactions using ": "Capture imagens da tela do dispositivo e identifique coordenadas visuais para interações automatizadas usando ",
+  "Journey Testing": "Teste de jornadas",
+  "Test end-to-end user flows with Journey tests defined using natural language, using ": "Teste fluxos completos de uso com testes Journey descritos em linguagem natural, usando ",
+  " and visual verification.": " e verificação visual.",
+  "Output structured Markdown reports detailing pass/fail statuses, ADB interaction commands, and verification screenshots.": "Gere relatórios estruturados em Markdown com resultados de aprovação ou falha, comandos de interação ADB e capturas de verificação.",
+  "Official Android Knowledge Base": "Base de conhecimento oficial do Android",
+  "Search authoritative, up-to-date Android developer documentation directly from the CLI via ": "Pesquise a documentação oficial e atualizada para desenvolvedores Android diretamente pela CLI usando ",
+  "Fetch full articles and migration guides using ": "Obtenha artigos completos e guias de migração usando ",
+  "Installation & Setup": "Instalação e configuração",
+  "Initialize Android CLI": "Inicializar a CLI do Android",
+  "NOTE": "OBSERVAÇÃO",
+  "The skill installed by running this command isn't removed if the Android plugin for Antigravity is uninstalled.": "A habilidade instalada por este comando não é removida se o plugin Android do Antigravity for desinstalado.",
+  "Update Android CLI": "Atualizar a CLI do Android",
+  "To keep your CLI and embedded skills up to date, run:": "Para manter a CLI e as habilidades incluídas atualizadas, execute:",
+  "Starter Prompts": "Sugestões para começar",
+  "Once enabled, try asking your agent:": "Depois de ativar, experimente pedir ao agente:",
+  "Creating a new Android project:": "Criando um novo projeto Android:",
+  "Running on a device:": "Executando em um dispositivo:",
+  "Testing & Play readiness:": "Testes e preparação para o Google Play:",
+  "Command Reference": "Referência de comandos",
+  "Initialize a new Android project from available templates.": "Inicie um novo projeto Android usando os modelos disponíveis.",
+  "Generate descriptive build target and artifact metadata for a project.": "Gere metadados descritivos sobre os alvos de compilação e artefatos de um projeto.",
+  "Build, deploy, and launch an application on a connected device or emulator.": "Compile, implante e inicie um aplicativo em um dispositivo conectado ou emulador.",
+  "Returns the active UI layout tree in JSON format (supports ": "Retorna a árvore de layout atual da interface em formato JSON (aceita ",
+  "commands to view, capture, and target UI elements visually on device.": "comandos para visualizar, capturar e selecionar elementos da interface no dispositivo.",
+  "Create, start, stop, and list Android Virtual Devices (AVDs).": "Crie, inicie, pare e liste dispositivos virtuais Android (AVDs).",
+  "Manage Android SDK packages, platforms, and build tools.": "Gerencie pacotes, plataformas e ferramentas de compilação do Android SDK.",
+  "Initialize the environment and install default Android CLI agent skills (skills that are installed aren't removed if the Android plugin for Antigravity is uninstalled).": "Inicialize o ambiente e instale as habilidades padrão da CLI do Android para agentes. As habilidades instaladas não são removidas se o plugin Android do Antigravity for desinstalado.",
+  "Manage Android CLI skills (search, add, remove, list, update). Skills that are installed aren't removed if the Android plugin for Antigravity is uninstalled.": "Gerencie habilidades da CLI do Android (pesquisar, adicionar, remover, listar e atualizar). As habilidades instaladas não são removidas se o plugin Android do Antigravity for desinstalado.",
+  "For more documentation, visit ": "Para ver mais documentação, acesse ",
+  "Science Plugin: scientific tools for your agent": "Plugin Science: ferramentas científicas para seu agente",
+  "Science Plugin": "Plugin Science",
+  "A collection of extensions (e.g. skills) for scientific research tasks, spanning genomics, structural biology, cheminformatics, scientific literature, and more.": "Uma coleção de extensões (como habilidades) para pesquisa científica, abrangendo genômica, biologia estrutural, quimioinformática, literatura científica e outras áreas.",
+  "Each extension provides structured instructions, scripts, and resources that extend Antigravity's capabilities for specialized scientific tasks.": "Cada extensão fornece instruções estruturadas, scripts e recursos que ampliam os recursos do Antigravity para tarefas científicas especializadas.",
+  "Usage": "Uso",
+  "We use the ": "Usamos o gerenciador de pacotes ",
+  " package manager to handle dependencies. The first time you trigger an extension in the Science Plugin, the agent will ask for approval to install ": " para gerenciar dependências. Na primeira vez que você acionar uma extensão do Plugin Science, o agente pedirá autorização para instalar ",
+  ", and then proceed to respond to your scientific query / task. We recommend restarting Antigravity after this first time installation.": ". Em seguida, ele responderá à sua consulta ou tarefa científica. Recomendamos reiniciar o Antigravity após essa primeira instalação.",
+  "Some skills, such as AlphaGenome and OpenAlex, require an API key to function. Others, such as ClinVar, benefit from an API key to unlock higher rate limits but are still functional without one. The agent should prompt you to obtain the API key and guide you through writing it in the correct location. However, if you would rather do this yourself, you can run a command like this in your terminal: ": "Algumas habilidades, como AlphaGenome e OpenAlex, precisam de uma chave de API para funcionar. Outras, como ClinVar, oferecem limites de uso maiores com uma chave, mas também funcionam sem ela. O agente deve orientar você a obter a chave e salvá-la no local correto. Se preferir fazer isso por conta própria, execute no terminal um comando como este: ",
+  "Customizing or creating extensions": "Personalizar ou criar extensões",
+  "If you want to customize an existing extension or create a new extension of your own, you should not modify the files inside the Science Plugin installation directory, as your changes will be overwritten whenever the Science Plugin is updated. Instead, place your custom or modified extensions elsewhere, e.g. skills can be placed in your personal skills directory: ": "Para personalizar uma extensão existente ou criar uma nova, não altere os arquivos dentro da pasta de instalação do Plugin Science, pois as mudanças serão sobrescritas quando o plugin for atualizado. Em vez disso, coloque as extensões personalizadas em outro local. Por exemplo, você pode guardar suas habilidades na pasta pessoal de habilidades: ",
+  "You can find examples of Science Plugin use cases, including demos, at ": "Veja exemplos de uso do Plugin Science, incluindo demonstrações, em ",
+  "Licensing & Disclaimer": "Licenças e isenção de responsabilidade",
+  "All software is licensed under the Apache License, Version 2.0 (Apache 2.0); you may not use this file except in compliance with the Apache 2.0 license. You may obtain a copy of the Apache 2.0 license at: ": "Todo o software está licenciado sob a Apache License, versão 2.0 (Apache 2.0); este arquivo só pode ser usado em conformidade com essa licença. Você pode obter uma cópia da Apache License 2.0 em: ",
+  "As set out in the attached file ": "Conforme descrito no arquivo anexo ",
+  " certain third party data sources referenced within individual Skill files have their own applicable licenses and/or terms of use. See the ": ", determinadas fontes de dados de terceiros mencionadas em arquivos de habilidades têm suas próprias licenças e/ou termos de uso. Consulte o arquivo ",
+  " file for more information. You are responsible for ensuring that your use of individual Skill files complies with any such applicable licenses/ terms of use.": " para saber mais. Você é responsável por garantir que o uso dos arquivos de habilidades esteja de acordo com as licenças e os termos de uso aplicáveis.",
+  "All other materials are licensed under the Creative Commons Attribution 4.0 International License (CC-BY). You may obtain a copy of the CC-BY license at: ": "Os demais materiais estão licenciados sob a Creative Commons Attribution 4.0 International (CC-BY). Você pode obter uma cópia da licença CC-BY em: ",
+  "Unless required by applicable law or agreed to in writing, all software and materials distributed here under the Apache 2.0 or CC-BY licenses are distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the licenses for the specific language governing permissions and limitations under those licenses.": "Salvo quando exigido pela legislação aplicável ou acordado por escrito, todo o software e os materiais distribuídos sob as licenças Apache 2.0 ou CC-BY são fornecidos “NO ESTADO EM QUE SE ENCONTRAM”, sem garantias ou condições de qualquer tipo, expressas ou implícitas. Consulte o texto das licenças para conhecer os termos específicos que regem as permissões e limitações.",
+  "Interactive 3D biomolecular structure viewer via Mol*": "Visualizador interativo de estruturas biomoleculares em 3D com Mol*",
+  "Science Visualization Priority Rules": "Regras prioritárias de visualização científica",
+  "android": "Android",
+  "CLI do Android is the official command-line interface that standardizes core Android development competencies for agent-first workflows. It gives coding agents and developers an entry point to the official tools, skills, and documentation needed to build for Android efficiently.": "A CLI do Android é a interface oficial de linha de comando que padroniza as principais tarefas de desenvolvimento Android para fluxos de trabalho com agentes. Ela oferece aos agentes de código e desenvolvedores acesso às ferramentas, habilidades e documentação oficiais necessárias para criar aplicativos Android com eficiência.",
   "Compile with Google": "Desenvolva com o Google",
   "Compilar with Google": "Desenvolva com o Google",
   "Compile on Google's developer platforms, including Android, Chrome, Gemini, and Google Cloud.": "Desenvolva nas plataformas do Google para desenvolvedores, como Android, Chrome, Gemini e Google Cloud.",
@@ -1280,6 +1396,9 @@ var _ptAgyDict = {
   "Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment.": "Diretrizes para interagir com o GitHub e solicitar permissões do usuário quando os comandos falharem devido a restrições no ambiente do agente.",
   "Skill": "Habilidade",
   "Agents": "Agentes",
+  "Main Agent": "Agente principal",
+  "Agent options": "Opções do agente",
+  "/path/to/folder...": "/caminho/da/pasta...",
   "No project selected": "Nenhum projeto selecionado",
   "Uninstall": "Desinstalar",
   "Install": "Instalar",
@@ -2040,6 +2159,7 @@ var _ptAgyDict = {
   "Create with Prompt": "Criar com uma instrução",
   "Files modified by the agent in this conversation": "Arquivos modificados pelo agente nesta conversa",
   "Click to open docs": "Clique para abrir a documentação",
+  "Click to Open Docs": "Clique para abrir a documentação",
   "Workspace name cannot be empty": "O nome do espaço de trabalho não pode ficar vazio.",
   "Create Cog Workspace": "Criar espaço de trabalho Cog",
   "Google3 projects are deprecated. Learn more": "Os projetos Google3 foram descontinuados. Saiba mais.",
@@ -2262,6 +2382,9 @@ Object.assign(_ptAgyDict, {
   "All tasks": "Todas as tarefas",
   "Artifacts": "Artefatos",
   "Show more lines": "Mostrar mais linhas",
+  "Hide Whitespace Changes": "Ocultar alterações de espaços em branco",
+  "Good Response": "Boa resposta",
+  "Bad Response": "Resposta ruim",
   "Hide lines": "Ocultar linhas",
   "Collapse lines": "Recolher linhas",
   "Expand lines": "Expandir linhas",
@@ -2291,8 +2414,68 @@ Object.assign(_ptAgyDict, {
 Object.assign(_ptAgyDict, {
   "Get notified when the agent needs your attention or completes a task.": "Receba notificações quando o agente precisar da sua atenção ou concluir uma tarefa.","This account is ineligible for higher rate limits through a Google AI plan at this time.":"Esta conta não é elegível para limites de taxa maiores por meio de um plano Google AI no momento.","View plans":"Ver planos","Notification Preferences":"Preferências de Notificação","Choose whether to be notified when the agent needs your attention or completes a task.":"Escolha se deseja ser notificado quando o agente precisar da sua atenção ou concluir uma tarefa.","Enable Notifications":"Ativar Notificações","Download the web app to get notifications when the agent needs your attention.":"Baixe o aplicativo web para receber notificações quando o agente precisar da sua atenção.","Dismiss":"Dispensar","Open Preferences":"Abrir Preferências","Got it":"Entendi","Block":"Bloquear","Allow":"Permitir","Requesting your permission in Terminal:":"Solicitando sua permissão no Terminal:","Requesting your permission to execute JavaScript:":"Solicitando sua permissão para executar JavaScript:","Requesting your permission to open URL:":"Solicitando sua permissão para abrir URL:","The agent has questions for you:":"O agente tem perguntas para você:","The agent has a question for you:":"O agente tem uma pergunta para você:","Click to respond to the questions.":"Clique para responder às perguntas.","Click to respond to the question.":"Clique para responder à pergunta.","Action requires your attention":"A ação requer sua atenção","The agent is waiting for your input.":"O agente está aguardando sua resposta.","Agent finished":"Agente concluído","Yes, allow this time":"Sim, permitir desta vez","Yes, and always allow in this conversation":"Sim e sempre permitir nesta conversa","Yes, and always allow when not in a project":"Sim e sempre permitir quando não estiver em um projeto","Yes, and always allow in this project":"Sim e sempre permitir neste projeto","Yes, and always allow in this workspace":"Sim e sempre permitir neste espaço de trabalho","Yes, and always allow":"Sim e sempre permitir","Yes, save rule in this conversation":"Sim, salvar regra nesta conversa","Yes, save rule when not in a project":"Sim, salvar regra quando não estiver em um projeto","Yes, save rule in this project":"Sim, salvar regra neste projeto","Yes, save rule in this workspace":"Sim, salvar regra neste espaço de trabalho","Yes, save rule globally":"Sim, salvar regra globalmente","No (tell the agent what to do instead)":"Não (diga ao agente o que fazer em vez disso)","(tell the agent what to do instead)":"(diga ao agente o que fazer em vez disso)","Confirm the command is safe to run outside of the sandbox with full network and disk access.":"Confirme se o comando é seguro para executar fora do sandbox com acesso total à rede e ao disco.","Edit permission target":"Editar destino da permissão","Requires manual confirmation.":"Requer confirmação manual.","read access to this path":"acesso de leitura a este caminho","write access to this path":"acesso de gravação a este caminho","reading this URL":"leitura desta URL","executing actions on this URL":"execução de ações nesta URL","running this command":"execução deste comando","running this command outside the sandbox":"execução deste comando fora do sandbox","using this MCP tool":"uso desta ferramenta MCP","access to this resource":"acesso a este recurso","Creating a Project":"Criando um Projeto","Projects serve as your workspace where your agents work. Each project has its own file scope and permissions. Get started by creating your first project.":"Os projetos servem como seu espaço de trabalho onde seus agentes trabalham. Cada projeto tem seu próprio escopo de arquivos e permissões. Comece criando seu primeiro projeto.","Not now":"Agora não","Create a Project":"Criar um Projeto","Learn more":"Saiba mais","+ New Conversation":"+ Nova Conversa","New Conversation":"Nova Conversa","Conversation History":"Histórico de Conversas","Open Conversation History":"Abrir Histórico de Conversas","Scheduled Tasks":"Tarefas Agendadas","Open Scheduled Tasks":"Abrir Tarefas Agendadas","Projects":"Projetos","New Project":"Novo Projeto","Quick Start":"Início Rápido","No Project":"Nenhum Projeto","Workspaces":"Espaços de Trabalho","New Workspace":"Novo Espaço de Trabalho","Add Workspace":"Adicionar Espaço de Trabalho","Create New Project":"Criar Novo Projeto","Display Options":"Opções de Exibição","Instantly create a new project and folder to start building.":"Crie instantaneamente um novo projeto e pasta para começar a programar.","Select a folder to create a new project.":"Selecione uma pasta para criar um novo projeto.","Select a folder to create a new project":"Selecione uma pasta para criar um novo projeto","Select Project":"Selecionar Projeto","Select project":"Selecionar projeto","New Conversation in Workspace":"Nova Conversa no Espaço de Trabalho","New Conversation in Project":"Nova Conversa no Projeto"});
 var _ptMcpPrefixes = {"Constructs deep-links and URLs for the AlphaGenome Atlas website":"Cria links diretos e URLs para o site do AlphaGenome Atlas. Permite gerar links de exploração de variante única (chr:pos:ref>alt com base 1), visualizações de locus genômico (chr:início-fim fechado com base 1), tabelas de resumo de candidatos e previsões de referência vs. alternativa do AlphaGenome. Use sempre que for visualizar, explorar, representar em gráficos ou vincular variantes genéticas e loci genômicos no AlphaGenome Atlas, ou quando solicitado a inspecionar, visualizar ou vincular previsões para uma variante genética.","Score, annotate, and analyze the functional impact of genetic variants using AlphaGenome Variant Impact":"Pontua, anota e analisa o impacto funcional de variantes genéticas usando pontuações do AlphaGenome Variant Impact (AVI). Consulte variantes no formato chr:pos:ref>alt, anote conjuntos de chamadas VCF/tabulares, execute varreduras de janela de mutagênese de saturação (chr:início-fim fechado com base 1) e extraia coordenadas de gene/éxon/junção do GENCODE v46 GTF através da API do AlphaGenome Atlas.","Investigate and fix software issues using AI-powered root cause analysis":"Investigue e corrija problemas de software usando análise de causa raiz com inteligência artificial. Este servidor MCP se conecta à sua conta Antimetal para pesquisar problemas, ler relatórios investigativos e acionar fluxos automatizados de depuração.","Query and act on your marketing, analytics, CRM, e-commerce":"Consulte e atue sobre seus dados de marketing, analytics, CRM, e-commerce e data warehouse através de mais de 325 conectores (Meta Ads, Google Ads, TikTok Ads, GA4, HubSpot, Salesforce, etc.).","Query your GitLab SDLC as a knowledge graph":"Consulte o ciclo de desenvolvimento de software (SDLC) do GitLab como um grafo de conhecimento. O Orbit indexa grupos, projetos, código-fonte, merge requests, pipelines, itens de trabalho e alertas de segurança em um único grafo.","Enable Antigravity to deploy apps to Google Cloud Run":"Permite que o Antigravity faça implantação de aplicativos no Google Cloud Run.","Ask questions. Get answers. The MCP is a server your coding agent talks to":"Faça perguntas. Obtenha respostas. O MCP é um servidor com o qual seu agente de código se comunica. Pergunte em linguagem natural e ele executa a consulta nos seus dados do PostHog, exibindo a resposta no seu ambiente de desenvolvimento.","Search and reference over 600,000 real-world app screens":"Pesquise e consulte mais de 600.000 telas reais de aplicativos, fluxos de usuários e padrões de interface do Mobbin diretamente nas suas ferramentas de IA.","Build, edit, deploy, and manage full-stack web apps with Lovable":"Crie, edite, publique e gerencie aplicações web completas com o Lovable, o criador de aplicativos com IA, usando linguagem natural. Este servidor MCP conecta seu cliente de IA ao motor do Lovable.","The GKE remote MCP server provides read write access":"O servidor MCP remoto do GKE fornece acesso de leitura e gravação aos seus recursos do Kubernetes no Google Kubernetes Engine. Ele permite que um agente de IA inspecione e observe seu ambiente.","The Dart and Flutter MCP server exposes Dart":"O servidor MCP do Dart e Flutter disponibiliza ações de ferramentas de desenvolvimento Dart e Flutter para clientes assistentes de IA compatíveis.","The Firebase Model Context Protocol (MCP) Server":"O servidor do Model Context Protocol (MCP) do Firebase permite que ferramentas de desenvolvimento com IA interajam com seus projetos do Firebase e a base de código do seu aplicativo.","The Genkit Model Context Protocol (MCP) Server":"O servidor do Model Context Protocol (MCP) do Genkit oferece a ferramentas de desenvolvimento com IA a capacidade de criar, depurar e inspecionar sua aplicação Genkit.","The gopls Model Context Protocol (MCP) server":"O servidor MCP do gopls fornece ferramentas para análise semântica de código, diagnósticos em tempo real e transformação da sua base de código em Go.","Interact with your BigQuery data using natural language":"Interaja com seus dados do BigQuery usando linguagem natural. Este servidor MCP permite conectar-se com segurança aos seus conjuntos de dados para pesquisar tabelas, inspecionar metadados, executar consultas e muito mais.","The AlloyDB for PostgreSQL remote MCP server lets you access":"O servidor MCP remoto do AlloyDB para PostgreSQL permite acessar e executar ferramentas do AlloyDB para gerenciar clusters e instâncias, administrar usuários, criar e restaurar backups e executar outras tarefas administrativas.","The Bigtable Admin remote MCP server lets you manage Bigtable":"O servidor MCP remoto do Bigtable Admin permite gerenciar recursos do Bigtable.","Manage Google Cloud resources with gcloud and bq CLI tools":"Gerencie recursos do Google Cloud com as ferramentas de linha de comando gcloud e bq em um ambiente de sandbox remoto.","The Cloud SQL remote MCP server lets you access and run Cloud SQL":"O servidor MCP remoto do Cloud SQL permite acessar e executar ferramentas do Cloud SQL para gerenciar instâncias, administrar usuários, criar e restaurar backups e realizar tarefas administrativas.","The Spanner remote MCP server lets you access and run Spanner":"O servidor MCP remoto do Spanner permite acessar e executar ferramentas do Spanner para criar, gerenciar e consultar recursos do Spanner a partir de seus ambientes de desenvolvimento com IA.","The Apigee API hub remote MCP server lets you manage the APIs":"O servidor MCP remoto do Apigee API hub permite gerenciar APIs, versões, especificações, operações, implantações, atributos, APIs externas e dependências registradas no Apigee API hub.","Connect your AI assistants to Looker business intelligence":"Conecte seus assistentes de IA à inteligência de negócios do Looker. Este servidor MCP permite a exploração de dados e gerenciamento de conteúdo executando consultas em linguagem natural, inspecionando modelos e interagindo com painéis.","Connect your AI assistants to the Knowledge Catalog":"Conecte seus assistentes de IA ao Knowledge Catalog (antigo Dataplex). Este servidor MCP possibilita a descoberta de dados e governança ao pesquisar ativos, inspecionar esquemas e gerenciar metadados no seu data lake.","The MCP Toolbox for Databases is an open-source MCP server":"O MCP Toolbox for Databases é um servidor MCP de código aberto desenvolvido para simplificar e proteger o desenvolvimento de ferramentas de interação com bancos de dados.","Interact with your Oracle Database data using natural language":"Interaja com seus dados do Oracle Database usando linguagem natural. Este servidor MCP permite conectar-se com segurança aos seus bancos de dados para executar consultas SQL, inspecionar esquemas e explorar dados.","The Dev Mode MCP Server brings Figma directly into your workflow":"O servidor Dev Mode MCP integra o Figma diretamente ao seu fluxo de trabalho, fornecendo informações de design e contexto essenciais para agentes de IA gerarem código a partir de designs do Figma.","The GitHub MCP Server is a Model Context Protocol (MCP) server":"O GitHub MCP Server é um servidor Model Context Protocol (MCP) que oferece integração perfeita com as APIs do GitHub, permitindo automação avançada e interação com repositórios, issues e pull requests.","The Google Home Developer MCP server allows you to search":"O servidor MCP do Google Home Developer permite pesquisar na documentação do Google Home e nas especificações do OpenThread e do Matter.","Neon MCP Server is an open-source tool that lets you interact":"O Neon MCP Server é uma ferramenta de código aberto que permite interagir com seus bancos de dados Postgres no Neon usando linguagem natural.","The Stripe Model Context Protocol server allows you to integrate":"O servidor MCP da Stripe permite a integração com as APIs da Stripe por meio de chamada de funções, com suporte a diversas ferramentas para interagir com recursos da plataforma.","Interact with Redis key-value stores":"Interaja com bancos de dados chave-valor Redis.","A Model Context Protocol server for interacting with MongoDB Atlas":"Um servidor Model Context Protocol para interagir com o MongoDB Atlas.","Official Notion MCP Server that allows interaction with Notion":"Servidor MCP oficial do Notion que permite interação com espaços de trabalho, páginas, bancos de dados e comentários por meio da API do Notion.","Official Linear.app MCP Server for interacting with Linear":"Servidor MCP oficial do Linear.aplicativo para interagir com projetos, issues e fluxos de trabalho do Linear.","An MCP server implementation that integrates the Perplexity Sonar API":"Implementação de servidor MCP que integra a API Perplexity Sonar para fornecer recursos de pesquisa na web em tempo real.","Official PayPal MCP Server that allows integration with PayPal":"Servidor MCP oficial do PayPal para integração com as APIs do PayPal para processamento de pagamentos, gerenciamento de transações e operações de conta.","The Heroku Platform MCP Server enables seamless interaction":"O Heroku Platform MCP Server permite interação contínua com os recursos da plataforma Heroku, possibilitando aos LLMs ler, gerenciar e operar aplicações, add-ons, bancos de dados e configurações.","The Pinecone MCP Server enables AI tools to search Pinecone":"O servidor MCP do Pinecone permite que ferramentas de IA pesquisem a documentação do Pinecone, configurem índices, gerem código com base na configuração do índice e gerenciem dados vetoriais.","Connect your Supabase projects to AI assistants":"Conecte seus projetos do Supabase a assistentes de IA. Este servidor MCP permite gerenciar tabelas, buscar configurações, executar consultas SQL, gerenciar edge functions e trabalhar com o esquema do banco.","The Prisma MCP Server enables AI tools to interact with Prisma":"O servidor MCP do Prisma permite que ferramentas de IA interajam com o Prisma para criar e gerenciar bancos de dados Postgres com facilidade.","The Locofy MCP Server enables Locofy.ai code to be integrated":"O servidor MCP do Locofy permite que o código do Locofy.ai seja integrado e estendido diretamente com a sua IDE.","Airweave lets agents search any app":"O Airweave permite que os agentes pesquisem em qualquer aplicativo.","Atlassian MCP Server for interacting with Atlassian":"Servidor MCP da Atlassian para interagir com os produtos da Atlassian (Jira, Confluence, etc.).","Interact with your Harness account using natural language":"Interaja com sua conta Harness usando linguagem natural. Este servidor MCP permite que agentes de IA inspecionem e gerenciem pipelines de CI/CD, execuções, serviços, ambientes e implantações.","SonarQube MCP Server enables AI assistants to interact":"O SonarQube MCP Server permite que assistentes de IA interajam com instâncias do SonarQube para análise de qualidade de código, gerenciamento de projetos e operações de quality gates.","Netlify MCP Server enables AI assistants to interact":"O servidor MCP do Netlify permite que assistentes de IA interajam com a plataforma da Netlify para gerenciar sites, implantações, domínios e outros fluxos de desenvolvimento web.","A Model Context Protocol server that provides structured thinking and reasoning":"Um servidor Model Context Protocol que fornece recursos estruturados de raciocínio lógico e pensamento passo a passo para conversas com LLMs.","Sonatype MCP server for interacting with our dependency management":"Servidor MCP do Sonatype para interagir com a plataforma de inteligência de segurança e gerenciamento de dependências.","The Google Maps Platform Code Assist MCP server provides your favorite AI coding assistant":"O servidor MCP do Google Maps Platform Code Assist fornece ao seu assistente de IA documentação oficial e atualizada do Google Maps Platform, exemplos de código e orientações de API.","This MCP server provides your LLM with docs and examples to instrument your AI apps with Arize AX":"Este servidor MCP fornece ao seu LLM documentação e exemplos para instrumentar seus aplicativos de IA com Arize AX, além de suporte do Arize. Conecte-o à sua IDE para obter respostas rápidas e trechos de código.","The Postman MCP Server connects Postman to AI tools":"O Postman MCP Server conecta o Postman a ferramentas de IA, dando aos agentes a capacidade de acessar espaços de trabalho, gerenciar coleções e ambientes, executar requisições e inspecionar documentações de API.","The Stitch MCP server enables AI assistants to interact with Stitch":"O servidor MCP do Stitch permite que assistentes de IA interajam com o Stitch para vibe design: gerando designs de interface a partir de texto e imagens, e acessando detalhes de projetos e telas.","The Google Developer Knowledge MCP server gives AI-powered development tools":"O servidor MCP do Google Developer Knowledge oferece a ferramentas de desenvolvimento com IA a capacidade de pesquisar na documentação oficial de desenvolvedores do Google e recuperar exemplos de código, referências de API e guias conceituais.","The ClickHouse MCP server enables agents to securely interact":"O servidor MCP do ClickHouse permite que os agentes interajam com segurança com bancos de dados ClickHouse. Ele fornece uma interface universal para executar SQL, explorar dados e visualizar métricas do sistema.","Perform a range of infrastructure management tasks, including: manage virtual machine":"Execute diversas tarefas de gerenciamento de infraestrutura, incluindo: gerenciar instâncias de máquinas virtuais (VM), gerenciar grupos e modelos de instâncias, gerenciar discos e snapshots e visualizar operações e métricas.","Access enterprise mobility data using natural language queries about device fleets":"Acesse dados de mobilidade corporativa usando consultas em linguagem natural sobre frotas de dispositivos, auditoria automatizada de conformidade de políticas e integração do gerenciamento de dispositivos a fluxos de TI mais amplos.","Search your Google Cloud projects using natural language":"Pesquise seus projetos do Google Cloud usando linguagem natural.","Perform searches on ingested data in Google-owned data stores":"Realize pesquisas em dados ingeridos em armazenamentos de dados do Google.","Interact with documents stored in a Firestore database using natural language":"Interaja com documentos armazenados em um banco de dados Firestore usando linguagem natural.","Access resources in the Cloud Logging platform using natural language":"Acesse recursos na plataforma Cloud Logging usando linguagem natural.","Manage clusters for Managed Service for Apache Kafka and Kafka Connect using natural language":"Gerencie clusters do Managed Service for Apache Kafka e Kafka Connect usando linguagem natural.","Access resources in the Cloud Monitoring platform using natural language":"Acesse recursos na plataforma Cloud Monitoring usando linguagem natural.","Manage Pub/Sub resources and publish messages. Create, list, get, update, and delete Pub/Sub topics":"Gerencie recursos do Pub/Sub e publique mensagens. Crie, liste, obtenha, atualize e exclua tópicos, assinaturas e snapshots do Pub/Sub, além de publicar mensagens em tópicos.","The Cloud Quotas MCP server allows you to view quota allocations":"O servidor MCP do Cloud Quotas permite visualizar alocações de cotas, solicitar aumentos de cotas e gerenciar configurações do Ajustador de Cotas.","Enable Antigravity to control and inspect a live Chrome browser, with access to the full power of Chrome DevTools":"Permite que o Antigravity controle e inspecione um navegador Chrome ativo, com acesso a todo o poder do Chrome DevTools para automação confiável, depuração aprofundada e testes."};
+Object.assign(_ptMcpPrefixes, {
+  "Skill for converting an installed Firebase Extension": "Habilidade para converter uma extensão instalada do Firebase, ou seu código-fonte, em um projeto independente.",
+  "Official skill for integrating Firebase AI Logic": "Habilidade oficial para integrar o Firebase AI Logic (Gemini API) a aplicativos web, incluindo configuração, modelos e geração de conteúdo.",
+  "Deploys and manages full-stack web applications": "Implanta e gerencia aplicativos web completos, incluindo Next.js e Angular com renderização no servidor.",
+  "Guide for setting up and using Firebase Authentication.": "Guia para configurar e usar o Firebase Authentication em aplicativos que precisam de autenticação de usuários.",
+  "Provides foundational Firebase CLI setup": "Apresenta a configuração básica da CLI do Firebase, instalação, verificação de versão e comandos essenciais.",
+  "Comprehensive guide for Firebase Crashlytics": "Guia completo do Firebase Crashlytics, incluindo configuração e uso do SDK para monitorar falhas.",
+  "Builds and deploys Firebase SQL Connect": "Cria e implanta back-ends do Firebase SQL Connect (Firebase Data Connect) com PostgreSQL.",
+  "Sets up, manages, queries, and configures Cloud Firestore databases": "Configura e gerencia bancos de dados Cloud Firestore, executa consultas e administra edições Standard e Enterprise.",
+  "Deploys and configures classic Firebase Hosting": "Implanta e configura o Firebase Hosting clássico para sites estáticos e aplicativos de página única.",
+  "Manages Firebase Remote Config templates": "Gerencia modelos, sinalizadores de recursos, estratégias de carregamento e SDKs do Firebase Remote Config.",
+  "Audits Firebase (Firestore, Cloud Storage) security rules": "Audita regras de segurança do Firebase (Firestore e Cloud Storage) em busca de vulnerabilidades e elevação de privilégios.",
+  "Designs, authors, refactors, and hardens production-grade Cloud Firestore Security Rules": "Cria, revisa, refatora e fortalece regras de segurança do Cloud Firestore para ambientes de produção.",
+  "Safely modifies Xcode projects (.pbxproj)": "Modifica projetos do Xcode (.pbxproj) com segurança para adicionar pacotes Swift e vincular arquivos.",
+  "MANDATORY specialist subagent for Cloud Firestore Security Rules": "Subagente especialista obrigatório para regras de segurança do Cloud Firestore. Acione-o ao criar ou revisar regras firestore.rules."
+});
+Object.assign(_ptMcpPrefixes, {
+  "Write and organize unit tests for functions, methods, and classes": "Escreve e organiza testes unitários para funções, métodos e classes usando package:test.",
+  "Architectural patterns, entrypoint structure, exit codes, stream routing, and subprocess spawning": "Padrões de arquitetura, estrutura do ponto de entrada, códigos de saída, roteamento de fluxos e criação de subprocessos para aplicativos de linha de comando em Dart.",
+  "Collect coverage using the coverage packge": "Coleta a cobertura de testes usando o pacote coverage e gera um relatório LCOV.",
+  "Uses get_runtime_errors and lsp to fetch an active stack trace": "Usa get_runtime_errors e LSP para obter o rastreamento de pilha ativo, localizar a linha com falha e aplicar correções.",
+  "Define and generate mock objects for external dependencies": "Define e gera objetos simulados para dependências externas usando package:mockito e build_runner.",
+  "Substituir the usage of `expect`": "Substitui o uso de expect e funções semelhantes do package:matcher pelos equivalentes do package:checks.",
+  "Workflow for fixing package version conflicts.": "Fluxo de trabalho para corrigir conflitos entre versões de pacotes, como falhas no pub get por dependências incompatíveis.",
+  "Execute `dart analyze` to identify warnings and errors": "Executa dart analyze para identificar avisos e erros e dart fix --apply para corrigir problemas mecânicos de lint.",
+  "Guides agents in compiling and packaging C/C++ source code": "Orienta a compilar e empacotar código C/C++ como bibliotecas dinâmicas ou estáticas com Native Assets do Dart.",
+  "How to inject external code examples into Dartdoc": "Explica como inserir exemplos externos no Dartdoc com a diretiva {@example} e filtrar arquivos com #hide, #region e #endregion.",
+  "Guide agents to use `package:ffigen`": "Orienta o uso de package:ffigen para gerar automaticamente vínculos FFI, em vez de escrevê-los manualmente.",
+  "Cross-platform file and directory path manipulation": "Manipula caminhos de arquivos e diretórios entre plataformas, separando segmentos, extraindo extensões e convertendo contextos com package:path e package:file.",
+  "Applies Dart 3 pattern matching, switch expressions, and destructuring": "Aplica correspondência de padrões do Dart 3, expressões switch e desestruturação para validar dados e organizar o fluxo de controle.",
+  "Help users write syntactically and semantically correct primary constructors": "Ajuda a escrever e migrar construtores primários em Dart com sintaxe e semântica corretas.",
+  "Rules and formatting guidelines for writing Dart /// API documentation": "Regras e orientações de formatação para escrever documentação de API e comentários Dartdoc com ///.",
+  "Configures Flutter Driver for app interaction": "Configura o Flutter Driver para interagir com o aplicativo e converte ações MCP em testes de integração permanentes.",
+  "Adds interactive widget previews to the project": "Adiciona prévias interativas de widgets ao projeto usando o sistema previews.dart.",
+  "Implement a component-level test using `WidgetTester`": "Implementa um teste de componente com WidgetTester para verificar a interface e interações como toques, rolagem e entrada de texto.",
+  "Architects a Flutter application using the recommended layered approach": "Estrutura um aplicativo Flutter com a arquitetura em camadas recomendada e separação entre interface, lógica e dados.",
+  "Use `LayoutBuilder`, `MediaQuery`, or `Expanded/Flexible`": "Usa LayoutBuilder, MediaQuery ou Expanded/Flexible para adaptar o layout a diferentes tamanhos de tela.",
+  "Fixes Flutter layout errors (overflows, unbounded constraints)": "Corrige erros de layout do Flutter, como transbordamentos e restrições sem limite, usando ferramentas MCP do Dart e Flutter.",
+  "Create model classes with `fromJson` and `toJson` methods": "Cria classes de modelo com fromJson e toJson usando dart:convert para mapear JSON a estruturas de dados simples.",
+  "Configure `MaterialApp.router` using a package like `go_router`": "Configura MaterialApp.router com pacotes como go_router para navegação avançada por URL e links diretos.",
+  "Add `flutter_localizations` and `intl` dependencies": "Adiciona flutter_localizations e intl, ativa generate true em pubspec.yaml e cria l10n.yaml para configurar a localização.",
+  "Use the `http` package to execute GET, POST, PUT, or DELETE requests.": "Usa o pacote http para enviar solicitações GET, POST, PUT ou DELETE a uma API REST."
+  ,"Google platform decision and setup guidance, loaded on demand from Google's": "Orientações para escolher e configurar serviços do Google, carregadas sob demanda do catálogo Google Agent Skills.",
+  "Provides safety-critical validation, guardrails, and data reduction for gcloud CLI operations": "Fornece validações críticas para a segurança, proteções e redução de dados nas operações da CLI gcloud.",
+  "Provides expert guidance on Identity and Access Management (IAM)": "Fornece orientação especializada sobre Identity and Access Management (IAM), autenticação e seleção segura de credenciais.",
+  "Guides a developer's first steps on Google Cloud, covering account creation": "Orienta os primeiros passos de um desenvolvedor no Google Cloud, incluindo criação da conta, configuração do projeto e faturamento.",
+  "Searches, retrieves, and synthesizes official Google developer documentation across Google Cloud": "Pesquisa, consulta e sintetiza a documentação oficial para desenvolvedores do Google em produtos como Google Cloud, Gemini, Android, Firebase, Flutter e Web.",
+  "A collection of skills for architecting and implementing production-ready code using Google Maps Platform APIs": "Conjunto de habilidades para projetar e implementar código pronto para produção usando as APIs do Google Maps Platform.",
+  "Search tool for modern web development best practices.": "Ferramenta de pesquisa de práticas recomendadas para desenvolvimento web moderno.",
+  "Configures (or reconfigures) the Google Cloud Data Agent Kit (DAK) plugin": "Configura ou reconfigura o plugin Google Cloud Data Agent Kit (DAK), verificando a CLI gcloud e as credenciais ADC, coletando o ID do projeto, a região e os serviços, e executando o script de configuração incluído.",
+  "Audits Flutter code for accessibility (a11y).": "Audita o código Flutter quanto à acessibilidade (a11y). Acione este agente para revisar um aplicativo ou alterações em busca de problemas de acessibilidade."
+});
+/* Firebase card summaries PT-BR */
 
 
+
+Object.assign(_ptAgyDict, {
+  "Set up Firebase in my app and connect it to a Firebase project": "Configure o Firebase no meu aplicativo e conecte-o a um projeto Firebase",
+  "Adicionar Firebase Authentication with Google sign-in to my app": "Adicione o Firebase Authentication com login do Google ao meu aplicativo",
+  "Gravar and audit Firestore security rules for my data model": "Crie e audite regras de segurança do Firestore para meu modelo de dados",
+  "Context usage": "Uso do contexto"
+});
 Object.assign(_ptAgyDict, {
   "Run in your current workspace": "Executar no espaço de trabalho atual",
   "Run in a new worktree": "Executar em uma nova worktree",
@@ -3127,8 +3310,255 @@ Object.assign(_ptAgyDict, {
   "Zoom in (+)": "Aumentar zoom (+)",
   "Zoom out (-)": "Diminuir zoom (-)"
 });
+// Conteúdo dos plugins Google Developer Knowledge, Google Maps e Modern Web Guidance.
+Object.assign(_ptAgyDict, {
+  "Keep your coding agent up to date with the latest web best practices.": "Mantenha seu agente de código atualizado com as práticas mais recentes de desenvolvimento web.",
+  "Audit this project for modern web best practices and modernization opportunities": "Audite este projeto em busca das práticas modernas de desenvolvimento web e de oportunidades de modernização",
+  "What is the recommended modern way to implement responsive dialogs and popovers?": "Qual é a maneira moderna recomendada de implementar caixas de diálogo e popovers responsivos?",
+  "Build a Chrome Extension with a side panel using Manifest V3 best practices": "Crie uma extensão do Chrome com um painel lateral seguindo as práticas recomendadas do Manifest V3",
+  "Modern Web Guidance is a set of skills that embed web platform expertise, best practices, and browser compatibility data directly into your coding agents.": "O Orientações para Desenvolvimento Web Moderno é um conjunto de habilidades que incorpora conhecimento da plataforma web, práticas recomendadas e dados de compatibilidade de navegadores diretamente aos seus agentes de código.",
+  "It helps to steer your coding agents away from legacy patterns, and instead toward solutions that harness the power and capabilities of the modern web platform.": "Ele ajuda a afastar seus agentes de código de padrões antigos e a direcioná-los para soluções que aproveitam o poder e os recursos da plataforma web moderna.",
+  "Supported by the Google Chrome team, the Microsoft Edge team, and the web development community.": "Com o apoio das equipes do Google Chrome e do Microsoft Edge e da comunidade de desenvolvimento web.",
+  "This is a preview release of Modern Web Guidance. We're actively adding new content and we welcome contributions or feedback on GitHub.": "Esta é uma versão de prévia do Orientações para Desenvolvimento Web Moderno. Estamos adicionando conteúdo continuamente e aceitamos contribuições e comentários no GitHub.",
+  "Why?": "Por quê?",
+  "Coding agents often default to older patterns because LLM training data contains vast amounts of legacy code. This often leads them to generate bloated JavaScript for tasks that now have native, high-performance web platform solutions.": "Os agentes de código costumam recorrer a padrões antigos porque os dados de treinamento dos modelos de linguagem contêm muito código legado. Isso frequentemente os leva a gerar JavaScript excessivo para tarefas que hoje contam com soluções nativas e de alto desempenho na própria plataforma web.",
+  "Even if a model knows an API exists, it often lacks the density of real-world, modern implementation patterns required for production-ready code.": "Mesmo quando um modelo sabe que uma API existe, muitas vezes lhe faltam exemplos práticos e atuais de implementação, necessários para produzir código pronto para produção.",
+  "Modern Web Guidance bridges this gap.": "O Orientações para Desenvolvimento Web Moderno preenche essa lacuna.",
+  "Our skill's CLI returns targeted, expert-curated guidelines directly into your agent's context window, focusing on:": "A CLI desta habilidade fornece ao contexto do agente orientações específicas, selecionadas por especialistas, com foco em:",
+  "Modern Browser APIs": "APIs modernas do navegador",
+  "Helping models correctly structure APIs they frequently misuse.": "Ajudam os modelos a estruturar corretamente APIs que costumam usar de forma incorreta.",
+  "Performance & Accessibility": "Desempenho e acessibilidade",
+  "Preferring platform-level APIs that can be optimized by the browser and include built-in accessibility affordances.": "Priorizam APIs da plataforma que o navegador pode otimizar e que incluem recursos de acessibilidade integrados.",
+  "Responsible Fallbacks": "Alternativas responsáveis",
+  "Guiding models to use sensible, lightweight fallbacks instead of heavy polyfills or legacy libraries.": "Orientam os modelos a usar alternativas leves e sensatas em vez de polyfills pesados ou bibliotecas antigas.",
+  "What's Included?": "O que está incluído?",
+  "We cover the past several years of the web platform's new features, all the way up to the cutting edge.": "Abrangemos os novos recursos da plataforma web dos últimos anos, incluindo as novidades mais recentes.",
+  "The guides are designed to be token-efficient; we run evals enabling us to prune lowest-common-denominator content that models already know.": "Os guias foram projetados para usar tokens com eficiência. Fazemos avaliações que nos permitem remover conteúdo básico que os modelos já conhecem.",
+  "Core Disciplines": "Áreas principais",
+  "User Experience": "Experiência do usuário",
+  "Smooth visual states (View Transitions, entry/exit animations, parallax scroll, CSS scrollbar-color).": "Estados visuais fluidos (transições de visualização, animações de entrada e saída, rolagem parallax e a propriedade CSS scrollbar-color).",
+  "CSS Layout": "Layout CSS",
+  "Modern layout systems (container queries, subgrid, modern color spaces like oklch, text-wrap tuning, and line-height trimming).": "Sistemas modernos de layout (consultas de contêiner, subgrid, espaços de cor modernos como oklch, ajuste de quebra de texto e redução da altura de linha).",
+  "Performance": "Desempenho",
+  "Speed optimizations (instant preloading, Interaction to Next Paint (INP) diagnostics, and scheduling tasks via scheduler.yield).": "Otimizações de velocidade (pré-carregamento instantâneo, diagnóstico da métrica Interaction to Next Paint (INP) e agendamento de tarefas com scheduler.yield).",
+  "Forms & UI": "Formulários e interface",
+  "Native components (Anchor Positioning for tooltips, Popover API, dialogs, :user-invalid validation, and auto-sizing fields).": "Componentes nativos (posicionamento de âncoras para dicas, API Popover, caixas de diálogo, validação :user-invalid e campos com ajuste automático de tamanho).",
+  "Accessibility": "Acessibilidade",
+  "Important considerations (screen reader and keyboard operability, content navigation and discoverability).": "Aspectos importantes (uso com leitores de tela e teclado, navegação pelo conteúdo e facilidade para encontrar informações).",
+  "Built-in AI": "IA integrada",
+  "Local client models (native translation, summarization, and language detection APIs).": "Modelos locais no cliente (APIs nativas de tradução, resumo e detecção de idioma).",
+  "View an example:": "Veja um exemplo:",
+  "The full list": "Lista completa",
+  "212 modern web features": "212 recursos modernos da web",
+  "180 real-world developer use cases": "180 casos de uso reais para desenvolvedores",
+  "accessible-error-announcement": "aviso-de-erro-acessível",
+  "Synchronize programmatic accessibility states (like aria-invalid) with the visual :user-invalid state to ensure screen reader users receive error feedback only after interaction, mirroring the visual experience.": "Sincronize estados de acessibilidade definidos por código (como aria-invalid) com o estado visual :user-invalid para que leitores de tela informem erros somente após a interação, refletindo o que aparece na tela.",
+  "accessible-generated-content": "conteúdo-gerado-acessível",
+  "Use CSS generated content (::before / ::after) in ways that stay accessible, including alternative text for decorative content.": "Use conteúdo gerado por CSS (::before / ::after) de forma acessível, incluindo texto alternativo para conteúdo decorativo.",
+  "respect-os-text-scale": "respeitar-escala-de-texto-do-sistema",
+  "Respect the operating system's text scale preference for a page so font sizes, layout, and rem-based measurements follow the user's accessibility settings.": "Respeite a preferência de escala de texto do sistema operacional para que tamanhos de fonte, layout e medidas em rem sigam as configurações de acessibilidade do usuário.",
+  "language-detection": "detecção-de-idioma",
+  "Detect the language of user-generated content or already present site content.": "Detecte o idioma de conteúdo criado pelo usuário ou já presente no site.",
+  "language-model": "modelo-de-idioma",
+  "Run on-device natural language inference in the browser using the Prompt API, with streaming output, structured JSON responses, and multi-turn session management.": "Execute inferência de linguagem natural no dispositivo, pelo navegador, usando a Prompt API, com saída em fluxo, respostas JSON estruturadas e gerenciamento de sessões com várias interações.",
+  "Summarize text content using the on-device Summarizer API.": "Resuma textos usando a Summarizer API no próprio dispositivo.",
+  "Translate text between languages using the on-device Translator API.": "Traduza textos entre idiomas usando a Translator API no próprio dispositivo.",
+  "Smoothly animate interactive components (like accordions, menus, and expanding cards) to and from their natural dimensions.": "Anime suavemente componentes interativos (como acordeões, menus e cartões expansíveis) entre suas dimensões naturais.",
+  "Conditionally apply certain CSS rules or declarations only if a certain at-rule is supported by the browser.": "Aplique determinadas regras ou declarações CSS somente quando o navegador oferecer suporte à regra at-rule correspondente.",
+  "Calculate the size of an element based on its intrinsic size, while ensuring it fits within given design constraints.": "Calcule o tamanho de um elemento com base em suas dimensões intrínsecas, garantindo que respeite as restrições do design.",
+  "Build a component that changes its styling based on the state of one of its child elements.": "Crie um componente cujo estilo muda de acordo com o estado de um de seus elementos filhos.",
+  "Content-based styling": "Estilização baseada no conteúdo",
+  "Action-oriented guidelines for modern CSS architecture, including the cascade, selectors, scoping, nesting, and design tokens. Use this guide when authoring styles or managing design systems.": "Orientações práticas para uma arquitetura CSS moderna, incluindo cascata, seletores, escopo, aninhamento e tokens de design. Use este guia ao criar estilos ou gerenciar sistemas de design.",
+  "Modern CSS layouts such as flexbox, grid, subgrid, container queries, anchor positioning, and intrinsic sizing. Use this skill when architecting responsive UI components or page layouts.": "Layouts CSS modernos, como flexbox, grid, subgrid, consultas de contêiner, posicionamento de âncoras e dimensionamento intrínseco. Use esta habilidade ao projetar componentes responsivos ou layouts de páginas.",
+  "Define higher-order design tokens, like density modes (compact, comfortable, spacious) or themes and have descendant components react to changes directly and in component-appropriate ways.": "Defina tokens de design de nível superior, como modos de densidade (compacto, confortável e espaçoso) ou temas, para que os componentes descendentes reajam às mudanças de forma direta e adequada.",
+  "Create dynamic visual spectrums or layout arrangements that automatically adapt to the number of elements in a group.": "Crie escalas visuais ou arranjos de layout dinâmicos que se adaptem automaticamente à quantidade de elementos de um grupo.",
+  "Scale items like font size, spacing, and media sizes smoothly based on the parent container's size rather than using fixed breakpoints": "Ajuste gradualmente o tamanho da fonte, os espaçamentos e as mídias com base no tamanho do contêiner pai, em vez de usar pontos de interrupção fixos.",
+  "Animate or override individual CSS transform properties (e.g. translate, rotate, scale) independently of other transform properties on a single element.": "Anime ou substitua propriedades individuais de transformação CSS (por exemplo, translate, rotate e scale) sem afetar as outras transformações do elemento.",
+  "Build a component that changes its layout based on whether it contains specific child elements (or not).": "Crie um componente cujo layout muda conforme contenha ou não determinados elementos filhos.",
+  "Orientations for modern web development": "Orientações para desenvolvimento web moderno",
+  "Google Developer Knowledge": "Conhecimento para desenvolvedores do Google",
+  "Search and retrieve official documentation across Google Cloud, Gemini, Android, Firebase, Flutter, and Web. Requires Google Cloud credentials (ADC) or an API key.": "Pesquise e consulte a documentação oficial do Google Cloud, Gemini, Android, Firebase, Flutter e Web. Requer credenciais do Google Cloud (ADC) ou uma chave de API.",
+  "Equip your agent with direct access to Google's official developer documentation and knowledge base. Search documentation, retrieve full reference pages, and get grounded answers across Google's developer ecosystem.": "Dê ao seu agente acesso direto à documentação e à base de conhecimento oficiais para desenvolvedores do Google. Pesquise documentos, consulte páginas de referência completas e obtenha respostas fundamentadas em todo o ecossistema de desenvolvimento do Google.",
+  "The Google Developer Knowledge plugin connects your coding agent to the official Google Developer Knowledge API and Model Context Protocol (MCP) server.": "O plugin Conhecimento para Desenvolvedores do Google conecta seu agente de código à API oficial Google Developer Knowledge e ao servidor Model Context Protocol (MCP).",
+  "Instead of relying on model training cutoffs or unverified web search results, your agent can directly query authoritative documentation across:": "Em vez de depender da data limite dos dados de treinamento do modelo ou de resultados de busca não verificados, seu agente pode consultar diretamente a documentação oficial de:",
+  "Authentication & Setup": "Autenticação e configuração",
+  "Using the Google Developer Knowledge API and MCP server requires a Google Cloud project with the Developer Knowledge API (developerknowledge.googleapis.com) enabled.": "Para usar a API Google Developer Knowledge e o servidor MCP, é necessário ter um projeto do Google Cloud com a API Developer Knowledge (developerknowledge.googleapis.com) ativada.",
+  "You can authenticate using either Application Default Credentials (ADC) or an API key.": "Você pode se autenticar com Application Default Credentials (ADC) ou com uma chave de API.",
+  "Enable the Developer Knowledge API": "Ativar a API Developer Knowledge",
+  "Enable the API on your Google Cloud project using the Google Cloud Console or the gcloud CLI:": "Ative a API no seu projeto do Google Cloud pelo Console do Google Cloud ou pela CLI gcloud:",
+  "Configure Credentials": "Configurar credenciais",
+  "Choose one of the following authentication methods:": "Escolha um dos métodos de autenticação a seguir:",
+  "Option 1: Application Default Credentials (Recommended for MCP)": "Opção 1: Application Default Credentials (recomendado para MCP)",
+  "The bundled google-developer-knowledge MCP server configuration uses local Google Cloud Application Default Credentials (google_credentials) automatically:": "A configuração incluída do servidor MCP google-developer-knowledge usa automaticamente as credenciais locais Application Default Credentials do Google Cloud (google_credentials):",
+  "Ensure your account has the Service Usage Consumer (roles/serviceusage.serviceUsageConsumer) IAM role on YOUR_PROJECT_ID.": "Verifique se sua conta tem a função IAM Service Usage Consumer (roles/serviceusage.serviceUsageConsumer) no projeto YOUR_PROJECT_ID.",
+  "Option 2: Developer Knowledge API Key": "Opção 2: chave da API Developer Knowledge",
+  "Alternatively, create an API key in the Google Cloud Console Credentials page (restricted to the Developer Knowledge API) and export it in your environment for the skill's REST API fallback:": "Como alternativa, crie uma chave de API na página Credenciais do Console do Google Cloud (restrita à API Developer Knowledge) e defina-a no ambiente para usar a API REST alternativa desta habilidade:",
+  "Included Components": "Componentes incluídos",
+  "Remote MCP Server": "Servidor MCP remoto",
+  "and provides tools for documentation retrieval:": "e disponibiliza ferramentas para consultar a documentação:",
+  "Ask natural-language technical questions and receive synthesized answers grounded in official Google documentation with source citations.": "Faça perguntas técnicas em linguagem natural e receba respostas sintetizadas com base na documentação oficial do Google e acompanhadas de citações das fontes.",
+  "Search across official Google developer documentation for matching pages and snippets.": "Pesquise páginas e trechos correspondentes na documentação oficial para desenvolvedores do Google.",
+  "Fetch the full Markdown content of one or more documentation pages by document name (accepts up to 20 document names in a single call).": "Obtenha todo o conteúdo Markdown de uma ou mais páginas de documentação pelo nome do documento (até 20 nomes em uma única chamada).",
+  "Provides structured workflows and domain filter guidance so the agent selects the best query strategy, scopes searches to the right Google product domains, verifies version-sensitive API details, and falls back cleanly when needed.": "Fornece fluxos de trabalho estruturados e orientações de filtro por domínio para que o agente escolha a melhor estratégia de consulta, pesquise nos domínios corretos dos produtos Google, confira detalhes de APIs que variam por versão e use alternativas quando necessário.",
+  "Example Prompts": "Exemplos de solicitações",
+  "Look up the exact gcloud CLI command and IAM roles needed to deploy a Cloud Run service with Secret Manager": "Encontre o comando exato da CLI gcloud e as funções IAM necessárias para implantar um serviço do Cloud Run com o Secret Manager",
+  "Search official Google documentation for how to implement structured outputs with the Gemini API": "Pesquise na documentação oficial do Google como implementar saídas estruturadas com a API Gemini",
+  "Compare Cloud Run, GKE Autopilot, and App Engine based on official Google Cloud architecture guides": "Compare Cloud Run, GKE Autopilot e App Engine com base nos guias oficiais de arquitetura do Google Cloud",
+  "What are the latest Compose navigation best practices according to official Android developer docs?": "Quais são as práticas recomendadas mais recentes para navegação no Compose, segundo a documentação oficial para desenvolvedores Android?",
+  "Google Developer Knowledge Documentation": "Documentação do Google Developer Knowledge",
+  "Developer Knowledge MCP Server Guide": "Guia do servidor MCP Developer Knowledge",
+  "Integration skill and tools for Google Maps Platform APIs": "Habilidade e ferramentas de integração com as APIs do Google Maps Platform",
+  "A collection of skills for architecting and implementing production-ready code using Google Maps Platform APIs and SDKs for any map, place, address, geocoding, routing/ETA (including eco-friendly routing), nearby search, 3D / Street View / static map, marker clustering, custom styling, drawing, geofencing, heatmap, or environmental (air-quality / pollen / solar / weather) feature — across Web, Android, iOS, and Web Services APIs.": "Conjunto de habilidades para projetar e implementar código pronto para produção usando as APIs e os SDKs do Google Maps Platform em mapas, lugares, endereços, geocodificação, rotas e previsão de chegada (incluindo rotas ecológicas), busca de locais próximos, mapas 3D, Street View e mapas estáticos, agrupamento de marcadores, estilos personalizados, desenhos, geocercas, mapas de calor e recursos ambientais (qualidade do ar, pólen, energia solar e clima), na Web, Android, iOS e APIs de serviços web.",
+  "For prototyping, use the public Maps Demo Key — no billing setup and no Cloud project required, covering a growing set of the most popular Google Maps Platform APIs.": "Para prototipar, use a chave pública Maps Demo Key — sem configurar faturamento ou criar um projeto do Cloud. Ela oferece acesso a um conjunto crescente das APIs mais populares do Google Maps Platform.",
+  "For production, the skill prompts you to create and restrict your own key.": "Para produção, a habilidade orienta você a criar sua própria chave e restringir o uso dela.",
+  "All non-trivial code is grounded in freshly retrieved docs via the Google Maps Platform Code Assist service (no reliance on training-data memory).": "Todo código não trivial é baseado em documentação recém-consultada pelo serviço Google Maps Platform Code Assist, sem depender da memória dos dados de treinamento.",
+  "A collection of skills for architecting and implementing production-ready code using Google Maps Platform APIs": "Conjunto de habilidades para projetar e implementar código pronto para produção usando as APIs do Google Maps Platform",
+  "Official plugin for Dart and Flutter that installs Flutter/Dart Skills, Rules, Custom Agents, and Dart MCP server for building natively compiled, visually stunning applications for mobile, web, desktop, and embedded devices from a single codebase": "Plugin oficial do Dart e Flutter, mantido pela equipe do Flutter. Instala habilidades e regras para Flutter e Dart, agentes personalizados e um servidor MCP do Dart para criar, a partir de uma única base de código, aplicativos compilados nativamente para dispositivos móveis, web, desktop e sistemas embarcados.",
+  "Build a responsive Flutter layout that adapts across mobile, tablet, and desktop form factors": "Crie um layout responsivo em Flutter que se adapte a celulares, tablets e computadores",
+  "Write a widget test using WidgetTester to verify UI rendering and user interactions": "Escreva um teste de widget com WidgetTester para verificar a renderização da interface e as interações do usuário",
+  "Audit my app for accessibility": "Audite a acessibilidade do meu aplicativo",
+  "Diagnose and fix layout overflows or constraint issues in this Flutter widget": "Diagnostique e corrija transbordamentos de layout ou problemas de restrições neste widget Flutter",
+  "The official plugin for Dart and Flutter maintained by the Flutter team.": "Plugin oficial do Dart e Flutter, mantido pela equipe do Flutter.",
+  "This plugin is designed to extend AI agent capabilities for Flutter development.": "Este plugin foi desenvolvido para ampliar os recursos dos agentes de IA no desenvolvimento com Flutter.",
+  "It bundles together skills, MCP server configuration, and rules to provide tailored workflows and instructions to agents for common Dart and Flutter development workflows.": "Ele reúne habilidades, configuração de servidor MCP e regras para fornecer aos agentes fluxos de trabalho e instruções específicos para tarefas comuns de desenvolvimento com Dart e Flutter.",
+  "By giving the agent domain expertise, you drastically reduce mistakes and ensure agents reliably complete tasks following best practices.": "Ao fornecer conhecimento especializado ao agente, você reduz significativamente os erros e ajuda a garantir que as tarefas sejam concluídas de forma confiável e conforme as práticas recomendadas.",
+  "Available Skills": "Habilidades disponíveis",
+  "Collect coverage using the coverage packge and create an LCOV report": "Colete a cobertura de testes usando o pacote coverage e gere um relatório LCOV",
+  "Architectural patterns, entrypoint structure, exit codes, stream routing, and subprocess spawning for Dart CLI applications.": "Padrões de arquitetura, estrutura do ponto de entrada, códigos de saída, roteamento de fluxos e criação de subprocessos para aplicativos de linha de comando em Dart.",
+  "Collect coverage using the coverage package and create an LCOV report": "Colete a cobertura de testes usando o pacote coverage e gere um relatório LCOV",
+  "Use the coverage package to collect test coverage and generate an LCOV report.": "Use o pacote coverage para coletar a cobertura dos testes e gerar um relatório LCOV.",
+  "Create a PySpark notebook to train a distributed Random Forest model on the BigQuery table my_transactions": "Crie um notebook PySpark para treinar um modelo distribuído de Random Forest na tabela my_transactions do BigQuery",
+  "Write a widget test using WidgetTester to verify UI rendering and user interactions (tapping, scrolling, entering text).": "Implemente um teste de widget com WidgetTester para verificar a renderização da interface e as interações do usuário (toques, rolagem e entrada de texto).",
+  "Use LayoutBuilder, MediaQuery, or Expanded/Flexible to create a layout that adapts to different screen sizes.": "Use LayoutBuilder, MediaQuery ou Expanded/Flexible para criar um layout que se adapte a diferentes tamanhos de tela.",
+  "Fixes Flutter layout errors (overflows, unbounded constraints) using Dart and Flutter MCP tools.": "Corrige erros de layout do Flutter (transbordamentos e restrições sem limite) usando as ferramentas MCP do Dart e Flutter.",
+  "Create model classes with fromJson and toJson methods using dart:convert.": "Crie classes de modelo com métodos fromJson e toJson usando dart:convert.",
+  "Configure MaterialApp.router using a package like go_router for advanced URL-based navigation.": "Configure MaterialApp.router com um pacote como go_router para navegação avançada baseada em URLs.",
+  "Add flutter_localizations and intl dependencies, enable generate true in pubspec.yaml, and create an l10n.yaml configuration file.": "Adicione as dependências flutter_localizations e intl, ative generate true em pubspec.yaml e crie o arquivo de configuração l10n.yaml.",
+  "Use the http package to execute GET, POST, PUT, or DELETE requests.": "Use o pacote http para executar solicitações GET, POST, PUT ou DELETE.",
+  "flutter_a11y_agent": "flutter_a11y_agent",
+  "Audits Flutter code for accessibility (a11y). Invoke this agent when you need to review an application, pull request, or code changes for accessibility issues.": "Audita o código Flutter quanto à acessibilidade (a11y). Acione este agente para revisar um aplicativo, pull request ou alterações de código em busca de problemas de acessibilidade.",
+  "Data Agent Kit": "Kit do agente de dados",
+  "Data Agent Kit is a free plugin that connects your coding agent to 15+ Google Data Cloud services, including BigQuery, Cloud Storage, Spanner, AlloyDB, Managed Service for Apache Spark, and Knowledge Catalog.": "O Data Agent Kit é um plugin gratuito que conecta seu agente de código a mais de 15 serviços de dados do Google Cloud, incluindo BigQuery, Cloud Storage, Spanner, AlloyDB, Managed Service for Apache Spark e Knowledge Catalog.",
+  "Spend your time on insights, not boilerplate. Describe a data task in plain language, and watch your agent handle the heavy lifting for you: writing SQL queries, building notebooks, generating pipeline code, setting up ML workflows, and more.": "Dedique seu tempo a obter insights, não a tarefas repetitivas. Descreva uma tarefa de dados em linguagem simples e deixe o agente cuidar do trabalho pesado: escrever consultas SQL, criar notebooks, gerar código para pipelines, configurar fluxos de trabalho de aprendizado de máquina e muito mais.",
+  "Prerequisites": "Pré-requisitos",
+  "Node.js (latest LTS recommended).": "Node.js (recomendamos a versão LTS mais recente).",
+  "Google Cloud CLI (gcloud), installed and authenticated:": "Google Cloud CLI (gcloud) instalado e autenticado:",
+  "Install the gcloud CLI": "Instale a CLI gcloud",
+  "Log in with your Google Cloud account:": "Faça login com sua conta do Google Cloud:",
+  "Log in to Application Default Credentials (ADC):": "Faça login nas Application Default Credentials (ADC):",
+  "Configuration": "Configuração",
+  "Provide any prompt to your agent and it will walk you through configuring Data Agent Kit.": "Envie qualquer solicitação ao agente e ele orientará você na configuração do Data Agent Kit.",
+  "Alternatively, you can manually invoke the Data Agent Kit setup skill:": "Como alternativa, você pode executar manualmente a habilidade de configuração do Data Agent Kit:",
+  "Restart your agent when prompted to complete the setup.": "Quando solicitado, reinicie o agente para concluir a configuração.",
+  "Features and Common Uses": "Recursos e usos comuns",
+  "Data engineering:": "Engenharia de dados:",
+  "Build pipelines that turn source data into analysis-ready tables, with quality checks along the way. Develop transformations with dbt or Dataform, schedule workflows with Managed Service for Apache Airflow, and debug failed runs by tracing execution logs and code.": "Crie pipelines que transformam dados de origem em tabelas prontas para análise, com verificações de qualidade em cada etapa. Desenvolva transformações com dbt ou Dataform, agende fluxos de trabalho com o Managed Service for Apache Airflow e depure execuções com falha rastreando os registros e o código.",
+  "Data science:": "Ciência de dados:",
+  "Develop experiments in Jupyter notebooks on local Python or remote Managed Service for Apache Spark kernels. Prepare features from BigQuery, train models with BigQuery ML, and schedule batch inference.": "Desenvolva experimentos em notebooks Jupyter com Python local ou kernels remotos do Managed Service for Apache Spark. Prepare atributos com dados do BigQuery, treine modelos com BigQuery ML e agende inferências em lote.",
+  "Data analysis:": "Análise de dados:",
+  "Explore data across BigQuery, AlloyDB, and Cloud SQL. Find datasets with Knowledge Catalog, guided by data quality metrics and lineage, then build visualizations or reusable data models.": "Explore dados no BigQuery, AlloyDB e Cloud SQL. Encontre conjuntos de dados com o Knowledge Catalog, usando métricas de qualidade e linhagem de dados, e então crie visualizações ou modelos de dados reutilizáveis.",
+  "Example Prompts": "Exemplos de solicitações",
+  "Create a PySpark notebook to train a distributed Random Forest model on the BigQuery table `my_transactions`": "Crie um notebook PySpark para treinar um modelo distribuído de Random Forest na tabela `my_transactions` do BigQuery",
+  "Find datasets about customer orders in Knowledge Catalog and show their lineage": "Encontre conjuntos de dados sobre pedidos de clientes no Knowledge Catalog e mostre a linhagem deles",
+  "Create an Airflow DAG that runs the dedup notebook, the dbt pipeline, and model training every Monday morning": "Crie um DAG do Airflow que execute o notebook de deduplicação, o pipeline dbt e o treinamento do modelo toda segunda-feira pela manhã",
+  "My last Dataflow job failed. Find the root cause in the logs and propose a fix": "Meu último job do Dataflow falhou. Encontre a causa nos registros e sugira uma correção",
+  "Troubleshooting": "Solução de problemas",
+  "If you see could not find default credentials or other auth errors, ensure you are logged into gcloud.": "Se aparecer o erro could not find default credentials ou outro erro de autenticação, confirme se você está conectado à CLI gcloud.",
+  "Exit your agent, run gcloud auth login followed by gcloud auth application-default login, then restart your agent.": "Feche o agente, execute gcloud auth login e depois gcloud auth application-default login. Em seguida, reinicie o agente.",
+  "Security": "Segurança",
+  "Your agent can run tools and commands on your behalf. Apply the principle of least privilege to every CLI, MCP server, and resource it can access:": "Seu agente pode executar ferramentas e comandos em seu nome. Aplique o princípio do menor privilégio a cada CLI, servidor MCP e recurso que ele possa acessar:",
+  "Usage Statistics": "Estatísticas de uso",
+  "Data Agent Kit collects usage statistics (such as when included skills and MCP tools are used) to improve reliability and performance. No user code, file contents, or application data values are collected.": "O Data Agent Kit coleta estatísticas de uso (como quando as habilidades incluídas e as ferramentas MCP são utilizadas) para melhorar a confiabilidade e o desempenho. Nenhum código do usuário, conteúdo de arquivos ou valor de dados do aplicativo é coletado.",
+  "To opt out, either set DO_NOT_TRACK=1 in your environment:": "Para desativar a coleta, defina DO_NOT_TRACK=1 no ambiente:",
+  "Or create or update ~/.data_agent_kit/config.json:": "Ou crie ou atualize ~/.data_agent_kit/config.json:",
+  "Feedback": "Comentários",
+  "We want your feedback! Please open an issue to report bugs, file feature requests, or ask questions.": "Queremos saber sua opinião! Abra uma issue para relatar erros, sugerir recursos ou fazer perguntas.",
+  "Resources": "Recursos",
+  "Data Agent Kit homepage": "Página do Data Agent Kit",
+  "Data Agent Kit documentation": "Documentação do Data Agent Kit"
+  ,"Google Cloud Developer": "Desenvolvedor do Google Cloud"
+  ,"Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation.": "Orientações do Google Cloud para agentes de programação: configuração do primeiro projeto, autenticação e seleção de credenciais, além da validação de segurança de comandos da CLI gcloud. Inclui o servidor MCP Google Developer Knowledge para consultar a documentação atualizada do Google Cloud com respostas fundamentadas."
+  ,"Help me set up a new Google Cloud project, link billing, and configure local authentication.": "Ajude-me a criar um projeto do Google Cloud, vincular o faturamento e configurar a autenticação local."
+  ,"Configure Application Default Credentials (ADC) and IAM permissions for my local development environment.": "Configure as Application Default Credentials (ADC) e as permissões IAM para meu ambiente de desenvolvimento local."
+  ,"Search official Google Cloud documentation using Developer Knowledge and validate my gcloud CLI commands.": "Pesquise a documentação oficial do Google Cloud com o Developer Knowledge e valide meus comandos da CLI gcloud."
+  ,"The google-cloud-developer plugin equips Antigravity with foundational skills, safety guardrails, and live documentation grounding for building on Google Cloud.": "O plugin google-cloud-developer equipa o Antigravity com habilidades fundamentais, proteções de segurança e acesso atualizado à documentação para desenvolver no Google Cloud."
+  ,"This plugin bundles curated Agent Skills, routing rules, and configuration for the Developer Knowledge MCP server into a single portable package.": "Este plugin reúne habilidades de agente selecionadas, regras de roteamento e a configuração do servidor MCP Developer Knowledge em um único pacote portátil."
+  ,"What's Included": "O que está incluído"
+  ,"Bundled Skills": "Habilidades incluídas"
+  ,"Safety-critical validation, best practices, and execution guardrails for gcloud CLI commands.": "Validação crítica para a segurança, práticas recomendadas e proteções para executar comandos da CLI gcloud."
+  ,"Authentication workflows, credential selection, and service identity best practices.": "Fluxos de autenticação, seleção de credenciais e práticas recomendadas para identidade de serviço."
+  ,"First-project onboarding, account setup, and billing configuration.": "Primeiros passos no projeto, configuração da conta e do faturamento."
+  ,"Discovery and on-demand installation of specialized skills from the Google Agent Skills repo.": "Descoberta e instalação sob demanda de habilidades especializadas do repositório Google Agent Skills."
+  ,"Grounded retrieval of official Google documentation.": "Consulta fundamentada à documentação oficial do Google."
+  ,"MCP Server": "Servidor MCP"
+  ,"Provides AI agents with up-to-date grounding in official Google developer documentation over streamable HTTP.": "Fornece aos agentes de IA respostas atualizadas e fundamentadas na documentação oficial para desenvolvedores do Google, por HTTP com transmissão de dados."
+  ,"Routing Rules": "Regras de roteamento"
+  ,"Always-on routing map that guides the agent to discover and suggest deeper product-specific skills when a task requires specialized domain knowledge beyond the foundational bundle.": "Mapa de roteamento sempre ativo que orienta o agente a encontrar e sugerir habilidades específicas de produtos quando a tarefa exigir conhecimento especializado além do pacote básico."
+  ,"Plugin in Action": "O plugin em ação"
+  ,"To see how this plugin works, consider a situation where you're bootstrapping a new project as part of working on a script. With the google-cloud-developer plugin installed, you can prompt your agent:": "Para ver como este plugin funciona, imagine que você está iniciando um projeto ao preparar um script. Com o plugin google-cloud-developer instalado, você pode pedir ao agente:"
+  ,"I'm brand new to this platform, and I need to get an account and a first project with billing set up. Then, I need my local machine authenticated so a script that I'm writing can call the APIs as a service identity instead of as me.": "Sou iniciante nesta plataforma e preciso criar uma conta e meu primeiro projeto com o faturamento configurado. Depois, quero autenticar meu computador para que um script meu chame as APIs usando uma identidade de serviço, em vez da minha conta pessoal."
+  ,"Environment awareness": "Análise do ambiente"
+  ,"The agent silently runs background checks against your live environment for prerequisites like CLI availability and potential existing projects or organizations.": "O agente verifica em segundo plano os pré-requisitos do ambiente ativo, como a disponibilidade da CLI e a existência de projetos ou organizações."
+  ,"Review": "Revisão"
+  ,"The agent considers IAM best practices to avoid risks that might be assumed as part of the prompt, like accidental key leaks or git commits.": "O agente considera as práticas recomendadas de IAM para evitar riscos não mencionados na solicitação, como expor chaves por acidente ou incluí-las em commits do Git."
+  ,"Interaction with guardrails": "Etapas com proteções"
+  ,"The agent outlines a workflow roadmap and offers to act on those steps before modifying any resources.": "O agente apresenta um plano de trabalho e se oferece para executar as etapas antes de alterar qualquer recurso."
+});
+// Strings novas observadas na interface do Antigravity 2.24.0.
+Object.assign(_ptAgyDict, {
+  "Other Customizations": "Outras personalizações",
+  "Biomolecular Structure Viewer": "Visualizador de Estruturas Biomoleculares",
+  "Extensions": "Extensões",
+  "Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers.": "O Gemini 4 Argon está disponível no momento para assinantes dos planos Ultra e Pro pagos.",
+  "Upload": "Enviar arquivo",
+  "Representation": "Representação",
+  "Cartoon": "Fitas",
+  "Stick": "Bastões",
+  "Sphere": "Esferas",
+  "Surface": "Superfície",
+  "Line": "Linhas",
+  "Components": "Componentes",
+  "Waters": "Moléculas de água",
+  "Sugars": "Açúcares",
+  "Ligands": "Ligantes",
+  "Sidechains": "Cadeias laterais",
+  "Select & customize": "Selecionar e personalizar",
+  "Select": "Selecionar",
+  "Residue": "Resíduo",
+  "Chain": "Cadeia",
+  "Select residues, use SHIFT click to select a range, CTRL / CMD click to add or remove": "Selecione resíduos: use Shift+clique para selecionar um intervalo e Ctrl/clique ou Cmd/clique para adicionar ou remover itens.",
+  "Select residues, use SHIFT click to select a range, CTRL / CMD click to add or remove.": "Selecione resíduos: use Shift+clique para selecionar um intervalo e Ctrl/clique ou Cmd/clique para adicionar ou remover itens.",
+  "Color": "Cor",
+  "Annotation (optional)": "Anotação (opcional)",
+  "Enter annotation": "Digite uma anotação",
+  "Save": "Salvar",
+  "No selections yet": "Nenhuma seleção ainda",
+  "This page is going away soon": "Esta página será descontinuada em breve",
+  "Search conversations with": "Pesquise conversas usando",
+  "in the top left.": "no canto superior esquerdo.",
+  "View archived in the sidebar": "Veja os itens arquivados na barra lateral",
+  "Mark All as Read": "Marcar tudo como lido",
+  "Verify availability, schedule events, and RSVP.": "Verifique a disponibilidade, agende eventos e confirme presença.",
+  "Visit Legal Help to ask for content changes for legal reasons.": "Acesse a Ajuda jurídica para solicitar alterações de conteúdo por motivos legais.",
+  "Attaching logs requires an email address": "Para anexar logs, é necessário informar um endereço de e-mail",
+  "Visit": "Acesse",
+  "Legal Help": "Ajuda jurídica",
+  "to ask for content changes for legal reasons.": "para solicitar alterações de conteúdo por motivos legais.",
+  "Also includes": "Também inclui",
+  "when working in this project.": "ao trabalhar neste projeto.",
+  "New Project": "Novo Projeto",
+  "Quick Start": "Início Rápido",
+  "No Project": "Nenhum Projeto",
+  "Select Environment (Ctrl+`)": "Selecionar ambiente (Ctrl+`)"
+});
+
 // Prefixos para variantes de descrições de skills que chegam do catálogo do Antigravity.
 var _ptRemainingSkillPrefixes = {
+  "Read, create, and manage Google Calendar events.": "Leia, crie e gerencie eventos do Google Agenda. Use quando alguém compartilhar um link do calendar.google.com ou pedir para consultar, localizar, criar, atualizar, excluir, mover ou confirmar presença em um evento.",
+  "Browse, search, and manage Google Drive files and folders.": "Navegue, pesquise e gerencie arquivos e pastas do Google Drive. Use quando alguém compartilhar um link do drive.google.com ou pedir para localizar, baixar, enviar, atualizar, mover ou copiar arquivos.",
+  "# Science Visualization Priority Rules for any science visualization task,": "# Regras prioritárias de visualização científica: em tarefas de visualização científica, prefira os visualizadores interativos em painéis laterais.",
+  "-- No structure files in this conversation": "-- Nenhum arquivo de estrutura nesta conversa",
+  "No structure files in this conversation": "Nenhum arquivo de estrutura nesta conversa",
   "This plugin provides a specialized suite of skills for data engineers and database practitioners working on Google Cloud.": "Este plugin oferece habilidades especializadas para engenharia de dados e administração de bancos de dados no Google Cloud. Atua como assistente para ajudar você a trabalhar com dados na nuvem.",
   "Compile applications with the Gemini Interactions": "Crie aplicativos com a Gemini Interactions API e a Live API, incluindo geração de texto, chat multiturno, streaming, chamada de funções, agentes gerenciados e áudio/vídeo em tempo real.",
   "Reliable automation, deep debugging, and": "Automação confiável, depuração aprofundada e análise de desempenho no Chrome usando Chrome DevTools e Puppeteer.",
@@ -3149,6 +3579,30 @@ function _trAgy(s) {
   if (typeof s !== "string") return s;
   var t = s.trim();
   if (!t) return s;
+  var resetTime = t.match(/^Resets in\s+(.+)$/i);
+  if (resetTime) {
+    var resetParts = resetTime[1].match(/<1m|\d+d|\d+h|\d+m/g) || [];
+    var resetLabels = resetParts.map(function(part) {
+      if (part === "<1m") return "menos de 1 minuto";
+      var amount = parseInt(part, 10);
+      var unit = part.slice(-1);
+      if (unit === "d") return amount + (amount === 1 ? " dia" : " dias");
+      if (unit === "h") return amount + (amount === 1 ? " hora" : " horas");
+      return amount + (amount === 1 ? " minuto" : " minutos");
+    });
+    return "Redefine em " + (resetLabels.length ? resetLabels.join(" e ") : resetTime[1]);
+  }
+  var switchingView = t.match(/^Switching view to\s*(.*)$/i);
+  if (switchingView) {
+    var viewName = switchingView[1].replace(/[.…]+$/, "").trim();
+    var translatedViewName = _ptAgyDict[viewName] || viewName;
+    return "Alternando visualização para" + (translatedViewName ? " " + translatedViewName : "…");
+  }
+  var selectionCount = t.match(/^Selections?\s+\((\d+)\)$/i);
+  if (selectionCount) {
+    var count = parseInt(selectionCount[1], 10);
+    return count === 1 ? "1 seleção" : count + " seleções";
+  }
   for (var skillPrefix in _ptRemainingSkillPrefixes) {
     if (t.startsWith(skillPrefix)) return _ptRemainingSkillPrefixes[skillPrefix];
   }
@@ -3224,6 +3678,11 @@ function _trAgy(s) {
   }
   if (/^(\d+)\s+hours?\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s+hours?\s+ago$/i, "$1 horas atrás");
+  }
+  if (/^(\d+)\s*h\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*h\s+ago$/i, function(match, num) {
+      return "há " + num + (num === "1" ? " hora" : " horas");
+    });
   }
   if (/^(\d+)\s+days?\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s+days?\s+ago$/i, "$1 dias atrás");
@@ -3673,8 +4132,8 @@ function _trAgy(s) {
     return "Enviar tudo";
   }
 
-  if (/^Show\s+(\d+)\s+more\.\.\.$/i.test(t)) {
-    return t.replace(/^Show\s+(\d+)\s+more\.\.\.$/i, "Mostrar mais $1...");
+  if (/^Show\s+(\d+)\s+more(?:\.\.\.|…)$/i.test(t)) {
+    return t.replace(/^Show\s+(\d+)\s+more(?:\.\.\.|…)$/i, "Mostrar mais $1…");
   }
 
   // 1.26 Trajetoria dinamica finished
@@ -4084,8 +4543,8 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     var tag = el.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "CODE" || tag === "PRE" || tag === "SCRIPT" || tag === "STYLE") return true;
     if (el.isContentEditable || el.getAttribute("contenteditable") === "true") return true;
-    if (typeof el.className === "string" && (el.className.includes("monaco") || el.className.includes("slate") || el.className.includes("lexical") || el.className.includes("prism") || el.className.includes("syntax") || el.className.includes("editor"))) return true;
-    if (typeof el.closest === "function" && el.closest("[contenteditable='true'], .monaco-editor, [data-slate-editor], [data-lexical-editor], input, textarea, pre, code")) return true;
+    if (typeof el.className === "string" && (el.className.includes("monaco") || el.className.includes("slate") || el.className.includes("lexical") || el.className.includes("prism") || el.className.includes("syntax"))) return true;
+    if (typeof el.closest === "function" && el.closest("[contenteditable='true'], .monaco-editor, .cm-editor, .CodeMirror, .ProseMirror, .tiptap, [data-slate-editor], [data-lexical-editor], input, textarea, pre, code")) return true;
     return false;
   }
 
@@ -4104,6 +4563,23 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     if (!parent || _isEditableOrCode(parent)) return;
     var value = node.nodeValue;
     if (!value || !value.trim()) return;
+    var projectPermissionsText = parent.textContent || "";
+    if ((projectPermissionsText.includes("This project was created for") || projectPermissionsText.includes("Este projeto foi criado para")) && projectPermissionsText.includes("automation.")) {
+      var projectText = value.trim();
+      if (projectText === "This project was created for") {
+        node.nodeValue = value.replace(projectText, "Este projeto foi criado para");
+        return;
+      }
+      if (projectText === "the") {
+        node.nodeValue = value.replace(projectText, "a automação do");
+        return;
+      }
+      if (projectText === "automation.") {
+        if (node.previousSibling && node.previousSibling.nodeType === 3 && !node.previousSibling.nodeValue.trim()) node.previousSibling.nodeValue = "";
+        node.nodeValue = ". ";
+        return;
+      }
+    }
     if (value.trim().includes("Tradução PT-BR") || value.trim().includes("Translation PT-BR")) {
       parent.style.color = "#00adb5";
       parent.style.fontWeight = "400";
@@ -4117,6 +4593,69 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   var _agQueueIndex = 0;
   var _agQueuedNodes = new WeakSet();
   var _agQueueScheduled = false;
+  var _agObservedRoots = new WeakSet();
+  var _agObservedFrames = new WeakSet();
+  var _agObserverOptions = { childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "title", "aria-label", "alt"], subtree: true };
+
+  function _enqueueAgChildren(root) {
+    var children = root && root.childNodes;
+    for (var i = 0; children && i < children.length; i++) _enqueueAgNode(children[i]);
+  }
+
+  function _handleAgMutations(mutations) {
+    for (var i = 0; i < mutations.length; i++) {
+      var mutation = mutations[i];
+      if (mutation.type === "childList") {
+        for (var j = 0; j < mutation.addedNodes.length; j++) _enqueueAgNode(mutation.addedNodes[j]);
+      } else if (mutation.type === "characterData") {
+        _enqueueAgNode(mutation.target);
+      } else if (mutation.type === "attributes") {
+        _translateAgAttributes(mutation.target);
+      }
+    }
+  }
+
+  function _observeAgRoot(root) {
+    if (!root || _agObservedRoots.has(root)) return;
+    var target = root.nodeType === 9 ? (root.body || root.documentElement) : root;
+    if (!target) return;
+    _agObservedRoots.add(root);
+    try {
+      new MutationObserver(_handleAgMutations).observe(target, _agObserverOptions);
+      _enqueueAgChildren(target);
+    } catch (_) {}
+  }
+
+  function _observeAgFrame(frame) {
+    if (!frame || _agObservedFrames.has(frame)) return;
+    _agObservedFrames.add(frame);
+    var observeFrameDocument = function() {
+      try {
+        var frameDocument = frame.contentDocument;
+        if (frameDocument && frameDocument.body) _observeAgRoot(frameDocument);
+      } catch (_) {
+        // Iframes de outra origem permanecem isolados pelo navegador.
+      }
+    };
+    frame.addEventListener("load", observeFrameDocument);
+    observeFrameDocument();
+  }
+
+  // Registra raízes abertas no momento em que componentes web as criam.
+  try {
+    var _agElementPrototype = window.Element && window.Element.prototype;
+    var _agNativeAttachShadow = _agElementPrototype && _agElementPrototype.attachShadow;
+    if (_agNativeAttachShadow && !_agNativeAttachShadow.__agyPtbrObserved) {
+      var _agObservedAttachShadow = function(init) {
+        var shadowRoot = _agNativeAttachShadow.call(this, init);
+        if (shadowRoot && init && init.mode === "open") _observeAgRoot(shadowRoot);
+        return shadowRoot;
+      };
+      _agObservedAttachShadow.__agyPtbrObserved = true;
+      _agElementPrototype.attachShadow = _agObservedAttachShadow;
+    }
+  } catch (_) {}
+
   function _enqueueAgNode(node) {
     if (!node || _agQueuedNodes.has(node)) return;
     _agQueuedNodes.add(node);
@@ -4141,8 +4680,9 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
         } else if (node.nodeType === 1) {
           _translateAgAttributes(node);
           if (_isEditableOrCode(node)) continue;
-          var children = node.childNodes;
-          for (var i = 0; children && i < children.length; i++) _enqueueAgNode(children[i]);
+          _enqueueAgChildren(node);
+          if (node.shadowRoot) _observeAgRoot(node.shadowRoot);
+          if (node.tagName === "IFRAME") _observeAgFrame(node);
         }
       }
       if (_agQueueIndex >= _agNodeQueue.length) {
@@ -4163,20 +4703,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
       window.setTimeout(_startAgObserver, 50);
       return;
     }
-    var obs = new MutationObserver(function(mutations) {
-      for (var i = 0; i < mutations.length; i++) {
-        var mutation = mutations[i];
-        if (mutation.type === "childList") {
-          for (var j = 0; j < mutation.addedNodes.length; j++) _enqueueAgNode(mutation.addedNodes[j]);
-        } else if (mutation.type === "characterData") {
-          _enqueueAgNode(mutation.target);
-        } else if (mutation.type === "attributes") {
-          _translateAgAttributes(mutation.target);
-        }
-      }
-    });
-    obs.observe(document.body, { childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "title", "aria-label", "alt"], subtree: true });
-    _enqueueAgNode(document.body);
+    _observeAgRoot(document);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", _startAgObserver, { once: true });

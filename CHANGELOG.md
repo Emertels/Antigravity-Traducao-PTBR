@@ -1,3 +1,44 @@
+## v1.4.0 — Antigravity 2.24.0 — 16/10/2026
+
+### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026
+- Corrigido o motivo de o painel continuar inteiramente em inglês: o Antigravity estava servindo o pacote ativo `~/.gemini/config/plugins/science/sidecars/biomolecular_structure_viewer`, enquanto o sincronizador anterior atualizava apenas a cópia do cache de marketplaces.
+- Atualizado o sincronizador para localizar as duas origens, validar a versão da cópia ativa pelo `plugin.json` do plugin Science e manter backup original separado sob `_backups/biomolecular-sidecar/gemini-config/1.3.0`.
+- Aplicadas as 39 substituições ao pacote ativo do Visualizador Biomolecular 1.3.0; o backup original foi criado a partir dos arquivos verificados. Após reabrir o app, as rotas ativas `/ui.html` e `/main.js` responderam HTTP 200; o HTML declara `lang="pt-BR"`, o bundle servido tem 184.209 bytes e contém os 23 rótulos visíveis conferidos no print — incluindo “Representação”, “Componentes”, “Selecionar e personalizar”, “Nenhuma seleção ainda” e “Salvar”. A frase original “No selections yet” não aparece na resposta ativa.
+
+### Interface e extensões
+- Traduzido “Other Customizations” como “Outras personalizações” na tela de uso de tokens das personalizações.
+- Traduzidos os novos rótulos do Visualizador de Estruturas Biomoleculares: representação, componentes, águas, açúcares, ligantes, cadeias laterais, seleção de resíduos, anotações e estados vazios.
+- Corrigida a cobertura do tradutor em raízes Shadow DOM abertas e iframes da mesma origem, onde estavam vários textos do visualizador e dos menus de projeto.
+- Traduzidos trechos separados por links: a descrição de permissões do projeto e o aviso “Attaching logs requires an email address”, além dos fragmentos do link Legal Help.
+- Corrigido o texto contextual “This project was created for the … automation” para “Este projeto foi criado para a automação do …”.
+- Adicionadas regras para a dica dinâmica “Switching view to…” e para a contagem de seleções; “Resets in 6d 5h” agora é exibido como “Redefine em 6 dias e 5 horas”.
+- Traduzidos o aviso de disponibilidade do Gemini 4 Argon para assinantes Ultra e Pro pagos, os textos de histórico “This page is going away soon” e “Mark All as Read”, a ajuda jurídica e as descrições dos plugins Google Agenda e Google Drive.
+- Acrescentados os rótulos de projeto “New Project” e “Quick Start”, além da dica “Select Environment (Ctrl+`)”. O trecho de regra mostrado na prévia de AGENTS.md é localizado somente na interface; o arquivo e seu conteúdo permanecem intactos.
+- Revisados os textos dos prints e o texto colado do Modern Web Guidance (441 linhas e 5.016 palavras no arquivo recebido). O catálogo recebeu 382 entradas novas ou ampliadas nesta revisão; esse total conta chaves/mapeamentos, não palavras traduzidas. Inclui títulos, descrições, prompts e trechos de acessibilidade, IA integrada e CSS.
+- O pacote do Visualizador Biomolecular aplica 39 substituições literais na interface, incluindo rótulos, seleção, estados vazios, acessibilidade, estados de anotação e as dicas de atualização e envio de arquivos; nomes internos, formatos PDB/CIF e integração Mol* são preservados.
+- Acrescentadas traduções para descrições e exemplos de Google Developer Knowledge, Google Cloud Developer, Google Maps Platform, Dart e Flutter e Data Agent Kit, além de prompts do Firebase, Google Workspace, Gemini API e Android CLI. Identificadores, comandos, nomes de APIs e caminhos permanecem preservados.
+- O instalador e o restaurador agora incluem o sidecar do Visualizador Biomolecular 1.3.0. O pré-teste confere a versão e os hashes dos arquivos; backups ficam em `<pasta-do-Antigravity>\\_backups\\biomolecular-sidecar`, e a restauração só substitui arquivos que ainda correspondem à tradução desta versão.
+- Corrigido o encerramento lento do instalador/restaurador: após os pré-testes, os scripts forçam o fechamento dos processos da interface do Antigravity, preservam `language_server.exe` e verificam o encerramento por até 3 segundos, em intervalos de 100 ms. Se algum processo não puder ser finalizado, exibem nome e PID; o próprio atalho apresenta uma única pausa de erro.
+- Corrigidos os acentos do console: os scripts de instalação/restauração selecionam a página de código UTF-8 antes de imprimir mensagens e configuram a codificação de entrada/saída do PowerShell.
+- Corrigida a atualização de textos em Personalizações: o instalador agora limpa os caches de interface em toda execução bem-sucedida, inclusive quando o patch principal e o sidecar já estão aplicados. Foram acrescentadas 4 chaves ao catálogo para o menu de agentes (“Main Agent”, “Agent options” e “Click to Open Docs”) e o campo de pasta, além de 4 substituições literais ao pacote do visualizador para rótulos acessíveis e estados de anotação; o HTML do visualizador agora declara `pt-BR`.
+- Comparação de hashes confirmou que o `web-bundle/main.js` instalado ainda era anterior às traduções mais recentes; reinstalação do pacote atualiza o bundle e renova o cache de interface.
+- Corrigida a atualização do sidecar biomolecular quando o pacote 1.3.0 recebe novas traduções: o sincronizador reconhece apenas os hashes exatos da tradução anterior e registra os hashes da nova versão ao lado do backup original. O sincronizador agora usa UTF-8 com BOM para preservar acentos no Windows PowerShell.
+- A verificação anterior comparava hashes da cópia no cache de marketplaces, mas não confirmava a origem servida pelo processo do visualizador. A consulta HTTP local revelou que o Antigravity carregava o plugin ativo em `~/.gemini/config/plugins/science`; esse caminho foi acrescentado ao pré-teste, à instalação e à restauração.
+- Instalação das correções adicionais concluída em 17/10/2026. O instalador encontrou as duas cópias do plugin Science 1.3.0, atualizou ambas e criou o backup original independente do pacote ativo em `_backups/biomolecular-sidecar/gemini-config/1.3.0`.
+- Teste confirmado pelo usuário: restaurador e instalador executaram corretamente de primeira após a correção do encerramento dos processos e da saída do console.
+- O instalador valida previamente o sidecar e restaura os arquivos do sidecar a partir do backup se uma cópia falhar. O restaurador limpa o cache de interface depois da restauração.
+- Verificação local: pré-testes do patch 2.24.0 e do sidecar 1.3.0 aprovados; validação de sintaxe JavaScript/PowerShell e `git diff --check` aprovados. A tentativa anterior do instalador foi interrompida pelo fechamento normal ineficaz e não alterou os arquivos instalados; a rotina foi corrigida para usar encerramento forçado.
+
+### Revisões anteriores incorporadas à versão
+- Mantidas as traduções “Hide Whitespace Changes”, “Good Response” e “Bad Response”, o tempo compacto “6h ago” e os contadores de linhas/itens adicionais.
+- Mantido o processamento incremental do observador DOM para evitar travamentos da interface, com áreas de edição protegidas por seletores específicos e observação de conteúdo em Shadow DOM/iframes acessíveis.
+- Confirmada a compatibilidade estrutural do patch com o `app.asar` local Antigravity 2.24.0. O bundle de interface usado pelo projeto permanece baseado na compilação 2.23.0; as novas extensões e textos dinâmicos são localizados pela camada DOM.
+
+### Traduções adicionais da interface — Antigravity 2.23.0 — 14/10/2026
+- Adicionadas “Hide Whitespace Changes”, “Good Response” e “Bad Response” ao catálogo PT-BR.
+- Acrescentada a forma compacta “6h ago” com tradução por horas variáveis e suporte a reticências tipográficas em “Show N more…”. A regra existente para “+ N more lines” foi confirmada com o valor da captura.
+- Refinada a proteção de editores: removida a exclusão ampla por qualquer classe que contenha `editor`, que podia pular rótulos da interface de diff. A proteção continua usando seletores conhecidos para Monaco, CodeMirror, ProseMirror, Tiptap, Lexical e Slate.
+
 ### Interface responsiva após a tradução — Antigravity 2.23.0 — 14/10/2026
 - Substituída a varredura síncrona e recursiva de todo o `document.body` por uma fila incremental processada em quadros de animação, limitada a 250 nós ou aproximadamente 6 ms por quadro.
 - Mantido o acompanhamento de conteúdo dinâmico e atributos. Editores e áreas de código continuam excluídos da tradução.
