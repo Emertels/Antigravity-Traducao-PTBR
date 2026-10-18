@@ -8,6 +8,8 @@
 - Traduzido o carimbo de tempo relativo “just now” da interface como “Agora mesmo”.
 - Acrescentada uma regra dinâmica para os tempos compactos em minutos: `2m ago` agora aparece como `há 2 min`, com suporte a qualquer quantidade de minutos.
 - Corrigido o tempo compacto mostrado na nova captura: `27d ago` agora aparece como `há 27 dias`. Também foram incluídas regras dinâmicas com singular e plural para semanas (`w ago`), meses (`mo ago`) e anos (`y ago`), cobrindo os formatos compactos equivalentes.
+- Corrigidos rótulos que continuavam em inglês no seletor de projeto/ambiente: “New Project”, “Quick Start” e “No Project” também são traduzidos diretamente na configuração e no JSX do menu, além do catálogo DOM. O tooltip com atalho é montado em fragmentos pelo Antigravity; o prefixo agora é localizado no próprio componente como “Selecionar ambiente (Ctrl+.)”. “New worktree” passa a “Nova árvore de trabalho”.
+- Traduzido o rótulo curto “Notice” como “Aviso” no catálogo da interface e na regra dinâmica.
 - Removido do diretório local e excluído do pacote o backup temporário `web-bundle/main.js.bak`; apenas o bundle atual é distribuído.
 
 ### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026
