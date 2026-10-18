@@ -6,6 +6,7 @@
 - Separadas as mensagens de arquivo `.cjs` ausente e runtime ausente. Os avisos orientam extrair o ZIP completo e confirmam que nenhum arquivo foi alterado.
 - O binário foi obtido da distribuição oficial e conferido pelo SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541` publicado no arquivo `SHASUMS256.txt` do Node.js.
 - Traduzido o carimbo de tempo relativo “just now” da interface como “Agora mesmo”.
+- Acrescentada uma regra dinâmica para os tempos compactos em minutos: `2m ago` agora aparece como `há 2 min`, com suporte a qualquer quantidade de minutos.
 - Removido do diretório local e excluído do pacote o backup temporário `web-bundle/main.js.bak`; apenas o bundle atual é distribuído.
 
 ### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026

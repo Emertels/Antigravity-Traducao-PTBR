@@ -3676,6 +3676,9 @@ function _trAgy(s) {
   if (/^(\d+)\s+minutes?\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s+minutes?\s+ago$/i, "$1 minutos atrás");
   }
+  if (/^(\d+)\s*m\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*m\s+ago$/i, "há $1 min");
+  }
   if (/^(\d+)\s+hours?\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s+hours?\s+ago$/i, "$1 horas atrás");
   }
