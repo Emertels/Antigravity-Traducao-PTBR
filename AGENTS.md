@@ -19,6 +19,7 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 ## Segurança da interface
 
 - `web-bundle/main.js` é a fonte PT-BR da interface web. Adicione mapeamentos exatos dos textos originais e preserve o comportamento da aplicação.
+- Preserve regras dinâmicas dos tempos relativos compactos exibidos pela interface (`m`, `h`, `d`, `w`, `mo` e `y` antes de `ago`), com singular/plural correto em português.
 - Não altere nós de texto em editores ricos, campos de entrada, Monaco, Lexical ou Slate. Evite observadores DOM que possam modificar o estado do editor.
 - A varredura inicial do DOM deve ser incremental e limitada por quadro (sem percorrer sincronicamente todo o `document.body`). Agrupe mutações em fila, limite o trabalho por quadro e mantenha os editores excluídos.
 - Não exclua elementos por uma classe genérica contendo `editor`; restrinja a proteção a editores/campos identificáveis para que barras de ferramentas e diffs continuem traduzidos.

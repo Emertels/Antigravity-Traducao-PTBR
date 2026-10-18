@@ -7,6 +7,7 @@
 - O binário foi obtido da distribuição oficial e conferido pelo SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541` publicado no arquivo `SHASUMS256.txt` do Node.js.
 - Traduzido o carimbo de tempo relativo “just now” da interface como “Agora mesmo”.
 - Acrescentada uma regra dinâmica para os tempos compactos em minutos: `2m ago` agora aparece como `há 2 min`, com suporte a qualquer quantidade de minutos.
+- Corrigido o tempo compacto mostrado na nova captura: `27d ago` agora aparece como `há 27 dias`. Também foram incluídas regras dinâmicas com singular e plural para semanas (`w ago`), meses (`mo ago`) e anos (`y ago`), cobrindo os formatos compactos equivalentes.
 - Removido do diretório local e excluído do pacote o backup temporário `web-bundle/main.js.bak`; apenas o bundle atual é distribuído.
 
 ### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026

@@ -3679,6 +3679,26 @@ function _trAgy(s) {
   if (/^(\d+)\s*m\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s*m\s+ago$/i, "há $1 min");
   }
+  if (/^(\d+)\s*d\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*d\s+ago$/i, function(match, num) {
+      return "há " + num + (num === "1" ? " dia" : " dias");
+    });
+  }
+  if (/^(\d+)\s*w\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*w\s+ago$/i, function(match, num) {
+      return "há " + num + (num === "1" ? " semana" : " semanas");
+    });
+  }
+  if (/^(\d+)\s*mo\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*mo\s+ago$/i, function(match, num) {
+      return "há " + num + (num === "1" ? " mês" : " meses");
+    });
+  }
+  if (/^(\d+)\s*y\s+ago$/i.test(t)) {
+    return t.replace(/^(\d+)\s*y\s+ago$/i, function(match, num) {
+      return "há " + num + (num === "1" ? " ano" : " anos");
+    });
+  }
   if (/^(\d+)\s+hours?\s+ago$/i.test(t)) {
     return t.replace(/^(\d+)\s+hours?\s+ago$/i, "$1 horas atrás");
   }
