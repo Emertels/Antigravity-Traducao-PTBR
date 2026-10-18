@@ -7,6 +7,9 @@ $utf8Console = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8Console
 [Console]::OutputEncoding = $utf8Console
 $OutputEncoding = $utf8Console
+$bundledNode = Join-Path $PSScriptRoot 'runtime\node.exe'
+$nodeCmd = Get-Command 'node.exe' -ErrorAction SilentlyContinue
+$nodePath = if (Test-Path -LiteralPath $bundledNode -PathType Leaf) { $bundledNode } elseif ($nodeCmd) { $nodeCmd.Source } else { $null }
 
 function Read-OpenChoice([string]$Prompt) {
     Write-Host $Prompt -NoNewline -ForegroundColor White
@@ -242,10 +245,9 @@ if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
     # criado _backups ainda. Só classificar como original após validar o ASAR
     # da versão ativa e confirmar ausência de marcadores conhecidos no bundle.
     $verifier = Join-Path $PSScriptRoot "tools\verify-clean-asar.cjs"
-    $node = Get-Command node -ErrorAction SilentlyContinue
     $installedAsarClean = $false
-    if ($detectedVersion -and $node -and (Test-Path $verifier) -and (Test-Path $targetAsar)) {
-        $verifyOutput = & $node.Source $verifier "antigravity" $targetAsar $detectedVersion 2>&1
+    if ($detectedVersion -and $nodePath -and (Test-Path $verifier) -and (Test-Path $targetAsar)) {
+        $verifyOutput = & $nodePath $verifier "antigravity" $targetAsar $detectedVersion 2>&1
         $installedAsarClean = ($LASTEXITCODE -eq 0)
     }
     $webBundleTranslated = Test-Path $installedWebBundleMarker
@@ -295,13 +297,17 @@ if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
     Exit 1
 }
 $verifier = Join-Path $PSScriptRoot "tools\verify-clean-asar.cjs"
-$node = Get-Command node -ErrorAction SilentlyContinue
-if (-not $node -or -not (Test-Path $verifier)) {
-    Write-Host "[x] Não foi possível verificar o backup. Confirme o Node.js e os arquivos do pacote." -ForegroundColor Red
+if (-not (Test-Path -LiteralPath $verifier -PathType Leaf)) {
+    Write-Host "[x] O verificador tools\verify-clean-asar.cjs não está no pacote. Extraia novamente o ZIP completo; nenhum arquivo foi alterado." -ForegroundColor Red
     Pause
     Exit 1
 }
-& $node.Source $verifier "antigravity" $foundBackup $detectedVersion
+if (-not $nodePath) {
+    Write-Host "[x] O Node.js portátil não está em runtime\node.exe e não há node.exe no PATH. Extraia novamente o ZIP completo ou instale Node.js; nenhum arquivo foi alterado." -ForegroundColor Red
+    Pause
+    Exit 1
+}
+& $nodePath $verifier "antigravity" $foundBackup $detectedVersion
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[x] O ASAR de backup não passou na verificação; restauração cancelada." -ForegroundColor Red
     Pause

@@ -7,6 +7,9 @@ $utf8Console = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8Console
 [Console]::OutputEncoding = $utf8Console
 $OutputEncoding = $utf8Console
+$bundledNode = Join-Path $PSScriptRoot "runtime\node.exe"
+$nodeCmd = Get-Command "node.exe" -ErrorAction SilentlyContinue
+$nodePath = if (Test-Path -LiteralPath $bundledNode -PathType Leaf) { $bundledNode } elseif ($nodeCmd) { $nodeCmd.Source } else { $null }
 
 function Read-OpenChoice([string]$Prompt) {
     Write-Host $Prompt -NoNewline -ForegroundColor White
@@ -452,14 +455,18 @@ if (-not (Test-Path $sourceWebBundle)) {
 
 # Conferir a compatibilidade do bundle antes de fechar o app, alterar o Fuse ou criar backups.
 $patcherScript = Join-Path $scriptDir "patch-antigravity.cjs"
-$nodeCmd = Get-Command "node" -ErrorAction SilentlyContinue
-if (-not $nodeCmd -or -not (Test-Path $patcherScript)) {
-    Write-Host "[x] Node.js ou patch-antigravity.cjs não encontrado; nenhum arquivo foi alterado." -ForegroundColor Red
+if (-not (Test-Path -LiteralPath $patcherScript -PathType Leaf)) {
+    Write-Host "[x] O arquivo patch-antigravity.cjs não está ao lado do instalador. Extraia novamente o ZIP completo; nenhum arquivo foi alterado." -ForegroundColor Red
+    Pause
+    Exit 1
+}
+if (-not $nodePath) {
+    Write-Host "[x] O Node.js portátil não está em runtime\node.exe e não há node.exe no PATH. Extraia novamente o ZIP completo ou instale Node.js; nenhum arquivo foi alterado." -ForegroundColor Red
     Pause
     Exit 1
 }
 Write-Host "[1/4] Conferindo compatibilidade da interface e do modo Turbo..." -ForegroundColor White
-& $nodeCmd.Source $patcherScript --preflight "$agyDir"
+& $nodePath $patcherScript --preflight "$agyDir"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[x] O pacote não é compatível com esta interface do Antigravity. O aplicativo permaneceu aberto e sem alterações." -ForegroundColor Red
     Pause
@@ -541,11 +548,10 @@ $patcherScript = Join-Path $scriptDir "patch-antigravity.cjs"
 $patchedDynamically = $false
 $translationAlreadyInstalled = $false
 
-$nodeCmd = Get-Command "node" -ErrorAction SilentlyContinue
-if ($nodeCmd -and (Test-Path $patcherScript)) {
+if ($nodePath -and (Test-Path -LiteralPath $patcherScript -PathType Leaf)) {
     Write-Host "    -> Executando Patcher Dinâmico Modular (preserva versão instalada sem downgrade)..." -ForegroundColor Cyan
     try {
-        & $nodeCmd.Source $patcherScript "$agyDir"
+        & $nodePath $patcherScript "$agyDir"
         if ($LASTEXITCODE -eq 10) {
             $patchedDynamically = $true
             $translationAlreadyInstalled = $true

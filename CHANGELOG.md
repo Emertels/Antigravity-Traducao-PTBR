@@ -1,4 +1,10 @@
-## v1.4.0 — Antigravity 2.24.0 — 16/10/2026
+## v1.4.0 — Antigravity 2.24.0 — 18/10/2026
+
+### Diagnóstico do instalador e runtime portátil — 18/10/2026
+- Corrigida a mensagem ambígua “Node.js ou patch-antigravity.cjs não encontrado”, que não indicava qual dependência faltava e interrompia a instalação em computadores sem Node.js no `PATH`.
+- O ZIP portátil agora inclui o runtime oficial Node.js 24.21.0 para Windows x64 em `runtime/node.exe`, além da licença distribuída pela Node.js Foundation. O instalador e o restaurador preferem esse runtime e usam `node.exe` do `PATH` como alternativa.
+- Separadas as mensagens de arquivo `.cjs` ausente e runtime ausente. Os avisos orientam extrair o ZIP completo e confirmam que nenhum arquivo foi alterado.
+- O binário foi obtido da distribuição oficial e conferido pelo SHA-256 `158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541` publicado no arquivo `SHASUMS256.txt` do Node.js.
 
 ### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026
 - Corrigido o motivo de o painel continuar inteiramente em inglês: o Antigravity estava servindo o pacote ativo `~/.gemini/config/plugins/science/sidecars/biomolecular_structure_viewer`, enquanto o sincronizador anterior atualizava apenas a cópia do cache de marketplaces.
