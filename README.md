@@ -6,7 +6,6 @@ Localizados os textos das capturas e das descrições de plugins: visualizador b
 Lançadores CMD e scripts PowerShell exibem corretamente acentos e cedilhas. O bundle atualizado para o frontend do Antigravity 2.23.0 preserva o seletor e o modo Turbo durante a tradução.
 
 
-![Versão](https://img.shields.io/badge/Versão-v1.4.0-blue?style=for-the-badge)
 ![Idioma](https://img.shields.io/badge/Idioma-Português%20(Brasil)-green?style=for-the-badge)
 
 Pacote portátil de localização PT-BR do **Google Antigravity Desktop** para Português do Brasil (pt-BR). Tradução profunda cobrindo tanto o núcleo do aplicativo Electron (modular ASAR de 4.5 MB) quanto a interface web gráfica (`web-bundle`), diálogos de permissão, configurações, comandos de agentes, bandeja do sistema e painel de conversas.
