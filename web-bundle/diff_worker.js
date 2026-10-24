@@ -138,21 +138,28 @@ function computeDiffStats(original, modified) {
   return {additions: 0, deletions: 0};
 }
 
-function computeDiffArrays(oldArr, newArr) {
+function computeDiffArrays(oldArr, newArr, ignoreWhitespace) {
   const mInitial = oldArr.length;
   const nInitial = newArr.length;
+
+  // Comparison arrays: normalized copies when ignoring whitespace (git diff -w
+  // semantics). Output values are always sliced from the original arrays.
+  const cmpOld =
+      ignoreWhitespace ? oldArr.map((s) => s.replace(/\s+/g, '')) : oldArr;
+  const cmpNew =
+      ignoreWhitespace ? newArr.map((s) => s.replace(/\s+/g, '')) : newArr;
 
   // 1. Prefix Trimming
   let start = 0;
   while (start < mInitial && start < nInitial &&
-         oldArr[start] === newArr[start]) {
+         cmpOld[start] === cmpNew[start]) {
     start++;
   }
 
   // 2. Suffix Trimming
   let mEnd = mInitial - 1;
   let nEnd = nInitial - 1;
-  while (mEnd >= start && nEnd >= start && oldArr[mEnd] === newArr[nEnd]) {
+  while (mEnd >= start && nEnd >= start && cmpOld[mEnd] === cmpNew[nEnd]) {
     mEnd--;
     nEnd--;
   }
@@ -177,7 +184,7 @@ function computeDiffArrays(oldArr, newArr) {
   } else if (M > 0 && N > 0) {
     // Run Myers' on the trimmed middle
     const middleDiff =
-        myersDiff(oldArr.slice(start, mEnd + 1), newArr.slice(start, nEnd + 1));
+        myersDiff(cmpOld.slice(start, mEnd + 1), cmpNew.slice(start, nEnd + 1));
     // Map middleDiff indices back and add to result
     for (let i = 0; i < middleDiff.length; i++) {
       const change = middleDiff[i];
@@ -336,10 +343,11 @@ function groupReversedChanges(changes) {
 }
 
 self.onmessage = function(event) {
-  const {id, type, original, modified, oldArr, newArr} = event.data;
+  const {id, type, original, modified, oldArr, newArr, ignoreWhitespace} =
+      event.data;
   try {
     if (type === 'diffArrays' || (oldArr && newArr)) {
-      const result = computeDiffArrays(oldArr, newArr);
+      const result = computeDiffArrays(oldArr, newArr, ignoreWhitespace);
       self.postMessage({
         id,
         type: 'diffArrays',

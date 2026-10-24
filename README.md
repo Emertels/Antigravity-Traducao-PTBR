@@ -1,5 +1,16 @@
+## Versão atual: 1.5.0 — Antigravity 2.26.0 — 24/10/2026
+
+Frontend original 2.26.0 atualizado; 87 novos mapeamentos; crédito em azul-turquesa restaurado no cartão da versão; “Give Feedback” traduzido; checagem sintática com o próprio Node portátil; Science 1.3.0/1.3.1 compatível.
+
+Baixe o ZIP portátil na página de Releases, extraia a pasta inteira e execute **Instalar-Traducao.bat**. Para voltar ao original da mesma versão, use **Restaurar-Original.bat**. O ZIP inclui runtime e licenças, com documentação e changelog disponíveis apenas no repositório e na descrição da release.
+
+Instalação, restauração e reinstalação foram conferidas na versão indicada, preservando os backups originais. Histórico detalhado: [CHANGELOG.md](CHANGELOG.md).
+
+---
+
 # 🌐 Google Antigravity — Tradução para Português do Brasil (PT-BR) 🇧🇷
 ### Versão de tradução 1.4.0 — Antigravity 2.24.0 — 18/10/2026
+Correção local de 19/10/2026: o tooltip do ícone de configurações do projeto agora é traduzido como “Configurações do projeto”; a ação dinâmica recebe o texto localizado diretamente.
 Localizados os textos das capturas e das descrições de plugins: visualizador biomolecular, Google Workspace, Firebase, Android CLI, Google Developer Knowledge, Google Cloud Developer, Google Maps Platform, Dart e Flutter, Data Agent Kit e Modern Web Guidance, além de limites, histórico, projetos, seletor de ambiente e ajuda jurídica. A revisão do texto copiado de Modern Web Guidance abrangeu 441 linhas e 5.016 palavras; 382 entradas de mapeamento foram acrescentadas ou ampliadas no catálogo desta revisão. Esse número conta mapeamentos, não palavras traduzidas. A compatibilidade estrutural do patch foi conferida no `app.asar` local 2.24.0; o frontend embarcado no pacote segue baseado em 2.23.0.
 
 ### Revisão do console — 14/10/2026

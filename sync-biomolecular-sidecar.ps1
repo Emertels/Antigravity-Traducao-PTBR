@@ -10,6 +10,9 @@
 
 $ErrorActionPreference = 'Stop'
 $supportedVersion = '1.3.0'
+# Science 1.3.1 contém os mesmos dois arquivos do visualizador, confirmados por SHA-256.
+# O pacote é compartilhado, mas os backups continuam separados pela versão do plugin.
+$supportedPluginVersions = @('1.3.0', '1.3.1')
 $marketplacesRoot = Join-Path $env:USERPROFILE '.gemini\antigravity\cache\marketplaces'
 $configScienceRoot = Join-Path $env:USERPROFILE '.gemini\config\plugins\science'
 $packageVersionRoot = Join-Path $PackageRoot $supportedVersion
@@ -74,13 +77,13 @@ if ($targets.Count -eq 0) {
     return $false
 }
 
-$unsupported = @($targets | Where-Object { $_.Version -ne $supportedVersion })
+$unsupported = @($targets | Where-Object { $_.Version -notin $supportedPluginVersions })
 if ($unsupported.Count -gt 0) {
     foreach ($target in $unsupported) {
-        Write-Host "[i] Visualizador biomolecular $($target.Label) $($target.Version) não corresponde ao pacote $supportedVersion; ignorado com segurança." -ForegroundColor Yellow
+        Write-Host "[i] Visualizador biomolecular $($target.Label) $($target.Version) não corresponde às versões suportadas; ignorado com segurança." -ForegroundColor Yellow
     }
 }
-$targets = @($targets | Where-Object { $_.Version -eq $supportedVersion })
+$targets = @($targets | Where-Object { $_.Version -in $supportedPluginVersions })
 if ($targets.Count -eq 0) { return $false }
 
 function Get-TrustedRecoveryPath($target, [string]$relativeFile) {
@@ -129,7 +132,7 @@ if ($Mode -eq 'Preflight') {
             }
         }
     }
-    Write-Host "[OK] Pacote biomolecular $supportedVersion compatível com $($targets.Count) instalação(ões) encontrada(s)." -ForegroundColor Green
+    Write-Host "[OK] Pacote biomolecular 1.3.0/1.3.1 compatível com $($targets.Count) instalação(ões) encontrada(s)." -ForegroundColor Green
     return $true
 }
 
@@ -239,7 +242,7 @@ foreach ($target in $targets) {
             throw
         }
         $changed = $true
-        Write-Host "[OK] Visualizador biomolecular traduzido ($($target.Label), $supportedVersion). Backup original: $backupRoot" -ForegroundColor Green
+        Write-Host "[OK] Visualizador biomolecular traduzido ($($target.Label), $($target.Version)). Backup original: $backupRoot" -ForegroundColor Green
         continue
     }
 
@@ -266,7 +269,7 @@ foreach ($target in $targets) {
             Copy-Item -LiteralPath (Join-Path $backupRoot $relativeFile) -Destination (Join-Path $target.Root $relativeFile) -Force
         }
         $changed = $true
-        Write-Host "[OK] Visualizador biomolecular restaurado ($($target.Label), $supportedVersion)." -ForegroundColor Green
+        Write-Host "[OK] Visualizador biomolecular restaurado ($($target.Label), $($target.Version))." -ForegroundColor Green
     }
 }
 return $changed

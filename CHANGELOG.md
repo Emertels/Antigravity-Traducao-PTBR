@@ -1,4 +1,49 @@
+## v1.5.0 — Antigravity 2.26.0 — 24/10/2026
+
+### Tradução e interface atual
+
+- Incorporado o frontend original servido pelo Antigravity 2.26.0: JavaScript principal, Tailwind, Jetbox e worker de diferenças. A camada de tradução foi reaplicada sobre essa interface, preservando os recursos atuais e o seletor Turbo.
+- Adicionados **87 mapeamentos de texto**, com **450 palavras nos valores PT-BR adicionados**. Contagem lexical automática de sequências de letras, ignorando placeholders; mapeamentos e palavras são métricas diferentes.
+- Cobertos os novos controles de sons e notificações, ações do navegador, autenticação e atualização de plugins, provedores de contexto, arquivos e recursos na nuvem, cópia de links/imagens, telemetria, contas e ações de painéis.
+- Incorporadas as revisões locais de “Display” → “Exibição”, “Archived Only” → “Somente arquivados” e “Project Settings” → “Configurações do projeto”.
+- Preservadas 13 regras de tradução direta dos seletores, projetos, ambientes, busca e criação de automações. Incluída “Give Feedback” → **“Enviar feedback”** no catálogo e no rótulo original do menu.
+- Restaurado **“Tradução PT-BR: Emerson Teles”** em azul-turquesa **#00adb5**, dentro do cartão da versão, abaixo da linha do número e com separador discreto. O pré-teste exige um único crédito para impedir sua perda ou duplicação em atualizações futuras.
+- A varredura de propriedades da interface examinou **894 candidatos** e terminou com **zero textos em inglês sem mapeamento** nesse conjunto. “a2a (ttv2)” e “Flash Lite” são identificadores/nomes preservados; “Novo Projeto” já está em português. A métrica não representa todos os textos possíveis de serviços externos.
+
+### Instalador e restaurador
+
+- A checagem sintática usa `execFileSync(process.execPath, ...)`, chamando o mesmo Node que iniciou o patcher. Isso remove a dependência de `node` no PATH que podia causar falha em instalações com runtime portátil.
+- Erros de sintaxe agora exibem o diagnóstico real do Node, incluindo stderr, para distinguir problemas no código de problemas no ambiente.
+- Mantido o Node.js portátil **24.21.0**, com licença, para instalação e restauração sem exigir Node global.
+- O pré-teste do Turbo reconhece a estrutura funcional e os valores dos perfis sem depender dos nomes minificados da compilação. Valores de permissões e modos originais permanecem preservados.
+- Adicionado suporte ao Science **1.3.1** no sincronizador biomolecular. Os dois arquivos originais foram confirmados como idênticos por SHA-256 aos da 1.3.0; o pacote de 39 substituições é compartilhado, com backups independentes por versão e por origem ativa/cache.
+- Padronizados os finais de linha dos scripts por `.gitattributes`; mantida a codificação de console com acentos e cedilhas.
+
+### Verificações realizadas
+
+- Pré-teste estrutural, sintaxe JavaScript/PowerShell e reconstrução sobre o Antigravity 2.26.0 aprovados.
+- Patcher executado com **PATH vazio e Node portátil**, sem depender de Node global.
+- Instalação, restauração e reinstalação locais concluídas. O SHA-256 do ASAR restaurado correspondeu exatamente ao backup original 2.26.0.
+- Crédito testado no componente gerado: posição dentro do cartão, texto exato, cor #00adb5 e versões obtidas tanto do servidor quanto do fallback nativo.
+- Tradução aplicada também às cópias ativa e em cache do visualizador biomolecular 1.3.1.
+
+### Pacote de distribuição
+
+- ZIP portátil com tradução, instalador, restaurador, verificadores necessários, sidecar, runtime e licenças.
+- **Sem README, README.ag, LEIA-ME, AGENTS ou CHANGELOG dentro do ZIP.** O histórico desta versão fica nesta descrição da release e no repositório.
+- O pacote não inclui ASAR estático para substituir versões oficiais mais novas; a reconstrução usa o original limpo da versão instalada.
+
+### Arquivo da release
+
+Antigravity-Traducao-PTBR-v1.5.0-Portable.zip — 25 arquivos, 39543789 bytes.
+
+SHA-256: E5CEA1A54B2DBF66A415D7D997A72250780C8F9D6BBB69968ABF3D5A0F221179
+
+
 ## v1.4.0 — Antigravity 2.24.0 — 18/10/2026
+
+### Revisão local — Antigravity 2.25
+- 22/10/2026: traduzidos os itens “Display” → “Exibição” e “Archived Only” → “Somente arquivados” no submenu de filtros do histórico; as traduções foram aplicadas diretamente aos rótulos renderizados e acrescentadas ao catálogo.
 
 ### Diagnóstico do instalador e runtime portátil — 18/10/2026
 - Corrigida a mensagem ambígua “Node.js ou patch-antigravity.cjs não encontrado”, que não indicava qual dependência faltava e interrompia a instalação em computadores sem Node.js no `PATH`.
@@ -10,6 +55,7 @@
 - Corrigido o tempo compacto mostrado na nova captura: `27d ago` agora aparece como `há 27 dias`. Também foram incluídas regras dinâmicas com singular e plural para semanas (`w ago`), meses (`mo ago`) e anos (`y ago`), cobrindo os formatos compactos equivalentes.
 - Corrigidos rótulos que continuavam em inglês no seletor de projeto/ambiente: “New Project”, “Quick Start” e “No Project” também são traduzidos diretamente na configuração e no JSX do menu, além do catálogo DOM. O tooltip com atalho é montado em fragmentos pelo Antigravity; o prefixo agora é localizado no próprio componente como “Selecionar ambiente (Ctrl+.)”. “New worktree” passa a “Nova árvore de trabalho”.
 - Traduzido o rótulo curto “Notice” como “Aviso” no catálogo da interface e na regra dinâmica.
+- 19/10/2026: corrigido o tooltip “Project Settings” do seletor de projetos. Embora já existisse no catálogo, o texto era passado como `label` de uma ação dinâmica e escapava da tradução DOM; as duas ações agora recebem diretamente “Configurações do projeto”.
 - Removido do diretório local e excluído do pacote o backup temporário `web-bundle/main.js.bak`; apenas o bundle atual é distribuído.
 
 ### Correção da origem ativa do Visualizador Biomolecular — 17/10/2026

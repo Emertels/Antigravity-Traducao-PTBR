@@ -29,7 +29,7 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 <!-- ag-agent-AGENTS.md -->
 ## Bundle e modo Turbo por versão
 - A presença de rótulos/enumerações não prova que a UI seja compatível. Antes de fechar processos, alterar Fuse ou criar backups, rode o pré-teste do patch-antigravity.cjs.
-- A base web atual é o frontend 2.23.0; preserve a tabela funcional do seletor e a lista de modos visíveis, incluindo Turbo. O pré-teste verifica os rótulos PT-BR Solicitar revisão e Padrão, as descrições atuais de Request Review, Default e Turbo, o placeholder de busca traduzido, `AgentPermissionPreset.TURBO` e a inclusão de Turbo na lista exibida. Se a estrutura da versão instalada mudar, interrompa sem alterar a instalação e atualize o bundle a partir da compilação correspondente; nunca substitua a interface atual por um bundle antigo.
+- A base web atual é o frontend original 2.26.0; preserve a tabela funcional do seletor e a lista de modos visíveis, incluindo Turbo. O pré-teste verifica os rótulos PT-BR Solicitar revisão e Padrão, as descrições atuais de Request Review, Default e Turbo, o placeholder de busca traduzido, `AgentPermissionPreset.TURBO` e a inclusão de Turbo na lista exibida. Se a estrutura da versão instalada mudar, interrompa sem alterar a instalação e atualize o bundle a partir da compilação correspondente; nunca substitua a interface atual por um bundle antigo.
 - A camada PT-BR deve permanecer antes do código original do frontend e traduzir somente conteúdo renderizado. Não altere chaves do modelo de permissões, valores de enumeração ou a lista de modos.
 - Instalações repetidas por fontes distintas devem ser deduplicadas após normalizar o caminho; mantenha seleção para cópias em pastas realmente diferentes.
 <!-- /ag-agent-AGENTS.md -->
@@ -51,3 +51,10 @@ Mantenha o pacote de localização do Antigravity, o patch dinâmico do ASAR, o 
 - Crédito: Tradução PT-BR: Emerson Teles, em turquesa #00adb5. O crédito fica somente em Configurações → Versão, dentro do mesmo cartão da versão, abaixo do número e separado por contorno cinza translúcido; não aparece no menu superior.
 ## Backup original ausente
 Se o backup original da versão não estiver em _backups, o restaurador não consegue reconstruir os arquivos de fábrica e deve informar que a restauração não é possível. Repare ou instale a versão oficial do aplicativo por cima da instalação existente, preservando os projetos e dados do perfil do usuário; depois execute novamente o instalador ou restaurador.
+
+## Atualização 1.5.0 — 24/10/2026
+- Preserve o crédito exato Tradução PT-BR: Emerson Teles, #00adb5, como segundo item do cartão da versão. O pré-teste exige uma única marca ptbr-translation-credit; ao atualizar o frontend, migre também esse elemento e as traduções diretas.
+- O bundle atual foi obtido do servidor original do Antigravity 2.26.0. Preserve os assets atuais, os identificadores de permissões e a lista funcional do Turbo; não fixe nomes minificados na validação.
+- Use process.execPath e execFileSync nas verificações de JavaScript e mantenha o stderr real nos erros. O ZIP distribui Node.js portátil com licença.
+- Science 1.3.0 e 1.3.1 compartilham os mesmos originais do visualizador por SHA-256; mantenha backups por versão e por origem. Outras versões exigem nova conferência.
+- ZIPs de release excluem README, README.ag, LEIA-ME, AGENTS e CHANGELOG; as notas completas ficam na release e no repositório.

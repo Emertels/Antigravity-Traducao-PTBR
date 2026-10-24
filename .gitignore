@@ -19,3 +19,6 @@ __pycache__/
 /web-bundle/main.js.bak
 # Internal team logs
 TEAMLOG.md
+
+# Portable Node.js runtime is distributed in release ZIPs only
+/runtime/

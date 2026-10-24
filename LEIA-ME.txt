@@ -1,3 +1,8 @@
+VERSÃO ATUAL 1.5.0 — Antigravity 2.26.0 — 24/10/2026
+Frontend original 2.26.0 atualizado; 87 novos mapeamentos; crédito em azul-turquesa restaurado no cartão da versão; “Give Feedback” traduzido; checagem sintática com o próprio Node portátil; Science 1.3.0/1.3.1 compatível.
+O ZIP portátil inclui Node.js e licenças. Extraia a pasta inteira antes de usar os atalhos.
+README, LEIA-ME, AGENTS e CHANGELOG ficam somente no repositório e nas notas da release, fora do ZIP.
+
 ==============================================================================
          PACOTE PORTÁTIL DE TRADUÇÃO GOOGLE ANTIGRAVITY - PT-BR 🇧🇷
 ==============================================================================
@@ -14,6 +19,8 @@
 ------------------------------------------------------------------------------
   1. SOBRE ESTE PACOTE
 ------------------------------------------------------------------------------
+  Correção local de 19/10/2026: o tooltip “Project Settings” foi traduzido
+  como “Configurações do projeto” diretamente na ação dinâmica do menu.
 Este pacote aplica a localização PT-BR ao Google Antigravity Desktop para
 Português do Brasil com instalação e restauração automatizadas.
 

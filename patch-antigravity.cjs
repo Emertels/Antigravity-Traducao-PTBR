@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
 
 console.log("====================================================================");
 console.log("    PATCHER DINAMICO AUTOMATIZADO ANTIGRAVITY PT-BR - EMERSON TELES  ");
@@ -23,16 +23,21 @@ if (!fs.existsSync(sourceWebBundleMain)) {
     process.exit(1);
 }
 const sourceMainText = fs.readFileSync(sourceWebBundleMain, "utf8");
+const translationCreditMarkers = sourceMainText.match(/"data-testid":"ptbr-translation-credit"/g) || [];
+if (translationCreditMarkers.length !== 1 || !sourceMainText.includes('color:"#00adb5",fontSize:"12px"')) {
+    console.error("[x] O cartão da versão precisa conter um único crédito PT-BR em azul-turquesa; nenhum arquivo foi alterado.");
+    process.exit(1);
+}
 const targetInjectionPoint = "'--enable_sidecars',";
 const turboPreservationChecks = [
     ['rótulo PT-BR de Request Review', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
     ['rótulo PT-BR de Default', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
-    ['campo de busca PT-BR', 'placeholder:"Pesquisar abas, arquivos, plugins, subagentes, artefatos e tarefas..."'],
+    ['campo de busca PT-BR', 'placeholder:"Pesquisar abas, arquivos, extensões, subagentes, artefatos e tarefas..."'],
     ['tradução do rótulo Turbo', '"Turbo": "Turbo"'],
     ['tradução da descrição do perfil Turbo', '"Run all commands without restrictions.": "Executar todos os comandos sem restrições."'],
-    ['perfil Turbo na estrutura atual', /turbo:\{label:"Turbo",description:"Run all commands without restrictions\.",prefValues:\{/],
+    ['perfil Turbo na estrutura atual', /turbo:\{label:"Turbo",description:"Run all commands without restrictions\.",\s*prefValues:\{/],
     ['identificador atual do perfil Turbo', /AgentPermissionPreset\.TURBO/],
-    ['Turbo habilitado no seletor principal', /R1a=\["request_review","default","turbo"\]/]
+    ['Turbo habilitado no seletor principal', /\b[\w$]{1,80}=\["request_review","default","turbo"\]/]
 ];
 const missingTurboParts = turboPreservationChecks.filter(([, marker]) =>
     marker instanceof RegExp ? !marker.test(sourceMainText) : !sourceMainText.includes(marker)
@@ -122,21 +127,22 @@ function getTurboUiCompatibilityIssues(version, bundleText) {
         (parts[0] > 2 || (parts[0] === 2 && (parts[1] > 23 || (parts[1] === 23 && (parts[2] || 0) >= 0))));
     if (!isAtLeast223) return [];
 
-    const start = bundleText.indexOf("var CM={");
-    const end = start >= 0 ? bundleText.indexOf('R1a=["request_review","default","turbo"]', start) : -1;
+    const presetDeclaration = /\bvar\s+[\w$]{1,80}=\{request_review:\{label:/.exec(bundleText);
+    const visiblePresets = /\b[\w$]{1,80}=\["request_review","default","turbo"\]/.exec(bundleText);
+    const start = presetDeclaration ? presetDeclaration.index : -1;
+    const end = visiblePresets ? visiblePresets.index : -1;
     const presetTable = start >= 0 && end > start ? bundleText.slice(start, end) : "";
     const required = [
-        ['estrutura atual dos perfis de segurança', 'var CM={'],
         ['perfil Request Review com rótulo PT-BR e descrição atual', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
         ['perfil Default com rótulo PT-BR e descrição atual', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
         ['perfil Turbo e sua descrição atual', 'turbo:{label:"Turbo",description:"Run all commands without restrictions."'],
         ['identificador atual do perfil Turbo', 'AgentPermissionPreset.TURBO']
     ];
     const issues = required.filter(([, marker]) => !presetTable.includes(marker)).map(([label]) => label);
-    if (!/R1a=\["request_review","default","turbo"\]/.test(bundleText)) {
+    if (!visiblePresets) {
         issues.push('Turbo habilitado na lista de perfis visíveis');
     }
-    if (!bundleText.includes('placeholder:"Pesquisar abas, arquivos, plugins, subagentes, artefatos e tarefas..."')) {
+    if (!bundleText.includes('placeholder:"Pesquisar abas, arquivos, extensões, subagentes, artefatos e tarefas..."')) {
         issues.push('placeholder de busca traduzido');
     }
     return issues;
@@ -407,12 +413,17 @@ if (provSplashCode) {
 const tempCheck = path.join(resourcesDir, "temp_ls_check.js");
 try {
     fs.writeFileSync(tempCheck, lsCode, "utf8");
-    execSync(`node --check "${tempCheck}"`, { stdio: "ignore" });
+    execFileSync(process.execPath, ["--check", tempCheck], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        windowsHide: true
+    });
     fs.unlinkSync(tempCheck);
     console.log("    [OK] Verificação sintática de dist/languageServer.js aprovada!");
 } catch (e) {
     try { fs.unlinkSync(tempCheck); } catch {}
-    console.error("[x] Falha na verificação sintática:", e.message);
+    const syntaxDetails = e.stderr ? e.stderr.toString("utf8").trim() : "";
+    console.error("[x] Falha na verificação sintática:", syntaxDetails || e.message);
     process.exit(1);
 }
 
