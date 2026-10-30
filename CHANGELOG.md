@@ -1,3 +1,31 @@
+## v1.6.0 — Antigravity 2.28.2 — 30/10/2026
+
+### Atualização do frontend e traduções
+- Revisados os prints desta conversa: acrescentadas traduções para navegação de conversas, categorias de plugins, textos de automação, metadados, descrições visíveis e aviso de privacidade. Os nomes próprios dos serviços foram preservados.
+- Ampliada a cobertura dos cartões dos prints: adicionados 42 mapeamentos por prefixo para descrições de plugins de design, produtividade, hospedagem, ferramentas de desenvolvimento e negócios, incluindo trechos que aparecem misturados em inglês e português. Os prefixos traduzem a descrição completa iniciada pelo mesmo texto, mesmo quando o cartão a corta visualmente.
+- Corrigidos rótulos de navegação “Move Conversation Up/Down” e metadados “Website”, “Repository”, “View less” e “automation”; as frases de privacidade e as categorias também ficam cobertas pelos textos completos do catálogo.
+- Traduzido o controle da barra lateral “Show Less” como “Mostrar menos”, junto de “Show All” → “Mostrar tudo”.
+- Traduzido o rótulo “Trigger” no formulário de nova automação como “Agendamento”.
+- Traduzido o seletor de projetos: “Search Projects”, “Search Recent Workspaces”, “This Computer” e “Cloud”, incluindo o placeholder misto “Search Projects...”.
+- Corrigido o seletor após conferência visual: além do dicionário e dos atributos de busca, os rótulos estáticos do componente React/portal são localizados diretamente no bundle (“Recentes”, “Este computador”, “Novo Projeto”, “Nenhum Projeto” e “Configurações do projeto”), e os placeholders das buscas locais e remotas usam português desde a renderização inicial.
+- Ajustado o valor personalizado salvo de `projectSearchPlaceholder` para passar por `_trAgy` antes de ser exibido; isso cobre preferências antigas que ainda armazenam “Search Projects”. Traduzido também o rótulo de “Configurações do projeto” no menu contextual de “Nenhum Projeto”.
+- Traduzidos os rótulos e o comando misto “Background comandos” / “Atualizar Chocolatey package” para “Comandos em segundo plano” / “Atualizar pacote do Chocolatey”.
+- Traduzida a tela de erro do Android Compose Preview: título, explicação da CLI Android ausente, instruções de instalação/PATH e botão “Retry”. O nome da aba passou a “Prévia do Compose para Android”; “Android Device Hub” também foi localizado como “Central de dispositivos Android”.
+- Adicionada regra dinâmica para “1 file changed” e plurais, exibindo “1 arquivo alterado” / “N arquivos alterados”; os contadores `+26` e `-0` permanecem intactos.
+- Traduzido o carimbo relativo “just now” como “agora mesmo” e confirmados nos prints os nomes localizados dos painéis Android Compose Preview e Android Device Hub.
+- Traduzidas diretamente no componente de busca as dicas “Match Case (Aa)”, “Match Whole Word (ab)” e “Use Regular Expression (.*)”, que não eram alcançadas pelo dicionário por causa da capitalização/renderização do tooltip. Reinstalação validada no Antigravity 2.28.2.
+- Nova varredura do bundle 2.28.2: **798 candidatos de rótulos e descrições** revisados. Acrescentados 42 mapeamentos para controles de atalhos, terminal, dados remotos, áudio, temas, espaços de trabalho, Google Drive, ações de abas/painéis e mensagens restantes; a varredura final do script agora encontra **0 candidatos sem tradução exata, normalizada ou por prefixo**. O scanner foi ajustado para ler dicionários compactos e regras de prefixo, evitando falsos positivos.
+- Tornado o pré-teste do Visualizador Biomolecular independente da importação automática do cmdlet `Get-FileHash`; quando necessário, o sincronizador calcula SHA-256 pelo .NET, sem alterar os critérios de identificação e backup.
+- Corrigido o texto composto do cartão “Subagente do navegador”: além do requisito do Chrome, a instrução para iniciar com `/browser` agora traduz o trecho junto quando o frontend o renderiza no mesmo nó.
+- Atualizado `web-bundle/main.js` a partir do frontend servido pela instalação original Antigravity 2.28.2; preservada a camada PT-BR existente e reaplicados os mapeamentos sobre a compilação atual.
+- Traduzido o aviso de pesquisa entre conversas: “This page is going away soon”, “Search conversations with”, “in the top left.”, “View archived in the sidebar” e o botão “Dismiss”. Mantida a busca nas conversas arquivadas pelo menu de filtros.
+- Mantido o crédito “Tradução PT-BR: Emerson Teles” em azul-turquesa no cartão da versão, atualizado para a estrutura do frontend 2.28.2.
+- Atualizados `compiled_tailwind.css`, `jetbox.css` e `prism_bundle.js` a partir da interface 2.28.2 servida localmente.
+- Atualizado o pré-teste do seletor e do placeholder para a estrutura e os textos atuais da versão 2.28.2, mantendo a validação do perfil Turbo.
+- Traduzidos os rótulos do painel de uso do modelo (“Model”, “Usage”, limites semanais/diários, estado indisponível e provedores) e adicionadas regras dinâmicas para percentuais restantes (`86% left`) e janelas como `5h limit`. A regra existente para tempos de redefinição cobre `Resets in 2d 5h`.
+- Correção refinada após conferir o DOM da 2.28.2: o percentual é renderizado em um nó separado e o sufixo é literalmente `% left`, não a frase completa `86% left`; o sufixo agora é traduzido diretamente para `% restante`.
+- Patcher pré-testado contra o ASAR instalado 2.28.2; sintaxe JavaScript validada. Instalação 2.28.2 e varredura final concluídas; 0 candidatos sem mapeamento. ZIP portátil sem documentação. Publicação v1.6.0 preparada em 30/10/2026.
+
 ## v1.5.0 — Antigravity 2.26.0 — 24/10/2026
 
 ### Tradução e interface atual

@@ -32,7 +32,7 @@ const targetInjectionPoint = "'--enable_sidecars',";
 const turboPreservationChecks = [
     ['rótulo PT-BR de Request Review', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
     ['rótulo PT-BR de Default', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
-    ['campo de busca PT-BR', 'placeholder:"Pesquisar abas, arquivos, extensões, subagentes, artefatos e tarefas..."'],
+    ['campo de busca PT-BR', 'placeholder:w?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos...":"Pesquisar abas, arquivos, extensões, artefatos e comandos..."'],
     ['tradução do rótulo Turbo', '"Turbo": "Turbo"'],
     ['tradução da descrição do perfil Turbo', '"Run all commands without restrictions.": "Executar todos os comandos sem restrições."'],
     ['perfil Turbo na estrutura atual', /turbo:\{label:"Turbo",description:"Run all commands without restrictions\.",\s*prefValues:\{/],
@@ -142,7 +142,7 @@ function getTurboUiCompatibilityIssues(version, bundleText) {
     if (!visiblePresets) {
         issues.push('Turbo habilitado na lista de perfis visíveis');
     }
-    if (!bundleText.includes('placeholder:"Pesquisar abas, arquivos, extensões, subagentes, artefatos e tarefas..."')) {
+    if (!bundleText.includes('placeholder:w?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos...":"Pesquisar abas, arquivos, extensões, artefatos e comandos..."')) {
         issues.push('placeholder de busca traduzido');
     }
     return issues;

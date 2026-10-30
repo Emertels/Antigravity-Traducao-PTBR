@@ -9,6 +9,23 @@
 )
 
 $ErrorActionPreference = 'Stop'
+# Alguns hosts PowerShell iniciam sem importar Microsoft.PowerShell.Utility.
+# O sincronizador só precisa do SHA-256; mantenha o pré-teste funcional nesses hosts.
+if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
+    function Get-FileHash {
+        param(
+            [Parameter(Mandatory = $true)][string]$LiteralPath,
+            [string]$Algorithm = 'SHA256'
+        )
+        if ($Algorithm -ne 'SHA256') { throw "Algoritmo de hash não suportado: $Algorithm" }
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        try {
+            $stream = [System.IO.File]::OpenRead($LiteralPath)
+            try { $hash = $sha.ComputeHash($stream) } finally { $stream.Dispose() }
+            [pscustomobject]@{ Algorithm = 'SHA256'; Hash = ([BitConverter]::ToString($hash) -replace '-', ''); Path = $LiteralPath }
+        } finally { $sha.Dispose() }
+    }
+}
 $supportedVersion = '1.3.0'
 # Science 1.3.1 contém os mesmos dois arquivos do visualizador, confirmados por SHA-256.
 # O pacote é compartilhado, mas os backups continuam separados pela versão do plugin.
