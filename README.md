@@ -1,8 +1,8 @@
-## Versão em preparação: 1.6.0 — Antigravity 2.28.2 — 29/10/2026
+## Versão atual: 1.6.0 — Antigravity 2.28.2 — 30/10/2026
 
-Frontend atualizado para 2.28.2, incluindo a dica de pesquisa entre conversas e navegação de itens arquivados. Instalação local em validação; esta revisão não foi publicada no GitHub.
+Frontend atualizado para 2.28.2. Revisados os cartões carregados dinamicamente no Marketplace e corrigidas descrições híbridas em inglês e português. A auditoria conjunta cobre 814 frases e candidatos, sem itens mapeados em falta. ZIP portátil atualizado na release v1.6.0.
 
-Frontend original 2.26.0 atualizado; 87 novos mapeamentos; crédito em azul-turquesa restaurado no cartão da versão; “Give Feedback” traduzido; checagem sintática com o próprio Node portátil; Science 1.3.0/1.3.1 compatível.
+O pacote continua incluindo o instalador, o restaurador, o runtime Node.js portátil e os componentes do Visualizador Biomolecular. O changelog desta versão registra as correções e os detalhes da distribuição.
 
 Baixe o ZIP portátil na página de Releases, extraia a pasta inteira e execute **Instalar-Traducao.bat**. Para voltar ao original da mesma versão, use **Restaurar-Original.bat**. O ZIP inclui runtime e licenças, com documentação e changelog disponíveis apenas no repositório e na descrição da release.
 

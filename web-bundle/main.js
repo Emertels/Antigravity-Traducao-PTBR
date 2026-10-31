@@ -3650,6 +3650,21 @@ Object.assign(_ptAgyDict, {
 
 // Prefixos para variantes de descrições de skills que chegam do catálogo do Antigravity.
 var _ptRemainingSkillPrefixes = {
+  "Verify availability, schedule events, and RSVP.": "Verifique a disponibilidade, agende eventos e confirme presença.",
+  "Interactive 3D biomolecular structure viewer via Mol*. Renders 3D molecular structures from local workspace files": "Visualizador interativo de estruturas biomoleculares em 3D com Mol*. Exibe estruturas moleculares 3D de arquivos locais do espaço de trabalho (.cif, .mmcif, .pdb) ou de itens da conversa e gerencia anotações 3D do usuário.",
+  "Uses Chrome DevTools MCP for inspecting, debugging, and testing cookies, session state, authentication issues, and cookie consent compliance.": "Usa o MCP do Chrome DevTools para inspecionar, depurar e testar cookies, estado da sessão, problemas de autenticação e conformidade com o consentimento de cookies. Use ao investigar erros 401/403, redirecionamentos de autenticação e problemas relacionados.",
+  "Connect Antigravity to Dropbox to search, inspect, and manage files": "Conecte o Antigravity ao Dropbox para pesquisar, inspecionar e gerenciar arquivos.",
+  "Connect Antigravity to your Notion workspace": "Conecte o Antigravity ao seu espaço de trabalho do Notion para pesquisar e gerenciar conteúdo.",
+  "Compile and deploy on Netlify:": "Compile e implante no Netlify: gerencie funções, funções de borda, prévias de implantação e sites.",
+  "Deploy, configure, monitor, and troubleshoot apps": "Implante, configure, monitore e solucione problemas dos seus aplicativos.",
+  "Compile and deploy web apps and AI agents on Vercel": "Compile e implante aplicativos web e agentes de IA na Vercel.",
+  "Compile Wix apps and headless sites, and manage": "Crie aplicativos Wix e sites headless e gerencie o conteúdo do seu site.",
+  "Build with Google": "Desenvolva com o Google",
+  "Compile on Google's developer platforms, including Android, Chrome, Gemini, and Google Cloud.": "Desenvolva nas plataformas para desenvolvedores do Google, incluindo Android, Chrome, Gemini e Google Cloud.",
+  "Also includes global permissions when working in this project.": "Também inclui as permissões globais ao trabalhar neste projeto.",
+  "global permissions": "permissões globais",
+  "when working in this project.": "ao trabalhar neste projeto.",
+  "Google does not control the availability or functionality of third-party developer tools. Your data from third-party developer tools connected to your Antigravity instance may be shared with Google. Google will protect any such data in accordance with the Google Privacy Policy, found here:": "O Google não controla a disponibilidade nem o funcionamento das ferramentas de desenvolvedores de terceiros. Seus dados dessas ferramentas conectadas à sua instância do Antigravity podem ser compartilhados com o Google. O Google protegerá esses dados de acordo com a Política de Privacidade do Google, disponível aqui:",
   "Read, create, and manage Google Calendar events.": "Leia, crie e gerencie eventos do Google Agenda. Use quando alguém compartilhar um link do calendar.google.com ou pedir para consultar, localizar, criar, atualizar, excluir, mover ou confirmar presença em um evento.",
   "Browse, search, and manage Google Drive files and folders.": "Navegue, pesquise e gerencie arquivos e pastas do Google Drive. Use quando alguém compartilhar um link do drive.google.com ou pedir para localizar, baixar, enviar, atualizar, mover ou copiar arquivos.",
   "# Science Visualization Priority Rules for any science visualization task,": "# Regras prioritárias de visualização científica: em tarefas de visualização científica, prefira os visualizadores interativos em painéis laterais.",
