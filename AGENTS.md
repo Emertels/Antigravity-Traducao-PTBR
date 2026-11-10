@@ -58,3 +58,10 @@ Se o backup original da versão não estiver em _backups, o restaurador não con
 - Use process.execPath e execFileSync nas verificações de JavaScript e mantenha o stderr real nos erros. O ZIP distribui Node.js portátil com licença.
 - Science 1.3.0 e 1.3.1 compartilham os mesmos originais do visualizador por SHA-256; mantenha backups por versão e por origem. Outras versões exigem nova conferência.
 - ZIPs de release excluem README, README.ag, LEIA-ME, AGENTS e CHANGELOG; as notas completas ficam na release e no repositório.
+
+## Linux
+- `instalar-traducao.sh` e `restaurar-original.sh` seguem as mesmas regras do Windows e compartilham `linux-common.sh`; mantenha os três juntos.
+- O instalador Linux salva `web-bundle-original` (ou `web-bundle-was-absent.txt`) em `<pasta-do-Antigravity>/_backups/<versão>` antes de chamar o patcher, pois o `patch-antigravity.cjs` só salva o `app.asar`. Nunca registre um bundle com marca PT-BR como original.
+- Encerre somente processos cujo executável está na pasta do programa, excluindo `language_server`; verifique por até 3 segundos e aborte mostrando nome e PID.
+- Eleve com `sudo` apenas quando `resources` não for gravável e limpe os caches em `~/.config/Antigravity` do usuário que chamou o `sudo`.
+- Valide os scripts com `bash -n` (e `shellcheck`, quando disponível) antes da entrega.
