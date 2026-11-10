@@ -72,10 +72,11 @@ Pacote portátil de localização PT-BR do **Google Antigravity Desktop** para P
 5. [Estrutura da Pasta](#-estrutura-da-pasta)
 6. [Como Instalar](#-como-instalar-em-2-cliques)
 7. [Como Restaurar o Original de Fábrica](#-como-restaurar-o-original-de-fábrica)
-8. [Sistema de Backup Modular e Segurança](#-sistema-de-backup-modular-e-segurança)
-9. [Diretórios do Sistema](#-diretórios-no-computador)
-10. [Padrão de Terminologia Oficial](#-padrão-de-terminologia-oficial)
-11. [Créditos e Autoria](#-créditos-e-autoria)
+8. [Instalação no Linux](#-instalação-no-linux-ubuntudebian)
+9. [Sistema de Backup Modular e Segurança](#-sistema-de-backup-modular-e-segurança)
+10. [Diretórios do Sistema](#-diretórios-no-computador)
+11. [Padrão de Terminologia Oficial](#-padrão-de-terminologia-oficial)
+12. [Créditos e Autoria](#-créditos-e-autoria)
 
 ---
 
@@ -114,6 +115,9 @@ Este pacote foi arquitetado para oferecer uma experiência nativa em português 
 ├── Restaurar-Original.bat   # Atalho rápido: volte ao original de fábrica em 1 clique
 ├── aplicar-traducao.ps1     # Script mestre PowerShell com barra de progresso visual
 ├── restaurar-original.ps1   # Script de restauração modular e limpeza segura
+├── instalar-traducao.sh     # Instalador para Linux (pacote .deb)
+├── restaurar-original.sh    # Restaurador para Linux
+├── linux-common.sh          # Funções compartilhadas pelos scripts Linux
 ├── patch-antigravity.cjs    # Motor dinâmico automatizado sem downgrade
 ├── tools/                   # Auditoria da interface e validação de backups
 │   ├── scan-untranslated.cjs
@@ -161,6 +165,23 @@ Se desejar retornar o Antigravity exatamente ao padrão original em inglês:
    ```
 2. O restaurador detectará a versão instalada, recuperará o backup original de fábrica em `_backups\<versão>\app.asar` e restaurará o `web-bundle` original salvo para essa versão.
 3. Seu Antigravity voltará a ser o original genuíno instantaneamente.
+
+---
+
+## 🐧 Instalação no Linux (Ubuntu/Debian)
+
+Para o pacote oficial `.deb` (instalado em `/opt/Antigravity`). Requer Node.js no sistema; `nvm`, `fnm` e `asdf` do usuário são encontrados mesmo sob `sudo`.
+
+```bash
+bash instalar-traducao.sh            # aplica a tradução
+bash restaurar-original.sh           # volta ao original da mesma versão
+bash instalar-traducao.sh /caminho   # instalação fora dos locais padrão
+```
+
+- Os scripts seguem o mesmo fluxo do Windows: pré-teste do `patch-antigravity.cjs` antes de qualquer alteração, elevação com `sudo` só quando a pasta do programa não é gravável, encerramento da interface sem encerrar o `language_server` e limpeza dos caches em `~/.config/Antigravity`.
+- Backups em `/opt/Antigravity/_backups/<versão>/`: `app.asar` (criado pelo patcher) e `web-bundle-original` (ou `web-bundle-was-absent.txt`), salvos uma única vez. Se o `web-bundle` instalado já estiver traduzido sem backup original, instalador e restaurador interrompem sem alterar arquivos; reinstale o `.deb` oficial e execute novamente.
+- Mantenha `linux-common.sh` ao lado dos scripts.
+- O Visualizador Biomolecular ainda não é sincronizado no Linux (`sync-biomolecular-sidecar.ps1` é exclusivo do Windows).
 
 ---
 

@@ -51,10 +51,22 @@ O pacote traduz todas as áreas do aplicativo:
 • web-bundle/             -> Pasta contendo a interface web traduzida por Emerson Teles.
 • aplicar-traducao.ps1    -> Script PowerShell de instalação com barra de progresso.
 • restaurar-original.ps1  -> Script PowerShell de restauração do backup original modular.
+• instalar-traducao.sh    -> Instalador para Linux (pacote .deb em /opt/Antigravity).
+• restaurar-original.sh   -> Restaurador para Linux.
+• linux-common.sh         -> Funções compartilhadas pelos scripts Linux; mantenha ao lado deles.
 • README.md               -> Guia completo em formato Markdown moderno (Português).
 • README.ag               -> Documento de metadados para Antigravity.
 • AGENTS_PTBR.md          -> Diretrizes operacionais para subagentes em Português.
 • LEIA-ME.txt             -> Este manual de instruções e referência em texto puro.
+
+  LINUX (Ubuntu/Debian): requer Node.js no sistema. Execute no terminal:
+    bash instalar-traducao.sh       (aplica a tradução)
+    bash restaurar-original.sh      (volta ao original da mesma versão)
+  Os backups ficam em /opt/Antigravity/_backups/<versão>/ (app.asar e
+  web-bundle-original). Se o web-bundle já estiver traduzido sem backup
+  original, os scripts interrompem sem alterar arquivos: reinstale o .deb
+  oficial e execute novamente. O Visualizador Biomolecular ainda não é
+  sincronizado no Linux.
 
 ------------------------------------------------------------------------------
   3. DIRETÓRIOS NO COMPUTADOR (ONDE OS ARQUIVOS FICAM)

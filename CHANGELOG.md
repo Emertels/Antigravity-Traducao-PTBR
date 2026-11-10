@@ -1,3 +1,14 @@
+## Não lançado — Suporte a Linux
+
+### Instalação e restauração no Linux
+- Adicionados `instalar-traducao.sh`, `restaurar-original.sh` e `linux-common.sh` para o pacote oficial `.deb` (`/opt/Antigravity`), usando o mesmo `patch-antigravity.cjs` e o mesmo `tools/verify-clean-asar.cjs` do Windows.
+- O instalador salva o `web-bundle` original em `_backups/<versão>/web-bundle-original` (ou registra `web-bundle-was-absent.txt`) uma única vez e interrompe quando o bundle instalado já está traduzido sem backup original.
+- O restaurador reconhece quando já está original, só copia o que difere do backup e nunca remove um `web-bundle` sem backup ou marca de ausência.
+- Os dois scripts encerram a interface depois dos pré-testes sem encerrar o `language_server`, elevam com `sudo` somente quando necessário e limpam os caches em `~/.config/Antigravity`.
+- Limitação conhecida: o Visualizador Biomolecular ainda não é sincronizado no Linux.
+
+---
+
 ## v1.6.0 — Antigravity 2.28.2 — 30/10/2026
 
 ### Atualização do frontend e traduções
