@@ -1,0 +1,20 @@
+{
+  "args": [
+    "dist/server.cjs"
+  ],
+  "command": "node",
+  "description": "Interactive 3D biomolecular structure viewer via Mol*",
+  "display_name": "Biomolecular Structure Viewer",
+  "has_web_ui": true,
+  "restart_policy": "always",
+  "ui_config": {
+    "display_name": "Biomolecular Structure Viewer",
+    "views": [
+      {
+        "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
+        "path": "/ui.html",
+        "title": "Biomolecular Structure Viewer"
+      }
+    ]
+  }
+}

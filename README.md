@@ -1,8 +1,8 @@
-## Versão atual: 1.6.0 — Antigravity 2.28.2 — 30/10/2026
+## Versão atual: 1.7.0 — Antigravity 2.35.1 — 24/11/2026
 
-Frontend atualizado para 2.28.2. Revisados os cartões carregados dinamicamente no Marketplace e corrigidas descrições híbridas em inglês e português. A auditoria conjunta cobre 814 frases e candidatos, sem itens mapeados em falta. ZIP portátil atualizado na release v1.6.0.
+Compatibilidade 100% com o Google Antigravity 2.35.1. Solução definitiva para inicialização estável com todos os 541 assets nativos de runtime extraídos (incluindo `workers/shiki_worker.js`, `page_agent_bundle.js`, áudios e ícones). Varredura profunda com tradução integral da Paleta de Comandos (`Ctrl+Shift+P`, 48 comandos), drawer e barra do navegador de Downloads, controles de áudio/gravação e novos status de envio (*"Finalizando..."*, *"Finalizando transcrição..."*, *"Cancelar (Ctrl+D)"*), além de todas as opções de Configurações, totalizando 0 termos sem mapeamento na auditoria.
 
-O pacote continua incluindo o instalador, o restaurador, o runtime Node.js portátil e os componentes do Visualizador Biomolecular. O changelog desta versão registra as correções e os detalhes da distribuição.
+O pacote continua incluindo o instalador, o restaurador, o runtime Node.js portátil e os componentes do Visualizador Biomolecular (com suporte a `sidecar.json` e fallback de restauração original). O changelog desta versão registra as correções e os detalhes da distribuição.
 
 Baixe o ZIP portátil na página de Releases, extraia a pasta inteira e execute **Instalar-Traducao.bat**. Para voltar ao original da mesma versão, use **Restaurar-Original.bat**. O ZIP inclui runtime e licenças, com documentação e changelog disponíveis apenas no repositório e na descrição da release.
 
@@ -11,7 +11,8 @@ Instalação, restauração e reinstalação foram conferidas na versão indicad
 ---
 
 # 🌐 Google Antigravity — Tradução para Português do Brasil (PT-BR) 🇧🇷
-### Versão de tradução 1.6.0 — Antigravity 2.28.2 — 30/10/2026
+### Versão de tradução 1.7.0 — Antigravity 2.35.1 — 24/11/2026
+Atualização completa para Antigravity 2.35.1: suporte oficial sem downgrade, tradução completa da Paleta de Comandos (`Ctrl+Shift+P`), controles do navegador e downloads, gravação de voz e status de envio, opções de configurações e preferências, e sistema de backup responsivo com reversão 100% limpa para o inglês de fábrica.
 Correção local de 19/10/2026: o tooltip do ícone de configurações do projeto agora é traduzido como “Configurações do projeto”; a ação dinâmica recebe o texto localizado diretamente.
 Localizados os textos das capturas e das descrições de plugins: visualizador biomolecular, Google Workspace, Firebase, Android CLI, Google Developer Knowledge, Google Cloud Developer, Google Maps Platform, Dart e Flutter, Data Agent Kit e Modern Web Guidance, além de limites, histórico, projetos, seletor de ambiente e ajuda jurídica. A revisão do texto copiado de Modern Web Guidance abrangeu 441 linhas e 5.016 palavras; 382 entradas de mapeamento foram acrescentadas ou ampliadas no catálogo desta revisão. Esse número conta mapeamentos, não palavras traduzidas. A compatibilidade estrutural do patch foi conferida no `app.asar` local 2.24.0; o frontend embarcado no pacote segue baseado em 2.23.0.
 

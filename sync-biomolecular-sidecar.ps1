@@ -26,66 +26,71 @@ if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
         } finally { $sha.Dispose() }
     }
 }
-$supportedVersion = '1.3.0'
-# Science 1.3.1 contém os mesmos dois arquivos do visualizador, confirmados por SHA-256.
-# O pacote é compartilhado, mas os backups continuam separados pela versão do plugin.
-$supportedPluginVersions = @('1.3.0', '1.3.1')
+# Suporte a versoes de plugins que contem o visualizador (science 1.3.x e structural-biology 1.0.x)
+$supportedPluginVersions = @('1.0.0', '1.3.0', '1.3.1')
 $marketplacesRoot = Join-Path $env:USERPROFILE '.gemini\antigravity\cache\marketplaces'
-$configScienceRoot = Join-Path $env:USERPROFILE '.gemini\config\plugins\science'
-$packageVersionRoot = Join-Path $PackageRoot $supportedVersion
-$originalRoot = Join-Path $packageVersionRoot 'original'
-$translatedRoot = Join-Path $packageVersionRoot 'translated'
-$files = @('ui.html', 'dist\main.js')
-$legacyTranslatedHashes = @{
-    'ui.html' = '4A9F7D80A2E6BBB98C477B33E55D72183B7474A892138DA024E8362A7BDF8226'
-    'dist\main.js' = 'DB9F87483BC28D84296DAB2D944ED4B9ADE5BA889512302376FCC38111FCEBD9'
+$pluginNames = @('science', 'structural-biology')
+$files = @('ui.html', 'dist\main.js', 'sidecar.json')
+
+function Get-SidecarPackageVersion([string]$pluginVer) {
+    if ($pluginVer -eq '1.0.0') { return '1.0.0' }
+    return '1.3.0'
 }
 
-foreach ($relativeFile in $files) {
-    if (-not (Test-Path -LiteralPath (Join-Path $originalRoot $relativeFile) -PathType Leaf) -or
-        -not (Test-Path -LiteralPath (Join-Path $translatedRoot $relativeFile) -PathType Leaf)) {
-        throw "Pacote do Visualizador Biomolecular incompleto: $relativeFile"
+# Validar integridade dos pacotes disponiveis (1.0.0 e 1.3.0)
+foreach ($ver in @('1.0.0', '1.3.0')) {
+    $verRoot = Join-Path $PackageRoot $ver
+    if (Test-Path -LiteralPath $verRoot -PathType Container) {
+        foreach ($relativeFile in $files) {
+            if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $verRoot 'original') $relativeFile) -PathType Leaf) -or
+                -not (Test-Path -LiteralPath (Join-Path (Join-Path $verRoot 'translated') $relativeFile) -PathType Leaf)) {
+                throw "Pacote do Visualizador Biomolecular $ver incompleto: $relativeFile"
+            }
+        }
     }
 }
 
 $targets = @()
 if (Test-Path -LiteralPath $marketplacesRoot -PathType Container) {
     foreach ($marketplace in Get-ChildItem -LiteralPath $marketplacesRoot -Directory -ErrorAction SilentlyContinue) {
-        $scienceRoot = Join-Path $marketplace.FullName 'plugins\science'
-        if (-not (Test-Path -LiteralPath $scienceRoot -PathType Container)) { continue }
-        foreach ($pluginVersion in Get-ChildItem -LiteralPath $scienceRoot -Directory -ErrorAction SilentlyContinue) {
-            $sidecarRoot = Join-Path $pluginVersion.FullName 'sidecars\biomolecular_structure_viewer'
-            if (Test-Path -LiteralPath (Join-Path $sidecarRoot 'sidecar.json') -PathType Leaf) {
-                $targets += [pscustomobject]@{
-                    Label = "cache $($marketplace.Name)"
-                    BackupKey = $marketplace.Name
-                    Version = $pluginVersion.Name
-                    Root = $sidecarRoot
+        foreach ($pName in $pluginNames) {
+            $pRoot = Join-Path $marketplace.FullName "plugins\$pName"
+            if (-not (Test-Path -LiteralPath $pRoot -PathType Container)) { continue }
+            foreach ($pluginVersion in Get-ChildItem -LiteralPath $pRoot -Directory -ErrorAction SilentlyContinue) {
+                $sidecarRoot = Join-Path $pluginVersion.FullName 'sidecars\biomolecular_structure_viewer'
+                if (Test-Path -LiteralPath (Join-Path $sidecarRoot 'sidecar.json') -PathType Leaf) {
+                    $targets += [pscustomobject]@{
+                        Label = "cache $($marketplace.Name) ($pName)"
+                        BackupKey = "$($marketplace.Name)-$pName"
+                        Version = $pluginVersion.Name
+                        Root = $sidecarRoot
+                        PluginName = $pName
+                    }
                 }
             }
         }
     }
 }
 
-$configPluginManifest = Join-Path $configScienceRoot 'plugin.json'
-$configSidecarRoot = Join-Path $configScienceRoot 'sidecars\biomolecular_structure_viewer'
-if (Test-Path -LiteralPath (Join-Path $configSidecarRoot 'sidecar.json') -PathType Leaf) {
-    if (-not (Test-Path -LiteralPath $configPluginManifest -PathType Leaf)) {
-        throw "O plugin Science ativo não tem plugin.json para validar sua versão: $configPluginManifest"
-    }
-    try {
-        $configPlugin = Get-Content -LiteralPath $configPluginManifest -Raw | ConvertFrom-Json -ErrorAction Stop
-    } catch {
-        throw "Não foi possível ler a versão do plugin Science ativo: $configPluginManifest"
-    }
-    if ($configPlugin.name -ne 'science' -or [string]::IsNullOrWhiteSpace([string]$configPlugin.version)) {
-        throw "O manifesto do plugin Science ativo não informa um nome e uma versão válidos: $configPluginManifest"
-    }
-    $targets += [pscustomobject]@{
-        Label = 'plugin Science ativo'
-        BackupKey = 'gemini-config'
-        Version = [string]$configPlugin.version
-        Root = $configSidecarRoot
+foreach ($pName in $pluginNames) {
+    $configPluginRoot = Join-Path $env:USERPROFILE ".gemini\config\plugins\$pName"
+    $configPluginManifest = Join-Path $configPluginRoot 'plugin.json'
+    $configSidecarRoot = Join-Path $configPluginRoot 'sidecars\biomolecular_structure_viewer'
+    if (Test-Path -LiteralPath (Join-Path $configSidecarRoot 'sidecar.json') -PathType Leaf) {
+        if (Test-Path -LiteralPath $configPluginManifest -PathType Leaf) {
+            try {
+                $configPlugin = Get-Content -LiteralPath $configPluginManifest -Raw | ConvertFrom-Json -ErrorAction Stop
+                if ($configPlugin.name -eq $pName -and -not [string]::IsNullOrWhiteSpace([string]$configPlugin.version)) {
+                    $targets += [pscustomobject]@{
+                        Label = "plugin $pName ativo"
+                        BackupKey = "gemini-config-$pName"
+                        Version = [string]$configPlugin.version
+                        Root = $configSidecarRoot
+                        PluginName = $pName
+                    }
+                }
+            } catch {}
+        }
     }
 }
 
@@ -111,10 +116,21 @@ function Get-TrustedRecoveryPath($target, [string]$relativeFile) {
     return $recoveryPath
 }
 
+function Get-TargetOriginalRoot($target) {
+    $pkgVer = Get-SidecarPackageVersion $target.Version
+    return Join-Path (Join-Path $PackageRoot $pkgVer) 'original'
+}
+
+function Get-TargetTranslatedRoot($target) {
+    $pkgVer = Get-SidecarPackageVersion $target.Version
+    return Join-Path (Join-Path $PackageRoot $pkgVer) 'translated'
+}
+
 function Test-TrustedRecoveryCopy($target) {
     foreach ($relativeFile in $files) {
         $recoveryPath = Get-TrustedRecoveryPath $target $relativeFile
-        $packageOriginal = Join-Path $originalRoot $relativeFile
+        $origRoot = Get-TargetOriginalRoot $target
+        $packageOriginal = Join-Path $origRoot $relativeFile
         if (-not (Test-Path -LiteralPath $recoveryPath -PathType Leaf) -or
             (Get-FileHash -LiteralPath $recoveryPath -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $packageOriginal -Algorithm SHA256).Hash) {
             return $false
@@ -136,12 +152,14 @@ if ($Mode -eq 'Preflight') {
                 throw "Arquivo esperado não encontrado no visualizador biomolecular: $($target.Root)\$relativeFile"
             }
             $currentHash = (Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash
-            $translatedHash = (Get-FileHash -LiteralPath (Join-Path $translatedRoot $relativeFile) -Algorithm SHA256).Hash
-            $originalSource = if ($backupPresent -eq $files.Count) { Join-Path $backupRoot $relativeFile } else { Join-Path $originalRoot $relativeFile }
+            $transRoot = Get-TargetTranslatedRoot $target
+            $origRoot = Get-TargetOriginalRoot $target
+            $translatedHash = (Get-FileHash -LiteralPath (Join-Path $transRoot $relativeFile) -Algorithm SHA256).Hash
+            $originalSource = if ($backupPresent -eq $files.Count) { Join-Path $backupRoot $relativeFile } else { Join-Path $origRoot $relativeFile }
             $originalHash = (Get-FileHash -LiteralPath $originalSource -Algorithm SHA256).Hash
             if ($currentHash -ne $translatedHash -and $currentHash -ne $originalHash) {
                 $recoveryPath = Get-TrustedRecoveryPath $target $relativeFile
-                $packageOriginalHash = (Get-FileHash -LiteralPath (Join-Path $originalRoot $relativeFile) -Algorithm SHA256).Hash
+                $packageOriginalHash = (Get-FileHash -LiteralPath (Join-Path $origRoot $relativeFile) -Algorithm SHA256).Hash
                 if (-not (Test-TrustedRecoveryCopy $target) -or
                     (Get-FileHash -LiteralPath $recoveryPath -Algorithm SHA256).Hash -ne $packageOriginalHash) {
                     throw "O sidecar biomolecular foi alterado ou atualizado; pré-teste interrompido para evitar sobrescrever arquivos diferentes: $livePath"
@@ -156,6 +174,8 @@ if ($Mode -eq 'Preflight') {
 $changed = $false
 foreach ($target in $targets) {
     $backupRoot = Join-Path $AntigravityInstallDir (Join-Path '_backups\biomolecular-sidecar' (Join-Path $target.BackupKey $target.Version))
+    $transRoot = Get-TargetTranslatedRoot $target
+    $origRoot = Get-TargetOriginalRoot $target
 
     if ($Mode -eq 'Install') {
         $backupComplete = @($files | Where-Object { Test-Path -LiteralPath (Join-Path $backupRoot $_) -PathType Leaf }).Count -eq $files.Count
@@ -168,7 +188,9 @@ foreach ($target in $targets) {
             $targetAlreadyTranslated = $true
             foreach ($relativeFile in $files) {
                 $livePath = Join-Path $target.Root $relativeFile
-                $translatedPath = Join-Path $translatedRoot $relativeFile
+                $transRoot = Get-TargetTranslatedRoot $target
+                $origRoot = Get-TargetOriginalRoot $target
+                $translatedPath = Join-Path $transRoot $relativeFile
                 if (-not (Test-Path -LiteralPath $livePath -PathType Leaf) -or
                     (Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $translatedPath -Algorithm SHA256).Hash) {
                     $targetAlreadyTranslated = $false
@@ -178,7 +200,7 @@ foreach ($target in $targets) {
             if (-not $targetAlreadyTranslated) {
                 foreach ($relativeFile in $files) {
                     $livePath = Join-Path $target.Root $relativeFile
-                    $originalPath = Join-Path $originalRoot $relativeFile
+                    $originalPath = Join-Path $origRoot $relativeFile
                     if ((Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $originalPath -Algorithm SHA256).Hash) {
                         $recoveryPath = Get-TrustedRecoveryPath $target $relativeFile
                         $originalHash = (Get-FileHash -LiteralPath $originalPath -Algorithm SHA256).Hash
@@ -194,7 +216,7 @@ foreach ($target in $targets) {
             foreach ($relativeFile in $files) {
                 $destination = Join-Path $backupRoot $relativeFile
                 New-Item -ItemType Directory -Path (Split-Path -Parent $destination) -Force | Out-Null
-                $backupSource = if ($targetAlreadyTranslated) { Join-Path $originalRoot $relativeFile } elseif ($needsNormalization) { Get-TrustedRecoveryPath $target $relativeFile } else { Join-Path $target.Root $relativeFile }
+                $backupSource = if ($targetAlreadyTranslated) { Join-Path $origRoot $relativeFile } elseif ($needsNormalization) { Get-TrustedRecoveryPath $target $relativeFile } else { Join-Path $target.Root $relativeFile }
                 Copy-Item -LiteralPath $backupSource -Destination $destination
             }
             $backupComplete = $true
@@ -219,16 +241,16 @@ foreach ($target in $targets) {
                     throw "Manifesto de hashes do sidecar inválido; nenhum arquivo foi alterado: $translationManifestPath"
                 }
             } else {
-                $previousTranslatedHashes = $legacyTranslatedHashes
+                $previousTranslatedHashes = @{}
             }
             $stateIsOriginalOrTranslated = $true
             foreach ($relativeFile in $files) {
                 $livePath = Join-Path $target.Root $relativeFile
                 $currentHash = (Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash
                 $originalHash = (Get-FileHash -LiteralPath (Join-Path $backupRoot $relativeFile) -Algorithm SHA256).Hash
-                $translatedHash = (Get-FileHash -LiteralPath (Join-Path $translatedRoot $relativeFile) -Algorithm SHA256).Hash
-                $previousTranslatedHash = $previousTranslatedHashes[$relativeFile]
-                if ($currentHash -ne $originalHash -and $currentHash -ne $translatedHash -and $currentHash -ne $previousTranslatedHash) {
+                $translatedHash = (Get-FileHash -LiteralPath (Join-Path $transRoot $relativeFile) -Algorithm SHA256).Hash
+                $previousTranslatedHash = if ($previousTranslatedHashes -and $previousTranslatedHashes.ContainsKey($relativeFile)) { $previousTranslatedHashes[$relativeFile] } else { $null }
+                if ($currentHash -ne $originalHash -and $currentHash -ne $translatedHash -and ($null -ne $previousTranslatedHash -and $currentHash -ne $previousTranslatedHash)) {
                     $stateIsOriginalOrTranslated = $false
                     break
                 }
@@ -240,13 +262,13 @@ foreach ($target in $targets) {
 
         try {
             foreach ($relativeFile in $files) {
-                $source = Join-Path $translatedRoot $relativeFile
+                $source = Join-Path $transRoot $relativeFile
                 $destination = Join-Path $target.Root $relativeFile
                 Copy-Item -LiteralPath $source -Destination $destination -Force -ErrorAction Stop
             }
             $currentTranslatedHashes = @{}
             foreach ($relativeFile in $files) {
-                $currentTranslatedHashes[$relativeFile] = (Get-FileHash -LiteralPath (Join-Path $translatedRoot $relativeFile) -Algorithm SHA256).Hash
+                $currentTranslatedHashes[$relativeFile] = (Get-FileHash -LiteralPath (Join-Path $transRoot $relativeFile) -Algorithm SHA256).Hash
             }
             $manifestJson = ConvertTo-Json -InputObject $currentTranslatedHashes -Depth 4
             [IO.File]::WriteAllText($translationManifestPath, $manifestJson, (New-Object System.Text.UTF8Encoding($false)))
@@ -266,17 +288,29 @@ foreach ($target in $targets) {
     if ($Mode -eq 'Restore') {
         $backupComplete = @($files | Where-Object { Test-Path -LiteralPath (Join-Path $backupRoot $_) -PathType Leaf }).Count -eq $files.Count
         if (-not $backupComplete) {
-            Write-Host "[i] Backup original do sidecar $($target.Label) não encontrado; nenhum arquivo alterado." -ForegroundColor DarkGray
-            continue
+            if (@($files | Where-Object { Test-Path -LiteralPath (Join-Path $origRoot $_) -PathType Leaf }).Count -eq $files.Count) {
+                $backupRoot = $origRoot
+                $backupComplete = $true
+            } else {
+                Write-Host "[i] Backup original do sidecar $($target.Label) não encontrado; nenhum arquivo alterado." -ForegroundColor DarkGray
+                continue
+            }
         }
+        $liveIsOriginal = $true
         $liveIsOurs = $true
         foreach ($relativeFile in $files) {
             $livePath = Join-Path $target.Root $relativeFile
-            if (-not (Test-Path -LiteralPath $livePath -PathType Leaf)) { $liveIsOurs = $false; break }
-            if ((Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath (Join-Path $translatedRoot $relativeFile) -Algorithm SHA256).Hash) {
-                $liveIsOurs = $false
-                break
-            }
+            if (-not (Test-Path -LiteralPath $livePath -PathType Leaf)) { $liveIsOurs = $false; $liveIsOriginal = $false; break }
+            $transRoot = Get-TargetTranslatedRoot $target
+            $liveHash = (Get-FileHash -LiteralPath $livePath -Algorithm SHA256).Hash
+            $transHash = (Get-FileHash -LiteralPath (Join-Path $transRoot $relativeFile) -Algorithm SHA256).Hash
+            $origHash = (Get-FileHash -LiteralPath (Join-Path $backupRoot $relativeFile) -Algorithm SHA256).Hash
+            if ($liveHash -ne $transHash) { $liveIsOurs = $false }
+            if ($liveHash -ne $origHash) { $liveIsOriginal = $false }
+        }
+        if ($liveIsOriginal) {
+            Write-Host "    [i] Visualizador biomolecular ($($target.Label)) já está original de fábrica em inglês." -ForegroundColor Cyan
+            continue
         }
         if (-not $liveIsOurs) {
             Write-Host "[!] O sidecar $($target.Label) mudou desde a tradução; preservado para evitar substituir arquivos da versão nova." -ForegroundColor Yellow

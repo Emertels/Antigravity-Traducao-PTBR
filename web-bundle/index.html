@@ -1,14 +1,9 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <script>
-  window.addEventListener('error', function(e) {
-    console.warn('[Antigravity UI Warning]:', e.message, e.filename + ':' + e.lineno);
-  });
-</script>
-<meta charset="UTF-8" />
-    <title>Antigravity</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+    <meta charset="UTF-8" />
+    <title>Jetski Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, interactive-widget=resizes-content" />
     <!-- Preconnect secondary CDNs for dynamic UI icons (Drive, Docs, Colab) -->
     <link rel="preconnect" href="https://www.gstatic.com" />
     <link rel="preconnect" href="https://ssl.gstatic.com" />
@@ -56,8 +51,11 @@
     <!-- Inline styles to prevent flash before app loads -->
     <style>
       html,
-      body {
+      body,
+      #root {
         height: 100%;
+        margin: 0;
+        overflow: hidden;
         background-color: transparent;
         overscroll-behavior: none;
       }

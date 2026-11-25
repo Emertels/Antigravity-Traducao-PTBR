@@ -1,3 +1,124 @@
+## v1.7.0 — Antigravity 2.35.1 — 25/11/2026
+
+### Seletor de Modelos, Esforço de Pensamento & Tooltips de Planos
+- **Tag de Modelos Novos (`Novo`):** Corrigida a tradução do emblema `"New"` de *"Nova"* para *"Novo"* no seletor de modelos (ex.: `Gemini 4 Hydrogen`).
+- **Esforço de Pensamento (`Extra High`):** Adicionada tradução para *"Extra alto"* (além de *"Muito alto"*, *"Ultra alto"* e *"Mínimo"*), incluindo combinações com sufixo de janela de contexto (ex.: `Extra alto · 1M`) e parênteses nos nomes de modelos (`(Extra alto)`, `(Alto)`, `(Baixo)`, `(Mínimo)`).
+- **Tooltips dos Modelos e Planos:** Traduzidos os avisos do seletor de modelos (*"Disponível nos planos pagos Google AI Pro e Ultra. Não incluído no seu plano atual."*, *"O \<modelo\> já está disponível nos planos pagos Pro e Ultra. O acesso a modelos de terceiros não estará mais disponível no seu plano atual a partir de \<data\>."* de forma dinâmica para modelos como `Opus 5.5` e `Sonnet 5.5`, *"Para velocidade e eficiência em tarefas de execução"*, *"Delega etapas rotineiras para um executor mais rápido. Mesma qualidade, menos tokens usados."*, *"Modelos personalizados são compatíveis apenas com máquinas Linux."*, *"Padrão (Gemini Pro)"* e *"O planejador próprio do Orquestrador"*).
+
+### Teclas de Atalho, Chat por Voz, Swarm & Interface Geral
+- **Proteção de Teclas (`Enter` e `<kbd>`):** Corrigido `"Enter": "Entrar"` para `"Enter": "Enter"`, eliminando *"Enviar mensagem Entrar"* (agora exibe corretamente *"Enviar mensagem Enter"*). Protegidos os elementos `<kbd>` e `.agy-shortcut-keycap` no observador DOM para preservar nomes de teclas (`Enter`, `Tab`, `Delete`, `End`, etc.). Traduzidos também *"Pressione as teclas..."* (`Press keys...`), *"Parar edição"* (`Stop Editing`), *"Redefinir tudo para o padrão"* (`Reset All to Defaults`) e o rótulo de gravação de atalho na aba Atalhos.
+- **Limpeza de Substituições Cegas no `_trToolPhrase`:** Removidas substituições isoladas de palavras soltas no meio de frases (`translation`, `Details`, `Modes`, `Targets`, `Schemas`, `Commands`, `Toolkit`, `Installer`, `Remote Control`, `In Progress`, `Danger Zone`, etc.) que geravam textos híbridos como *"Checked Portuguese tradução..."*, *"Copy version detalhes"* e *"Use this form if you cannot connect to Controle Remoto..."*.
+- **Termo `Swarm` Preservado:** Mantida a palavra técnica *"Swarm"* / *"Swarms"* sem traduzir para *"enxame"* (*"Nenhum swarm nesta conversa"*, *"Swarms iniciados nesta conversa..."*, *"Aguardando por um swarm"*).
+- **Chat por Voz & Títulos:** Traduzidos *"Chat por voz iniciado · ..."*, *"Chat por voz encerrado · ..."*, *"Transcrição de voz"*, *"Transcrição ao vivo"*, *"Editar título da conversa"* (apenas inicial maiúscula), *"Criar novo projeto"* (apenas inicial maiúscula), *"Escuro Padrão"* / *"Claro Padrão"* (padronizados com P maiúsculo no seletor de tema), *"Verificar versão do Antigravity"* e *"Conversa de teste simples"*.
+- **Ações de Cópia & Notificação de Arquivamento:** Traduzidos *"Copiar comando"*, *"Copiar transcrição"*, *"Copiar imagem"*, *"Copiar comando gh auth login"*, *"Copiar detalhes da versão"*, *"Copiar como Markdown"*, *"Copiar para a área de transferência"* e o toast com ícone embutido *"Veja os itens arquivados na barra lateral (menu)."* / *"(Personalizar barra lateral)."*.
+- **Onboarding (Termos & Telemetria), Cota de Uso (`Weekly limit, resets in ...`) & WSL (`dist/wsl.js`):** Traduzido o modal *"Mais uma coisa antes de começar…"* (*"Personalize sua experiência no agente..."*, *"Proteções automatizadas ajudam..."*, *"Os agentes do Antigravity são poderosos..."*, *"Ajude-nos a melhorar o Antigravity."*, *"Permita que o Google colete e use seus dados de interações, sujeito aos Termos de Serviço do Google Antigravity e à Política de Privacidade do Google. Você pode controlar isso nas suas configurações a qualquer momento."*, *"Inscreva-se para receber boletins informativos..."*, *"A telemetria está desativada para a sua conta..."* e botão *"Continuar"*); corrigido o formato combinado *"Weekly limit, resets in ..."* $\rightarrow$ *"Limite semanal, redefine em ..."* (e diário/por hora); traduzidas as mensagens do WSL em `dist/wsl.js` (*"Baixando o binário do Antigravity…"*, *"Instalando em \<distro\>…"* e erros/avisos de caminho) e alertas de falha do WSL em `dist/main.js` pelo `patch-antigravity.cjs`.
+- **Formulário Completo de Feedback & Dispositivos de Áudio:** Traduzidas todas as categorias (*Relatório de bug*, *Solicitação de recurso*, *Autenticação e faturamento*, *Problema no Controle Remoto*, *Feedback geral*), descrições detalhadas, listas com marcadores, placeholders, validações e anexo de logs/capturas; corrigido também o prefixo `Communications -` $\rightarrow$ *"Comunicações - "* na lista de microfones das Configurações de Voz e no tradutor dinâmico.
+- **Menu de Exibição e Ordenação da Barra Lateral:** Traduzidos *"Ordenar projetos"* (`Sort Projects`), *"Ordenar espaços de trabalho"* (`Sort Workspaces`), *"Decorações"* (`Decorations`) e *"Ambiente"* (`Environment`).
+- **Aba Contas de Plugins (`Contas`):** Traduzidos *"Used for:"* → *"Usado para:"*, *"Domains:"* → *"Domínios:"*, *"Add account"* → *"Adicionar conta"*, *"Add label"* → *"Adicionar rótulo"*, *"Signing out…"* → *"Saindo…"* e os rótulos dinâmicos de acessibilidade (*"Adicionar rótulo para ..."*, *"Tornar ... a conta padrão de ..."*, *"Novo segredo para ..."*).
+- **Indicadores de Execução (`1 task running`):** Adicionada regra dinâmica para *"1 task running"* / *"N tasks running"* (*"1 tarefa em execução"* / *"N tarefas em execução"*), cobrindo também tarefas em segundo plano, agentes, subagentes, etapas, combinações (`subagents/tasks running`, bloqueados, timers e *"Still running"* → *"Ainda em execução"*) e swarms em execução.
+- **Progresso do Checklist de Etapas (`2/5 steps`):** Adicionada regra dinâmica para o chip `step-plan-chip` (*"2/5 steps"* → *"2/5 etapas"*, incluindo sufixos com `failed` / `skipped` e contadores isolados *"N steps"* → *"N etapas"*).
+- **Cotas de 5 Horas, Erros & IDs (`Configurações > Modelos` e Chat):** Adicionada tradução para *"You have hit your 5-hour limit, so the weekly limit does not currently apply. Your 5-hour limit will refresh in ..."* e o trecho *"If on a supported paid plan, you can use AI credits in the interim."*; corrigido o aviso *"Erro: cota individual atingida..."* e traduzido *"Error ID:"* → *"ID do erro:"*.
+- **Créditos da Tradução (`Configurações > Versão`):** Removidos o fundo acinzentado, o `marginTop` e a borda dupla do bloco `ptbr-translation-credit`, mantendo a mesma cor de fundo do aplicativo e apenas a linha divisória principal entre *Versão do aplicativo* e *Tradução PT-BR: Emerson Teles*.
+- **Menu de Diff, Gmail & Ajustes de Capitalização:** Traduzidos *"Show Whitespace Changes"* → *"Mostrar alterações de espaços em branco"*, a descrição da skill `/gmail` e seus exemplos de prompts (*"Summarize my unread emails from today"*, *"Draft a reply to the latest thread about launch readiness"*, *"Find emails with attachments from last week"*), além do ajuste *"Opções de Exibição"* → *"Opções de exibição"*.
+- **Espaçamento do Tempo Relativo na Barra Lateral (`7 min`, `2 h`, `17 dias`):** Corrigido o formatador `zD` (e o fallback em `_trAgy`) para separar o número da unidade em todas as escalas de tempo (`7 min`, `2 h`, `1 dia`/`17 dias`, `2 sem`, `1 mês`/`2 meses`, `1 ano`/`2 anos`), evitando rótulos colados como `7min`.
+- **Correção da Paleta de Comandos (`Ctrl+Shift+P`, `Ctrl+K`, `Ctrl+P`, `Ctrl+Shift+K`):** Restaurados os identificadores internos de `S_.Commands.title`, `S_.Files.title`, `S_.Conversations.title` e `S_.Projects.title` no código do seletor rápido (`uBc` / `vBc` / `Pjc` dependiam dos valores em inglês para abrir cada categoria e trocar o filtro no menu suspenso, mantendo a tradução visual automática via observador DOM); adicionado também *"Search code..."* $\rightarrow$ *"Pesquisar código..."*.
+- **Varredura Adicional de UI:** Traduzidas mais de 400 strings adicionais de configurações, modal SSH, permissões granulares do GitHub, integração/onboarding e SSO, navegador integrado, depuração remota do Chrome, perguntas paralelas, visualizador de PDF, worktrees, atualizações e mensagens do Git.
+
+### Painéis Android Completos (`sync-android-sidecars.ps1`)
+- **Android Device Hub (`hub.bundle.js`):** Tradução completa do modal *"Criar dispositivo virtual"* (*"Selecione um perfil de hardware. O dispositivo usa a imagem de sistema mais recente para ele."*, *"Perfil de hardware:"*, *"Cancelar"*, *"Criar"*), perfis de hardware (*"Celular médio"*, *"Tablet médio"*, *"Desktop pequeno"*, *"Desktop médio"*, *"Desktop grande"*, *"Dobrável 1:1"*, *"Dobrável 4:3"*), controles do emulador (*"Ligar/Desligar"*, *"Aumentar volume"*, *"Diminuir volume"*, *"Girar à esquerda"*, *"Girar à direita"*, *"Controles estendidos"*, *"Sensor de toque"*), barra de dispositivos e ações (*"Inicialização a frio"*, *"Iniciar espelhamento"*, *"Enviar tela para o agente"*).
+- **Android Compose Preview (`preview.bundle.js`):** Tradução completa da barra de zoom, árvore de componentes, propriedades, atalho de re-renderização e configurações (*"Manter o renderizador em execução"*, *"Unidade dos limites"*, *"Mostrar saída"*, *"Corrigir com o agente"*).
+
+### Coerência dos Scripts (`.bat` / `.ps1`) & Backups
+- **Fechamento Automático do CMD:** Corrigidos `Instalar-Traducao.bat` e `Restaurar-Original.bat` para não pausarem novamente quando o usuário escolhe abrir o Antigravity (`S`) ou sair (`N`/`Enter`/`Esc`) após o término da operação, mantendo pausa automática apenas em caso de erro.
+- **Reinstalação e Restauração Forçadas:** Ao confirmar reinstalação (`S`) em instalação já traduzida, o `aplicar-traducao.ps1` agora repassa `--force` ao `patch-antigravity.cjs`; ao confirmar restauração forçada (`S`) em instalação já original, o `restaurar-original.ps1` agora força a regravação a partir de `_backups\<versão>\`.
+- **Backup Unificado e Completo:** Garantida a geração de `backup-info.txt` em `_backups\<versão>\` além da cópia e restauração automática dos backups dos sidecars Android (`_backups\android-sidecars\`).
+
+### Compatibilidade Oficial com Antigravity 2.35.1
+- **Pareamento com o Antigravity 2.35.1:** Atualização e testes de compatibilidade total com a nova versão oficial da Google (v2.35.1), garantindo preservação de versão instalada e patch modular dinâmico sem riscos de downgrade.
+- **Correção Definitiva da Tela Preta (Black Screen):** O executável `Antigravity.exe` agora tem seu Electron Fuse de integridade ASAR comutado para `'0'` diretamente pelo instalador e pelo patcher com validação pós-escrita no disco. Isso impede que o Electron recuse o carregamento do `app.asar` com `--web_bundle_path`, eliminando definitivamente a tela preta de inicialização.
+- **Preservação de Assets Nativos:** Preservados e validados todos os 541 assets nativos de runtime extraídos de `language_server.exe` (incluindo `workers/shiki_worker.js`, `page_agent_bundle.js`, `page_facade_bundle.js`, esquemas ConnectRPC/Protobuf e sons de notificação `antigravityActionRequired.mp3` e `antigravityCascadeDone.mp3`).
+
+### Idempotência Inteligente & Encerramento Seguro de Processos
+- **Instalador Inteligente (`Instalar-Traducao.bat` / `aplicar-traducao.ps1`):** Detecta se a tradução PT-BR já está instalada e ativa antes de alterar qualquer arquivo. Caso já esteja traduzido, exibe mensagem informativa amigável e encerra sem fechar processos nem acusar erro de PID preso.
+- **Restaurador Inteligente (`Restaurar-Original.bat` / `restaurar-original.ps1`):** Localiza a instalação e detecta se o Antigravity já está no estado original de fábrica (em inglês). Caso já esteja original, exibe mensagem informativa clara e encerra sem fechar processos nem refazer cópias desnecessárias.
+- **Encerramento Robusto de Processos:** Implementado encerramento via `taskkill.exe /F /T` para derrubar toda a árvore de processos do `Antigravity.exe` e `language_server.exe`, acompanhado de verificação de liberação de alça de escrita no arquivo executável antes de prosseguir com o patch.
+- **Script de Automação na Área de Trabalho:** Disponibilizado `Aplicar-Traducao-Automatica.bat` diretamente na Área de Trabalho para aplicar a tradução em 2 segundos e abrir o Antigravity já traduzido automaticamente.
+
+### Tempo Relativo nas Conversas & Textos de Configuração
+- **Correção da Abreviação de Mês ("1mo" / "2mo"):** As conversas antigas exibiam "1mo" e "2mo" (abreviação em inglês de *1 month* / *2 months*). A função de tempo relativo agora formata expressamente para *"1 mês"* e *"2 meses"* (e *"há 1 mês"* / *"há 2 meses"*).
+- **Configurações > Conversas:** Corrigido o texto misto de idiomas para *"Configurações para conversas fora de projetos."*.
+
+### Automações, Agendamentos & Personalizações (Skills)
+- **Editor de Agendamentos Customizados:** Nós JSX diretos do editor traduzidos (*"Repetir a cada"*, *"no dia"*, *"nos dias"*, *"Dia da semana"*, *"Número de horas"*, *"Unidade de repetição"*, *"Dia do mês"*, *"Dias"*), corrigindo o texto do botão de unidade que ficava fixo em inglês (*"week"*, *"hours"*, *"month"*).
+- **Ações e Rótulos de Personalizações:** Ações da lista de plugins e habilidades traduzidas (*"Copiar caminho"*, *"Caminho copiado!"*, *"Espaço de trabalho"*, *"Excluir agente"*, *"Excluir plugin"*).
+- **Tradução de Descrições de Habilidades:** Mapeamento integrado para descrições técnicas de plugins instalados (quimioinformática, Chrome DevTools, depuração de vazamento de memória e ferramentas Android).
+
+### Visualizador Biomolecular (Sidecar Mol*)
+- **Paleta de Cores e Swatches:** Nomes das cores traduzidos em `title` e `aria-label` ao passar o mouse sobre cada swatch (*"Magenta"*, *"Vermelho"*, *"Laranja"*, *"Amarelo"*, *"Verde"*, *"Ciano"*, *"Azul"*, *"Rosa"*).
+- **Seletor de Cor Personalizada:** Botão de conta-gotas e seletor de cores hexadecimal traduzidos (*"Cor personalizada"*, *"Cor hex, #rrggbb"*, *"Cor hex personalizada, #rrggbb"* e mensagem de validação de formato *"Digite uma cor como #rrggbb"*).
+- **Notificações de Alternância de Visualização:** Mensagens dinâmicas de transição traduzidas em tempo real (*"Alternando visualização para Bastão…"*, *"Alternando visualização para Esfera…"*, *"Alternando visualização para Cartoon…"*, *"Alternando visualização para Superfície…"*, *"Alternando visualização para Linha…"*) cobrindo todos os presets moleculares.
+- **Controle de Visibilidade de Anotações e pLDDT:** Botões de alternância de exibição localizados como *"Mostrar anotações"* / *"Ocultar anotações"* e *"Mostrar coloração pLDDT"* / *"Ocultar coloração pLDDT"*.
+
+### Painéis Android (Device Hub & Compose Preview)
+- **Localização Direta nos Bundles dos Sidecars:** Tradução dos assets servidos isoladamente via iframe pelo `sidecar-web-server`:
+  - **Android Device Hub:** Estado vazio (*"Nenhum dispositivo conectado"*), instrução (*"Conecte um dispositivo com a depuração USB ativada ou obtenha um abaixo."*), ação (*"Criar dispositivo virtual"*), divisor (*"ou"*) e aluguel (*"Alugar um dispositivo remoto"*).
+  - **Android Compose Preview:** Estado vazio (*"Nenhuma prévia ainda"*), instrução com aspas tipográficas corretas (*"Peça ao agente para pré-visualizar uma tela do Compose, ex.: “Mostrar HomeScreenPreview no Android Compose Preview”."*).
+
+### Editor de Automações, Agendamentos e Modelos
+- **Seletor de Recorrência e Unidades:** Configuração de agendamentos localizada (*"Repetir a cada"*, *"A cada hora"*, *"Todos os dias"*, *"Dias úteis"*, *"Toda semana"*, *"Personalizado…"*, *"horas"*, *"semana"*, *"mês"*).
+- **Abreviação e Acessibilidade dos Dias da Semana:** Botões de dias da semana mapeados com padrão do Brasil (`S  T  Q  Q  S  S  D` para Segunda a Domingo) e rótulos acessíveis completos (`aria-label` de Segunda a Domingo).
+- **Conectores e Datas:** Textos de ligação traduzidos (*"em"*, *"no dia"*, *"dia {X}"*, *"às"*).
+- **Níveis de Raciocínio de Modelos:** Níveis traduzidos dinamicamente nos seletores de modelo: `(High)` → `(Alto)`, `(XHigh)` → `(Muito alto)`, `(Low)` → `(Baixo)` (mantendo os já suportados `(Médio)` e `(Pensando)`).
+- **Tooltip de Validação de Criação:** Mensagem de campos pendentes traduzida dinamicamente para *"Necessário para criar: título, instruções"* e *"Necessário para salvar: ..."*.
+- **Comando `/automation`:** Prompt padrão preenchido automaticamente traduzido para *"Oriente-me na criação de uma tarefa automatizada"*.
+
+### Gerenciador de Plugins (Aba Permissões)
+- **Cabeçalhos e Descrições de Permissão:** Localizados os nós JSX hardcoded da aba Permissões de plugins (*"Permitido por você"*, *"Nada é sempre permitido. Você será consultado antes que este plugin faça alterações."*, *"Incluído no plugin"*, *"Estes vêm com o plugin e não podem ser revogados."*).
+- **Linhas de Concessão e Ações:** Traduzidos os escopos e botões (*"Sempre permitido"*, *"Permitido em {Projeto}"*, *"Qualquer recurso"*, *"Nome indisponível"*, *"Revogar tudo"*, *"Revogar: {Recurso}"* e diálogo de confirmação).
+
+### Menu de Projetos, Barra de Status e Aparência
+- **Padronização de Capitalização (Minúsculas em Palavras Secundárias):** Ajustados os textos para evitar Title Case excessivo em português:
+  - Barra inferior e menu: *"Nenhum projeto"* (com 'N' maiúsculo e 'p' minúsculo, corrigindo o antigo "Nenhum Projeto").
+  - Menus de criação: *"Novo projeto"* e *"Projeto CLI"*.
+  - Cabeçalhos: *"Selecionar projeto"* e *"Selecionar espaço de trabalho"*.
+- **Configurações de Aparência:** Fonte *"System UI"* traduzida para *"Interface do sistema"*.
+- **Dispositivos de Áudio:** Prefixo *"Communications - "* traduzido para *"Comunicações - "* nos dispositivos de comunicação padrão do Windows.
+- **Seletor de Modelos e Cotas:** Banner de limites básicos mínimos para usuários gratuitos e aviso de disponibilidade do Sonnet 5.5 em planos pagos localizados em português.
+
+### Paleta de Comandos Completa (`Ctrl+Shift+P`)
+- **Tradução Integral dos 48 Comandos:** Traduzidos diretamente no registro central de comandos (`Vj`) todas as 48 ações do aplicativo (gerenciamento de conversas, pastas, abas, terminais, automações, SSH, atalhos de teclado e alternância de temas claro/escuro).
+- **Interface da Paleta:** Traduzido o campo de pesquisa (*"Pesquisar comandos..."*), seletor de categorias (*"Comandos"*, *"Arquivos"*, *"Conversas"*, *"Projetos"*) e mensagem de estado vazio (*"Nenhum resultado encontrado"*).
+
+### Barra do Navegador Interno & Drawer de Downloads
+- **Drawer de Downloads:** Título *"Downloads"*, estado vazio *"Nenhum download recente"*, botão *"Limpar"*, botão *"Fechar downloads"* e tooltips de progresso (*"Downloads, em andamento"*, *"Downloads, X% concluído"*).
+- **Barra de Navegação e Ferramentas:** Botões *"Inspecionar elemento para comentar"*, *"Sair do modo de inspeção de elemento (Esc)"*, *"Adicionar captura de tela à conversa"*, *"Abrir no navegador externo"* e *"Recarregar"*.
+- **Rascunhos de Comentários:** Tooltips e botões *"Retomar rascunho de comentário"*, *"Descartar rascunho de comentário"* e contador de rascunhos (*"1 rascunho"*).
+
+### Controles de Áudio, Gravação e Envio de Mensagens
+- **Botão de Envio e Modos de Disparo:** Tooltips contextualizados para envio primário e secundário (*"Enviar mensagem Enter"*, *"Enfileirar mensagem (Alt+Enter)"*, *"Enviar imediatamente (Alt+Enter)"*).
+- **Gravação de Voz:** Tooltips e rótulos interativos (*"Gravar áudio"*, *"Parar gravação"*, *"Gravando"*, *"Parar gravação e enviar"*), além de notificação do microfone (*"O modo de voz do Chefe de Gabinete está ativo"*).
+- **Feedback de Envio e Transcrição:** Localizados os nós JSX hardcoded do botão de áudio/envio: *"Finalizando..."*, *"Finalizando transcrição..."*, *"Enviando mensagem transcrita..."* e *"Carregando..."*.
+- **Banner de Alerta e Seletor de Microfone:** Tradução do menu popover de microfones (*"Microfone"*, *"Padrão do sistema"*, *"Padrão do sistema (X)"*), banner de advertência (*"Sem áudio de X"*, *"Nenhum áudio do microfone detectado"*, *"Trocar microfone"*, *"Dispensar aviso do microfone"*, *"Usando X"* e *"Usando o microfone padrão do sistema"*), além de todas as mensagens de permissão e bloqueio do microfone no Windows/Mac.
+- **Botão de Cancelamento de Geração:** Tooltip e acessibilidade do botão vermelho de cancelamento localizados como *"Cancelar (Ctrl+D)"* e *"Cancelar (⌘C)"*.
+
+### Varredura Completa de Configurações e Preferências
+- **Opções do Painel de Configurações:** Tradução completa de todas as chaves e descrições das configurações gerais e de aparência (*"Verificação automática de atualizações"*, *"Impedir suspensão"*, *"Manter na barra de menus"*, *"Modo de leitor de tela"*, *"Largura da conversa"*, *"Posicionamento do terminal"*, *"Largura de artefatos Markdown"*, *"Menus de contexto personalizados"*, *"Habilitar agente de navegador"*, *"Indicador de contexto e cota"*, *"Seleção de modelo"*, *"Ativar telemetria"*, etc.).
+- **Tempo Relativo e Notificações de Erro:** Carimbos temporais traduzidos para *"agora mesmo"* e *"há {X}m/h/d"*. Toasts de erro de mídia localizados para *"Mídia inválida"* e *"Não foi possível anexar a imagem: ..."*.
+
+### Sincronizador do Visualizador Biomolecular (`sync-biomolecular-sidecar.ps1`)
+- **Suporte Abrangente a Versões (1.0.0 e 1.3.0/1.3.1):** Pacotes de sidecar contendo conjuntos completos `original` e `translated` para as versões 1.0.0 e 1.3.0.
+- **Tradução do Título da Aba (`sidecar.json`):** Incluído `sidecar.json` no ciclo de tradução e restauração, localizando o título da aba no painel lateral.
+- **Fallback Automático de Restauração:** Caso a pasta `_backups` seja removida em atualizações da Google, o restaurador utiliza os arquivos originais em inglês embutidos no pacote para garantir a reversão a 100% inglês.
+- **Tratamento Resiliente:** Se executado em máquinas que ainda não possuem o plugin de biologia estrutural instalado, o instalador avisa amigavelmente e segue sem falhas.
+
+### Sistema de Backup e Restauração de Fábrica Reforçado
+- **Preservação de Integridade:** Backup automático do executável oficial com o Electron Fuse de fábrica preservado em `1` antes de desativar a verificação de integridade para a tradução.
+- **Marcador de Ausência de Bundle:** Registro de `web-bundle-was-absent.txt` para que a restauração remova completamente a pasta `web-bundle`, eliminando resíduos em português ao voltar para o inglês.
+- **Restauração Responsiva e Idempotente (`restaurar-original.ps1`):** Restaura com 1 clique o `app.asar` limpo da Google, restaura o executável original, remove o web-bundle traduzido, reverte os sidecars para o inglês e limpa o cache do Electron.
+- **Auditoria Final de Tradução:** 857 candidatos inspecionados via `tools/scan-untranslated.cjs`, com **0 termos em inglês sem mapeamento**.
+- **Crédito de Autoria Preservado:** Mantido o crédito oficial `"Tradução PT-BR: Emerson Teles"` em destaque azul-turquesa `#00adb5` no cartão da versão em Configurações.
+- **Terminologia Padronizada:** Aderência integral ao padrão de Emerson Teles: "aplicativo" (nunca "app"), "tokens" e Português do Brasil (`pt-BR`).
+
 ## v1.6.0 — Antigravity 2.28.2 — 30/10/2026
 
 ### Atualização do frontend e traduções

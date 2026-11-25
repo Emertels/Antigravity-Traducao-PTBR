@@ -1,5 +1,5 @@
-VERSÃO ATUAL 1.6.0 — Antigravity 2.28.2 — 30/10/2026
-Frontend original 2.28.2 atualizado; 814 candidatos de interface e amostras do catálogo remoto auditados, sem traduções ausentes. Corrigidas descrições híbridas de plugins e o trecho de permissões globais; verificações de sintaxe e instalação concluídas.
+VERSÃO ATUAL 1.7.0 — Antigravity 2.35.1 — 24/11/2026
+Frontend 2.35.1 compatível com 541 assets nativos; tradução profunda da Paleta de Comandos (Ctrl+Shift+P), controles do navegador e downloads, gravação de voz e status de envio ("Finalizando..."), configurações e preferências. Auditoria com 0 termos pendentes e backup responsivo com reversão 100% limpa para o inglês de fábrica.
 O ZIP portátil inclui Node.js e licenças. Extraia a pasta inteira antes de usar os atalhos.
 README, LEIA-ME, AGENTS e CHANGELOG ficam somente no repositório e nas notas da release, fora do ZIP.
 

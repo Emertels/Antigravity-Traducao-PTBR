@@ -11,6 +11,10 @@ $bundledNode = Join-Path $PSScriptRoot 'runtime\node.exe'
 $nodeCmd = Get-Command 'node.exe' -ErrorAction SilentlyContinue
 $nodePath = if (Test-Path -LiteralPath $bundledNode -PathType Leaf) { $bundledNode } elseif ($nodeCmd) { $nodeCmd.Source } else { $null }
 
+function Wait-IfStandalone {
+    if ($env:AGY_FROM_BAT -ne '1') { Wait-IfStandalone }
+}
+
 function Read-OpenChoice([string]$Prompt) {
     Write-Host $Prompt -NoNewline -ForegroundColor White
     while ($true) {
@@ -37,10 +41,11 @@ function Copy-FileWithProgress {
     param(
         [string]$Source,
         [string]$Destination,
-        [string]$Label = "Restaurando"
+        [string]$Label = "Restaurando",
+        [switch]$Force
     )
 
-    if ((Test-Path -LiteralPath $Destination -PathType Leaf) -and
+    if (-not $Force -and (Test-Path -LiteralPath $Destination -PathType Leaf) -and
         (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash -eq (Get-FileHash -LiteralPath $Destination -Algorithm SHA256).Hash) {
         Write-Host "    [i] $Label já está original; restauração desnecessária." -ForegroundColor Cyan
         return
@@ -165,29 +170,7 @@ if ($activeProcess -and $activeProcess.Path) {
     $script:preferredAgyDir = Split-Path $activeProcess.Path -Parent
 }
 
-# 1. Forçar o fechamento dos processos da interface do Antigravity
-$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
-if ($running) {
-    Write-Host "[-] Encerrando processos do Antigravity para restaurar arquivos..." -ForegroundColor Yellow
-    foreach ($process in $running) {
-        try { Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue } catch { }
-    }
-    $timeout = 30
-    while ($timeout -gt 0) {
-        $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
-        if (-not $check) { break }
-        Start-Sleep -Milliseconds 100
-        $timeout -= 1
-    }
-    $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
-    if ($check) {
-        $remaining = ($check | ForEach-Object { "$($_.ProcessName) (PID $($_.Id))" }) -join ", "
-        Write-Host "[x] Não foi possível encerrar estes processos do Antigravity: $remaining. Nenhum arquivo foi alterado." -ForegroundColor Red
-        Exit 1
-    }
-}
-
-# 2. Localizar instalação
+# 1. Localizar instalação antes de fechar processos
 Write-Host "[1/3] Localizando instalação do Antigravity..." -ForegroundColor White
 $agyDir = Find-AntigravityInstallation
 
@@ -197,7 +180,7 @@ while (-not $agyDir) {
     $userInput = Read-Host "Digite ou cole o caminho da pasta do Antigravity (Enter para sair)"
     if ([string]::IsNullOrWhiteSpace($userInput)) {
         Write-Host "[x] Nenhuma instalação foi selecionada. O Antigravity pode não estar instalado." -ForegroundColor Red
-        Pause
+        Wait-IfStandalone
         Exit 1
     }
     $userInput = $userInput.Trim().Trim('"')
@@ -227,6 +210,59 @@ if (Test-Path $exePath) {
         if (-not $detectedVersion) { $detectedVersion = (Get-Item $exePath).VersionInfo.ProductVersion }
         if ($detectedVersion) { $v = $detectedVersion.Split('.'); if ($v.Length -ge 3) { $detectedVersion = $v[0..2] -join '.' } }
     } catch { }
+}
+
+# 1.5 Verificar de forma inteligente se o Antigravity já está original em inglês
+$forceRestore = $false
+$patcherScript = Join-Path $PSScriptRoot "patch-antigravity.cjs"
+if ($nodePath -and (Test-Path $patcherScript)) {
+    & $nodePath $patcherScript --check-original "$agyDir"
+    if ($LASTEXITCODE -eq 30) {
+        Write-Host ""
+        Write-Host " ==================================================================== " -ForegroundColor Cyan
+        Write-Host "      O ANTIGRAVITY JÁ ESTÁ NO ESTADO ORIGINAL DE FÁBRICA (INGLÊS)    " -ForegroundColor Cyan
+        Write-Host " ==================================================================== " -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "  O Antigravity já está no seu estado padrão original em inglês." -ForegroundColor Green
+        Write-Host ""
+        if (-not (Read-OpenChoice "Deseja forçar a restauração dos arquivos de backup mesmo assim? [S = sim | N/Enter/Esc = sair]: ")) {
+            Write-Host "Restauração cancelada. Nenhuma alteração foi realizada." -ForegroundColor Gray
+            Write-Host ""
+            if (Test-Path $exePath) {
+                if (Read-OpenChoice "Deseja abrir o Antigravity? [S = sim | N/Enter/Esc = sair]: ") {
+                    Start-Process -FilePath "explorer.exe" -ArgumentList "`"$exePath`""
+                } else {
+                    Write-Host "Finalizando..." -ForegroundColor Gray
+                    Start-Sleep -Milliseconds 800
+                }
+            }
+            Exit 0
+        }
+        $forceRestore = $true
+        Write-Host "[-] Forçando restauração completa dos backups a pedido do usuário..." -ForegroundColor Yellow
+    }
+}
+
+# 2. Forçar o fechamento seguro dos processos do Antigravity somente quando a restauração for necessária
+$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" }
+if ($running) {
+    Write-Host "[-] Encerrando processos do Antigravity para restaurar arquivos..." -ForegroundColor Yellow
+    & taskkill.exe /F /T /IM "Antigravity.exe" 2>$null | Out-Null
+    & taskkill.exe /F /T /IM "language_server.exe" 2>$null | Out-Null
+    $timeout = 40
+    while ($timeout -gt 0) {
+        $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+        if (-not $check) { break }
+        Start-Sleep -Milliseconds 100
+        $timeout -= 1
+    }
+    $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+    if ($check) {
+        foreach ($p in $check) {
+            try { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue } catch { }
+        }
+        Start-Sleep -Milliseconds 500
+    }
 }
 
 # 3. Restaurar backup da pasta _backups
@@ -270,9 +306,16 @@ if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
                 if ($sidecarRestored -contains $true) { $restoreChanged = $true }
             } catch {
                 Write-Host "[!] Não foi possível restaurar o Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Yellow
-                Pause
+                Wait-IfStandalone
                 Exit 1
             }
+        }
+$androidSidecarHelper = Join-Path $PSScriptRoot "sync-android-sidecars.ps1"
+        if (Test-Path -LiteralPath $androidSidecarHelper -PathType Leaf) {
+            try {
+                $androidRestored = & $androidSidecarHelper -Mode Restore -AntigravityInstallDir $agyDir
+                if ($androidRestored -contains $true) { $restoreChanged = $true }
+            } catch { }
         }
         if ($restoreChanged) {
             $roamingAgy = Join-Path $env:APPDATA "Antigravity"
@@ -293,44 +336,85 @@ if (-not $detectedVersion -or -not (Test-Path $foundBackup)) {
     Write-Host "[x] Não há backup da versão exata instalada em $backupDir." -ForegroundColor Red
     Write-Host "    Nenhum arquivo foi alterado. Repare/instale o Antigravity oficial por cima e tente novamente." -ForegroundColor Cyan
     Write-Host "    Mantenha as pastas de dados do usuário; projetos e configurações ficam fora da pasta do programa." -ForegroundColor Cyan
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 $verifier = Join-Path $PSScriptRoot "tools\verify-clean-asar.cjs"
 if (-not (Test-Path -LiteralPath $verifier -PathType Leaf)) {
     Write-Host "[x] O verificador tools\verify-clean-asar.cjs não está no pacote. Extraia novamente o ZIP completo; nenhum arquivo foi alterado." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 if (-not $nodePath) {
     Write-Host "[x] O Node.js portátil não está em runtime\node.exe e não há node.exe no PATH. Extraia novamente o ZIP completo ou instale Node.js; nenhum arquivo foi alterado." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 & $nodePath $verifier "antigravity" $foundBackup $detectedVersion
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[x] O ASAR de backup não passou na verificação; restauração cancelada." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 $backupWebBundle = Join-Path $versionBackupDir "web-bundle-original"
 $webBundleWasAbsent = Join-Path $versionBackupDir "web-bundle-was-absent.txt"
 if ((Test-Path $backupWebBundle) -and (Test-Path (Join-Path $backupWebBundle ".agy-ptbr-installed"))) {
     Write-Host "[x] O web-bundle salvo contém a marca de tradução e não será restaurado como original." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 if ((Test-Path $installedWebBundleMarker) -and -not (Test-Path $backupWebBundle) -and -not (Test-Path $webBundleWasAbsent)) {
-    Write-Host "[x] O web-bundle instalado está traduzido, mas não existe backup original desta versão." -ForegroundColor Red
-    Write-Host "    Restauração interrompida sem alterar o app.asar." -ForegroundColor Yellow
-    Write-Host "    Repare/instale o Antigravity oficial por cima e tente novamente. Mantenha os dados do usuário." -ForegroundColor Cyan
-    Pause
-    Exit 1
+    # Se o web-bundle instalado tem a marca da tradução e não havia web-bundle de fábrica,
+    # registra o marcador para garantir remoção segura do web-bundle na restauração.
+    [IO.File]::WriteAllText($webBundleWasAbsent, "web-bundle ausente antes da tradução", (New-Object System.Text.UTF8Encoding($false)))
 }
 Write-Host "    -> Restaurando backup exato: $foundBackup" -ForegroundColor Cyan
-Copy-FileWithProgress -Source $foundBackup -Destination $targetAsar -Label "Restaurando app.asar original"
+Copy-FileWithProgress -Source $foundBackup -Destination $targetAsar -Label "Restaurando app.asar original" -Force:$forceRestore
 $backupExe = Join-Path $versionBackupDir "Antigravity.exe"
-if (Test-Path $backupExe) { Copy-FileWithProgress -Source $backupExe -Destination $exePath -Label "Restaurando executável original" }
+if (Test-Path $backupExe) {
+    Copy-FileWithProgress -Source $backupExe -Destination $exePath -Label "Restaurando executável original" -Force:$forceRestore
+} else {
+    try {
+        if (-not ([System.Management.Automation.PSTypeName]'RestoreFuse').Type) {
+            Add-Type -TypeDefinition @'
+using System;
+using System.IO;
+using System.Text;
+
+public class RestoreFuse {
+    public static int Restore(string path) {
+        if (!File.Exists(path)) return -1;
+        byte[] bytes = File.ReadAllBytes(path);
+        byte[] magic = Encoding.ASCII.GetBytes("WNKmHXBZaB9tsX");
+        for (int i = 0; i <= bytes.Length - magic.Length - 16; i++) {
+            if (bytes[i] == magic[0]) {
+                bool match = true;
+                for (int j = 1; j < magic.Length; j++) {
+                    if (bytes[i + j] != magic[j]) { match = false; break; }
+                }
+                if (match) {
+                    int fuseIndex = i + magic.Length + 6;
+                    if (fuseIndex < bytes.Length && bytes[fuseIndex] == (byte)'0') {
+                        bytes[fuseIndex] = (byte)'1';
+                        File.WriteAllBytes(path, bytes);
+                        return 1;
+                    }
+                    return 0;
+                }
+            }
+        }
+        return -2;
+    }
+}
+'@
+        }
+        $fuseRes = [RestoreFuse]::Restore($exePath)
+        if ($fuseRes -eq 1) {
+            Write-Host "    [OK] Verificação de integridade de fábrica restaurada no executável." -ForegroundColor Green
+            $restoreChanged = $true
+        }
+    } catch { }
+}
 if (Test-Path $backupWebBundle) {
     $webBundleEqual = $false
     if (Test-Path $targetWebBundle -PathType Container) {
@@ -353,10 +437,12 @@ if (Test-Path $backupWebBundle) {
         $restoreChanged = $true
         Write-Host "    -> web-bundle original restaurado." -ForegroundColor Green
     }
-} elseif ((Test-Path $webBundleWasAbsent) -and (Test-Path (Join-Path $targetWebBundle ".agy-ptbr-installed"))) {
-    Remove-Item -LiteralPath $targetWebBundle -Recurse -Force
-    $restoreChanged = $true
-    Write-Host "    -> web-bundle criado pela tradução removido." -ForegroundColor Green
+} elseif ((Test-Path (Join-Path $targetWebBundle ".agy-ptbr-installed")) -or (Test-Path $webBundleWasAbsent)) {
+    if (Test-Path $targetWebBundle) {
+        Remove-Item -LiteralPath $targetWebBundle -Recurse -Force
+        $restoreChanged = $true
+        Write-Host "    -> web-bundle criado pela tradução removido." -ForegroundColor Green
+    }
 }
 if (Test-Path -LiteralPath $sidecarHelper -PathType Leaf) {
     try {
@@ -365,8 +451,17 @@ if (Test-Path -LiteralPath $sidecarHelper -PathType Leaf) {
     } catch {
         Write-Host "[!] Não foi possível restaurar o Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Red
         Write-Host "    Os arquivos do app e os backups foram preservados." -ForegroundColor Yellow
-        Pause
+        Wait-IfStandalone
         Exit 1
+    }
+}
+$androidSidecarHelper = Join-Path $PSScriptRoot "sync-android-sidecars.ps1"
+if (Test-Path -LiteralPath $androidSidecarHelper -PathType Leaf) {
+    try {
+        $androidRestored = & $androidSidecarHelper -Mode Restore -AntigravityInstallDir $agyDir
+        if ($androidRestored -contains $true) { $restoreChanged = $true }
+    } catch {
+        Write-Host "[!] Aviso ao restaurar painéis Android: $($_.Exception.Message)" -ForegroundColor Yellow
     }
 }
 # 4.1 Limpar cache de bytecode para restaurar a interface original sem resíduos

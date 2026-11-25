@@ -1,0 +1,20 @@
+{
+  "args": [
+    "dist/server.cjs"
+  ],
+  "command": "node",
+  "description": "Visualizador interativo de estruturas biomoleculares em 3D com Mol*",
+  "display_name": "Visualizador de Estruturas Biomoleculares",
+  "has_web_ui": true,
+  "restart_policy": "always",
+  "ui_config": {
+    "display_name": "Visualizador de Estruturas Biomoleculares",
+    "views": [
+      {
+        "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
+        "path": "/ui.html",
+        "title": "Visualizador de Estruturas Biomoleculares"
+      }
+    ]
+  }
+}

@@ -7,8 +7,12 @@ console.log("===================================================================
 console.log("    PATCHER DINAMICO AUTOMATIZADO ANTIGRAVITY PT-BR - EMERSON TELES  ");
 console.log("====================================================================");
 
-const preflightOnly = process.argv[2] === "--preflight";
-const agyArg = process.argv[preflightOnly ? 3 : 2];
+const preflightOnly = process.argv.includes("--preflight");
+const checkInstalledOnly = process.argv.includes("--check-installed");
+const checkOriginalOnly = process.argv.includes("--check-original");
+const isForce = process.argv.includes("--force");
+const nonFlagArgs = process.argv.slice(2).filter(a => !a.startsWith("--"));
+const agyArg = nonFlagArgs[0];
 const agyDir = agyArg || path.join(process.env.LOCALAPPDATA, "Programs", "antigravity");
 const scriptDir = __dirname;
 const webBundleDir = path.join(scriptDir, "web-bundle");
@@ -32,12 +36,12 @@ const targetInjectionPoint = "'--enable_sidecars',";
 const turboPreservationChecks = [
     ['rótulo PT-BR de Request Review', 'request_review:{label:"Solicitar revisão",description:"Every command requires approval."'],
     ['rótulo PT-BR de Default', '"default":{label:"Padrão",description:"Ask before sensitive operations."'],
-    ['campo de busca PT-BR', 'placeholder:w?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos...":"Pesquisar abas, arquivos, extensões, artefatos e comandos..."'],
+    ['campo de busca PT-BR', /(?:placeholder:w\?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos\.\.\.":\"Pesquisar abas, arquivos, extensões, artefatos e comandos\.\.\."|placeholder:c\?"Pesquisar conversas, comandos e código\.\.\.":\"Selecionar categoria para pesquisar\.\.\.")/],
     ['tradução do rótulo Turbo', '"Turbo": "Turbo"'],
     ['tradução da descrição do perfil Turbo', '"Run all commands without restrictions.": "Executar todos os comandos sem restrições."'],
     ['perfil Turbo na estrutura atual', /turbo:\{label:"Turbo",description:"Run all commands without restrictions\.",\s*prefValues:\{/],
     ['identificador atual do perfil Turbo', /AgentPermissionPreset\.TURBO/],
-    ['Turbo habilitado no seletor principal', /\b[\w$]{1,80}=\["request_review","default","turbo"\]/]
+    ['Turbo habilitado no seletor principal', /\b[\w$]{1,80}=\["request_review","default"(?:,"auto")?,"turbo"\]/]
 ];
 const missingTurboParts = turboPreservationChecks.filter(([, marker]) =>
     marker instanceof RegExp ? !marker.test(sourceMainText) : !sourceMainText.includes(marker)
@@ -58,6 +62,27 @@ const tempAsar = path.join(resourcesDir, "app.asar.tmp");
 if (!fs.existsSync(srcAsar)) {
     console.error("[x] Erro: app.asar não encontrado em:", srcAsar);
     process.exit(1);
+}
+
+if (checkInstalledOnly) {
+    const isSrcTr = isAlreadyTranslatedAgy(srcAsar);
+    const mkr = path.join(agyDir, "resources", "web-bundle", ".agy-ptbr-installed");
+    if (isSrcTr && fs.existsSync(mkr)) {
+        console.log("[i] Antigravity já está traduzido em Português (Brasil).");
+        process.exit(20);
+    }
+    process.exit(0);
+}
+
+if (checkOriginalOnly) {
+    const isSrcTr = isAlreadyTranslatedAgy(srcAsar);
+    const wb = path.join(agyDir, "resources", "web-bundle");
+    const mkr = path.join(wb, ".agy-ptbr-installed");
+    if (!isSrcTr && !fs.existsSync(mkr) && !fs.existsSync(wb)) {
+        console.log("[i] Antigravity já está no estado original de fábrica (em inglês).");
+        process.exit(30);
+    }
+    process.exit(0);
 }
 
 function computeIntegrity(buffer) {
@@ -128,7 +153,7 @@ function getTurboUiCompatibilityIssues(version, bundleText) {
     if (!isAtLeast223) return [];
 
     const presetDeclaration = /\bvar\s+[\w$]{1,80}=\{request_review:\{label:/.exec(bundleText);
-    const visiblePresets = /\b[\w$]{1,80}=\["request_review","default","turbo"\]/.exec(bundleText);
+    const visiblePresets = /\b[\w$]{1,80}=\["request_review","default"(?:,"auto")?,"turbo"\]/.exec(bundleText);
     const start = presetDeclaration ? presetDeclaration.index : -1;
     const end = visiblePresets ? visiblePresets.index : -1;
     const presetTable = start >= 0 && end > start ? bundleText.slice(start, end) : "";
@@ -142,7 +167,9 @@ function getTurboUiCompatibilityIssues(version, bundleText) {
     if (!visiblePresets) {
         issues.push('Turbo habilitado na lista de perfis visíveis');
     }
-    if (!bundleText.includes('placeholder:w?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos...":"Pesquisar abas, arquivos, extensões, artefatos e comandos..."')) {
+    const hasSearchPlaceholder = bundleText.includes('placeholder:w?"Pesquisar abas, arquivos, extensões, subagentes, artefatos e comandos...":"Pesquisar abas, arquivos, extensões, artefatos e comandos..."') ||
+        bundleText.includes('placeholder:c?"Pesquisar conversas, comandos e código...":"Selecionar categoria para pesquisar..."');
+    if (!hasSearchPlaceholder) {
         issues.push('placeholder de busca traduzido');
     }
     return issues;
@@ -257,6 +284,54 @@ if (!fs.existsSync(versionBackupAsar) && !isSrcTranslated) {
     fs.copyFileSync(srcAsar, versionBackupAsar);
     fs.writeFileSync(versionBackupInfo, infoText, "utf8");
 }
+const targetWebBundleDir = path.join(agyDir, "resources", "web-bundle");
+const webBundleWasAbsentFile = path.join(versionBackupDir, "web-bundle-was-absent.txt");
+if (!fs.existsSync(webBundleWasAbsentFile)) {
+    if (!fs.existsSync(targetWebBundleDir) || fs.existsSync(path.join(targetWebBundleDir, ".agy-ptbr-installed"))) {
+        fs.writeFileSync(webBundleWasAbsentFile, "web-bundle ausente antes da tradução\n", "utf8");
+    }
+}
+const backupExePath = path.join(versionBackupDir, "Antigravity.exe");
+const liveExePath = path.join(agyDir, "Antigravity.exe");
+if (!fs.existsSync(backupExePath) && fs.existsSync(liveExePath)) {
+    try {
+        const exeBuf = fs.readFileSync(liveExePath);
+        const magic = Buffer.from("WNKmHXBZaB9tsX");
+        const idx = exeBuf.indexOf(magic);
+        if (idx !== -1) {
+            const fuseIdx = idx + magic.length + 6;
+            const origBuf = Buffer.from(exeBuf);
+            origBuf[fuseIdx] = 49; // '1' de fábrica
+            fs.writeFileSync(backupExePath, origBuf);
+        }
+    } catch (_) { }
+}
+
+function ensureFuseIsZero(exePath) {
+    if (!fs.existsSync(exePath)) return;
+    try {
+        const exeBuf = fs.readFileSync(exePath);
+        const magic = Buffer.from("WNKmHXBZaB9tsX");
+        const idx = exeBuf.indexOf(magic);
+        if (idx !== -1) {
+            const fuseIdx = idx + magic.length + 6;
+            if (exeBuf[fuseIdx] === 49) { // '1'
+                console.log("    [*] Desativando Electron Fuse de integridade ASAR no executável...");
+                exeBuf[fuseIdx] = 48; // '0'
+                fs.writeFileSync(exePath, exeBuf);
+                console.log("    [OK] Verificação de integridade ASAR desativada com sucesso no executável (Fuse: 0).");
+            } else {
+                console.log("    [OK] Executável já está configurado com Fuse: 0.");
+            }
+        }
+    } catch (err) {
+        console.error("[x] Erro crítico ao atualizar o executável " + exePath + ": " + err.message);
+        console.error("    O executável Antigravity.exe está bloqueado por outro processo em execução.");
+        console.error("    Encerre todos os processos do Antigravity e tente novamente.");
+        process.exit(15);
+    }
+}
+ensureFuseIsZero(liveExePath);
 const cleanAsarPath = fs.existsSync(versionBackupAsar) && getAgyAsarVersion(versionBackupAsar) === currentVersion && !isAlreadyTranslatedAgy(versionBackupAsar)
     ? versionBackupAsar : (!isSrcTranslated ? srcAsar : null);
 if (!cleanAsarPath || isAlreadyTranslatedAgy(cleanAsarPath) || getAgyAsarVersion(cleanAsarPath) !== currentVersion) {
@@ -275,7 +350,7 @@ try {
     const installedMainHash = crypto.createHash("sha256").update(fs.readFileSync(installedWebBundleMain)).digest("hex");
     installedWebBundleIsCurrent = markerText.includes(`main.js SHA256: ${sourceWebBundleHash}`) && installedMainHash === sourceWebBundleHash;
 } catch (_) { }
-if (isSrcTranslated && installedWebBundleIsCurrent && cleanAsarPath === versionBackupAsar) {
+if (!isForce && isSrcTranslated && installedWebBundleIsCurrent && cleanAsarPath === versionBackupAsar) {
     process.exit(10);
 }
 if (isSrcTranslated) console.log("[i] Tradução anterior detectada; verificando e atualizando o pacote a partir do backup limpo.");
@@ -353,6 +428,8 @@ if (mainCode) {
     mainCode = mainCode.replace("label: `Open ${electron_1.app.getName()}`", "label: `Abrir ${electron_1.app.getName()}`");
     mainCode = mainCode.replace("label: 'Quit'", "label: 'Sair'");
     mainCode = mainCode.replace("label: 'No agents running'", "label: 'Nenhum agente em execução'");
+    mainCode = mainCode.replace("await electron_1.dialog.showErrorBox('WSL setup failed', msg);", "await electron_1.dialog.showErrorBox('Falha na configuração do WSL', msg);");
+    mainCode = mainCode.replace("const msg = `Failed to install the server into WSL distro \"${WSL_DISTRO}\":\\n${err.message}`;", "const msg = `Falha ao instalar o servidor na distro WSL \"${WSL_DISTRO}\":\\n${err.message}`;");
 }
 
 // 5.3 dist/loadingOverlay.js
@@ -409,6 +486,29 @@ if (provSplashCode) {
     console.log("    -> Splash do WSL traduzido em dist/provisionSplash.js");
 }
 
+// 5.8 dist/wsl.js
+const wslEntry = cleanHeader.files.dist && cleanHeader.files.dist.files && cleanHeader.files.dist.files["wsl.js"];
+let wslCode = wslEntry ? getCleanFileData(wslEntry).toString("utf8") : null;
+if (wslCode) {
+    wslCode = wslCode.replace("onStatus?.('Downloading the Antigravity binary\\u2026');", "onStatus?.('Baixando o binário do Antigravity\\u2026');");
+    wslCode = wslCode.replace("onStatus?.('Downloading the Antigravity binary…');", "onStatus?.('Baixando o binário do Antigravity…');");
+    wslCode = wslCode.replace("onStatus?.(`Installing into ${distro}\\u2026`);", "onStatus?.(`Instalando em ${distro}\\u2026`);");
+    wslCode = wslCode.replace("onStatus?.(`Installing into ${distro}…`);", "onStatus?.(`Instalando em ${distro}…`);");
+    wslCode = wslCode.replace(
+        "error: `This folder belongs to the WSL distro \"${unc[1]}\", but this window is connected to \"${distro}\".`,",
+        "error: `Esta pasta pertence à distro WSL \"${unc[1]}\", mas esta janela está conectada a \"${distro}\".`,"
+    );
+    wslCode = wslCode.replace(
+        "warning: 'This folder is on the Windows filesystem. Accessing it from WSL (via /mnt) can be slow — for best performance keep projects inside the WSL filesystem.',",
+        "warning: 'Esta pasta está no sistema de arquivos do Windows. Acessá-la pelo WSL (via /mnt) pode ser lento — para melhor desempenho, mantenha os projetos dentro do sistema de arquivos do WSL.',"
+    );
+    wslCode = wslCode.replace(
+        "return { error: `This location cannot be opened in WSL: ${winPath}` };",
+        "return { error: `Este local não pode ser aberto no WSL: ${winPath}` };"
+    );
+    console.log("    -> Mensagens do WSL traduzidas em dist/wsl.js");
+}
+
 // Validar sintaxe do languageServer.js
 const tempCheck = path.join(resourcesDir, "temp_ls_check.js");
 try {
@@ -435,6 +535,7 @@ const patchedUpdaterBuf = updaterCode ? Buffer.from(updaterCode, "utf8") : null;
 const patchedMenuBuf = menuCode ? Buffer.from(menuCode, "utf8") : null;
 const patchedWizHtmlBuf = wizHtmlCode ? Buffer.from(wizHtmlCode, "utf8") : null;
 const patchedProvSplashBuf = provSplashCode ? Buffer.from(provSplashCode, "utf8") : null;
+const patchedWslBuf = wslCode ? Buffer.from(wslCode, "utf8") : null;
 
 // 6. Escanear e reconstruir árvore ASAR estritamente a partir da base limpa original
 function scan(node, prefix = "") {
@@ -533,6 +634,13 @@ for (const item of allItems) {
         setDeep(newHeader, parts, { size, offset, integrity });
         filesToWrite.push({ type: "buffer", buffer: patchedProvSplashBuf, size, path: p });
         currentOffset += size;
+    } else if (p === "dist/wsl.js" && patchedWslBuf) {
+        const size = patchedWslBuf.length;
+        const offset = currentOffset.toString();
+        const integrity = computeIntegrity(patchedWslBuf);
+        setDeep(newHeader, parts, { size, offset, integrity });
+        filesToWrite.push({ type: "buffer", buffer: patchedWslBuf, size, path: p });
+        currentOffset += size;
     } else {
         const size = e.size;
         const srcOffset = cleanBaseOffset + parseInt(e.offset, 10);
@@ -617,6 +725,17 @@ function copyDirRecursive(src, dest) {
 copyDirRecursive(webBundleDir, targetWebBundle);
 fs.writeFileSync(path.join(targetWebBundle, ".agy-ptbr-installed"), `PT-BR translation marker\nmain.js SHA256: ${sourceWebBundleHash}\n`, "utf8");
 console.log("    [OK] Pasta web-bundle traduzida instalada com sucesso em resources/web-bundle!");
+
+// Validação final de integridade do Electron Fuse
+try {
+    const finalExeBuf = fs.readFileSync(liveExePath);
+    const magic = Buffer.from("WNKmHXBZaB9tsX");
+    const idx = finalExeBuf.indexOf(magic);
+    if (idx !== -1 && finalExeBuf[idx + magic.length + 6] !== 48) {
+        console.error("[x] Erro grave: O Electron Fuse não está em 0. Risco de tela preta.");
+        process.exit(16);
+    }
+} catch (_) { }
 
 console.log("====================================================================");
 console.log(` [OK] SUCESSO! Antigravity atualizado e traduzido na versão ${currentVersion}!`);

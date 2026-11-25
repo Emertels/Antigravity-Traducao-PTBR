@@ -2,24 +2,25 @@
  * are driven by --syntax-* CSS variables so a selected theme preset can
  * override the syntax palette without re-tokenizing (a preset just swaps the
  * vars). The defaults below reproduce the original bundled prismjs palettes
- * exactly (light: prism default; dark: okaidia), so this is a no-op until
- * presets seed --syntax-*. Backgrounds/structural colors stay app-native and
- * are intentionally not preset-driven. */
+ * (light: prism default; dark: okaidia) until presets seed --syntax-*.
+ * Backgrounds/structural colors stay app-native and are intentionally not
+ * preset-driven. */
 
 .theme-light {
-  /* Default syntax palette (prism default theme, @author Lea Verou). */
+  /* Default syntax palette (prism default theme, @author Lea Verou). Greens
+   * darkened from #690 to stay readable on diff-inserted tints. */
   --syntax-default-fg: black;
   --syntax-comment: slategray;
   --syntax-punctuation: #999;
   --syntax-property: #905;
   --syntax-deleted: #905;
-  --syntax-inserted: #690;
+  --syntax-inserted: #5c8a00;
   --syntax-tag: #905;
   --syntax-constant: #905;
   --syntax-number: #905;
-  --syntax-string: #690;
-  --syntax-attr-name: #690;
-  --syntax-builtin: #690;
+  --syntax-string: #5c8a00;
+  --syntax-attr-name: #5c8a00;
+  --syntax-builtin: #5c8a00;
   --syntax-operator: #9a6e3a;
   --syntax-variable: #e90;
   --syntax-attr-value: #07a;
@@ -2934,7 +2935,7 @@ canvas.hiddenCanvasElement {
 }
 /**
  * PDF SDK - Utility Classes
- *
+ * 
  * Reusable utility classes for common styling patterns.
  * These can be used by SDK consumers to build custom UI around the viewer.
  */

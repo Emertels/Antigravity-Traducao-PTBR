@@ -11,6 +11,10 @@ $bundledNode = Join-Path $PSScriptRoot "runtime\node.exe"
 $nodeCmd = Get-Command "node.exe" -ErrorAction SilentlyContinue
 $nodePath = if (Test-Path -LiteralPath $bundledNode -PathType Leaf) { $bundledNode } elseif ($nodeCmd) { $nodeCmd.Source } else { $null }
 
+function Wait-IfStandalone {
+    if ($env:AGY_FROM_BAT -ne '1') { Wait-IfStandalone }
+}
+
 function Read-OpenChoice([string]$Prompt) {
     Write-Host $Prompt -NoNewline -ForegroundColor White
     while ($true) {
@@ -398,6 +402,7 @@ while (-not $agyDir -or -not (Test-Path $agyDir)) {
     $userInput = Read-Host "Digite ou cole o caminho da pasta do Antigravity"
     if ([string]::IsNullOrWhiteSpace($userInput)) {
         Write-Host "[x] Nenhuma instalação foi selecionada. O Antigravity pode não estar instalado." -ForegroundColor Red
+        Wait-IfStandalone
         Exit 1
     }
     $userInput = $userInput.Trim().Trim('"')
@@ -449,7 +454,7 @@ $sidecarPackage = Join-Path $scriptDir "biomolecular-sidecar"
 
 if (-not (Test-Path $sourceWebBundle)) {
     Write-Host "[x] Erro: Pasta 'web-bundle' não encontrada nesta pasta!" -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 
@@ -457,24 +462,52 @@ if (-not (Test-Path $sourceWebBundle)) {
 $patcherScript = Join-Path $scriptDir "patch-antigravity.cjs"
 if (-not (Test-Path -LiteralPath $patcherScript -PathType Leaf)) {
     Write-Host "[x] O arquivo patch-antigravity.cjs não está ao lado do instalador. Extraia novamente o ZIP completo; nenhum arquivo foi alterado." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 if (-not $nodePath) {
     Write-Host "[x] O Node.js portátil não está em runtime\node.exe e não há node.exe no PATH. Extraia novamente o ZIP completo ou instale Node.js; nenhum arquivo foi alterado." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 Write-Host "[1/4] Conferindo compatibilidade da interface e do modo Turbo..." -ForegroundColor White
 & $nodePath $patcherScript --preflight "$agyDir"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[x] O pacote não é compatível com esta interface do Antigravity. O aplicativo permaneceu aberto e sem alterações." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 12
+}
+
+# Verificar de forma inteligente se a tradução já está aplicada
+$forceReinstall = $false
+& $nodePath $patcherScript --check-installed "$agyDir"
+if ($LASTEXITCODE -eq 20) {
+    Write-Host ""
+    Write-Host " ==================================================================== " -ForegroundColor Cyan
+    Write-Host "      A TRADUÇÃO PT-BR JÁ ESTÁ APLICADA NO SEU GOOGLE ANTIGRAVITY     " -ForegroundColor Cyan
+    Write-Host " ==================================================================== " -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "  O Antigravity já está funcionando em Português do Brasil!" -ForegroundColor Green
+    Write-Host ""
+    if (-not (Read-OpenChoice "Deseja reinstalar / atualizar a tradução mesmo assim? [S = sim | N/Enter/Esc = sair]: ")) {
+        Write-Host "Instalação mantida sem alterações." -ForegroundColor Gray
+        Write-Host ""
+        if (Test-Path $exePath) {
+            if (Read-OpenChoice "Deseja abrir o Antigravity? [S = sim | N/Enter/Esc = sair]: ") {
+                Start-Process -FilePath "explorer.exe" -ArgumentList "`"$exePath`""
+            } else {
+                Write-Host "Finalizando..." -ForegroundColor Gray
+                Start-Sleep -Milliseconds 800
+            }
+        }
+        Exit 0
+    }
+    $forceReinstall = $true
+    Write-Host "[-] Reinstalando a tradução a pedido do usuário..." -ForegroundColor Yellow
 }
 if (-not (Test-Path -LiteralPath $sidecarHelper -PathType Leaf)) {
     Write-Host "[x] O sincronizador do Visualizador Biomolecular não foi encontrado; nenhum arquivo foi alterado." -ForegroundColor Red
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 try {
@@ -482,18 +515,17 @@ try {
 } catch {
     Write-Host "[x] Pré-teste do Visualizador Biomolecular falhou: $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "    Nenhum arquivo foi alterado." -ForegroundColor Yellow
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 
-# 2. Forçar o fechamento dos processos da interface somente depois da validação do bundle.
-$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
+# 2. Forçar o fechamento seguro de toda a árvore de processos do Antigravity
+$running = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" }
 if ($running) {
     Write-Host "[-] Encerrando processos do Antigravity para atualizar arquivos com segurança..." -ForegroundColor Yellow
-    foreach ($process in $running) {
-        try { Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue } catch { }
-    }
-    $timeout = 30
+    & taskkill.exe /F /T /IM "Antigravity.exe" 2>$null | Out-Null
+    & taskkill.exe /F /T /IM "language_server.exe" 2>$null | Out-Null
+    $timeout = 40
     while ($timeout -gt 0) {
         $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
         if (-not $check) { break }
@@ -502,16 +534,37 @@ if ($running) {
     }
     $check = Get-Process | Where-Object { $_.ProcessName -like "*antigravity*" -and $_.ProcessName -notlike "*language_server*" }
     if ($check) {
-        $remaining = ($check | ForEach-Object { "$($_.ProcessName) (PID $($_.Id))" }) -join ", "
-        Write-Host "[x] Não foi possível encerrar estes processos do Antigravity: $remaining. Nenhum arquivo foi alterado." -ForegroundColor Red
-        Exit 1
+        foreach ($p in $check) {
+            try { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue } catch { }
+        }
+        Start-Sleep -Milliseconds 500
     }
+}
+
+# 2.1 Garantir liberação do executável para gravação do Fuse
+$fileUnlocked = $false
+for ($i = 0; $i -lt 10; $i++) {
+    try {
+        if (Test-Path $exePath) {
+            $testStream = [System.IO.File]::Open($exePath, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite, [System.IO.FileShare]::None)
+            $testStream.Close()
+        }
+        $fileUnlocked = $true
+        break
+    } catch {
+        Start-Sleep -Milliseconds 300
+    }
+}
+if (-not $fileUnlocked) {
+    Write-Host "[x] O executável Antigravity.exe ainda está bloqueado por outro processo. Nenhum arquivo foi alterado." -ForegroundColor Red
+    Wait-IfStandalone
+    Exit 1
 }
 
 # 4. Preservar os arquivos originais da instalação dentro da pasta do programa.
 Write-Host ""; Write-Host "[2/4] Verificando backups imutáveis desta versão..." -ForegroundColor White
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-if (-not $detectedVersion) { Write-Host "[x] Não foi possível detectar a versão. Backup interrompido." -ForegroundColor Red; Pause; Exit 1 }
+if (-not $detectedVersion) { Write-Host "[x] Não foi possível detectar a versão. Backup interrompido." -ForegroundColor Red; Wait-IfStandalone; Exit 1 }
 $versionBackupDir = Join-Path $backupDir $detectedVersion
 New-Item -ItemType Directory -Path $versionBackupDir -Force | Out-Null
 $versionBackupAsar = Join-Path $versionBackupDir "app.asar"
@@ -523,13 +576,13 @@ if ((Test-Path $installedWebBundleMarker) -and -not (Test-Path $backupWebBundle)
     Write-Host "[x] A pasta web-bundle já está traduzida, mas não existe uma cópia original salva para a versão $detectedVersion." -ForegroundColor Red
     Write-Host "    Instalação interrompida; não vou salvar os arquivos traduzidos como backup original." -ForegroundColor Yellow
     Write-Host "    Repare/instale o Antigravity oficial por cima e tente novamente. Mantenha as pastas de dados do usuário." -ForegroundColor Cyan
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 if ((Test-Path $backupWebBundle) -and (Test-Path (Join-Path $backupWebBundle ".agy-ptbr-installed"))) {
     Write-Host "[x] O backup web-bundle desta versão contém a marca de tradução; não será usado como original." -ForegroundColor Red
     Write-Host "    Repare/instale o Antigravity oficial por cima e tente novamente; mantenha as pastas de dados do usuário." -ForegroundColor Cyan
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 if ((Test-Path $exePath) -and -not (Test-Path $backupExe)) { Copy-Item -LiteralPath $exePath -Destination $backupExe }
@@ -539,6 +592,11 @@ if (-not (Test-Path $backupWebBundle) -and -not (Test-Path $webBundleWasAbsent))
     } elseif (-not (Test-Path $targetWebBundle)) {
         [IO.File]::WriteAllText($webBundleWasAbsent,"web-bundle ausente antes da tradução",$utf8NoBom)
     }
+}
+$versionBackupInfo = Join-Path $versionBackupDir "backup-info.txt"
+if (-not (Test-Path $versionBackupInfo)) {
+    $infoContent = "Backup original Google Antigravity`nVersão: $detectedVersion`nCriado: $((Get-Date).ToString('dd/MM/yyyy HH:mm:ss'))`n"
+    [IO.File]::WriteAllText($versionBackupInfo, $infoContent, $utf8NoBom)
 }
 if (Test-Path $exePath) { Disable-AsarIntegrityFuse -ExePath $exePath }
 # 5. Aplicar patch modular dinâmico
@@ -551,7 +609,7 @@ $translationAlreadyInstalled = $false
 if ($nodePath -and (Test-Path -LiteralPath $patcherScript -PathType Leaf)) {
     Write-Host "    -> Executando Patcher Dinâmico Modular (preserva versão instalada sem downgrade)..." -ForegroundColor Cyan
     try {
-        & $nodePath $patcherScript "$agyDir"
+        if ($forceReinstall) { & $nodePath $patcherScript --force "$agyDir" } else { & $nodePath $patcherScript "$agyDir" }
         if ($LASTEXITCODE -eq 10) {
             $patchedDynamically = $true
             $translationAlreadyInstalled = $true
@@ -569,7 +627,7 @@ if (-not $patchedDynamically) {
     if ($LASTEXITCODE -eq 11) {
         Write-Host "[x] Antigravity está modificado, mas não há backup original limpo desta versão." -ForegroundColor Red
         Write-Host "    Repare/instale o Antigravity oficial por cima e tente novamente; mantenha as pastas de dados do usuário." -ForegroundColor Cyan
-        Pause
+        Wait-IfStandalone
         Exit 1
     }
     Write-Host "[x] Não há patch dinâmico compatível com o Antigravity $detectedVersion. Nenhum ASAR estático será aplicado para evitar downgrade." -ForegroundColor Red
@@ -592,7 +650,7 @@ if (-not $patchedDynamically) {
         Write-Host "    [!] A restauração automática encontrou um erro: $($_.Exception.Message)" -ForegroundColor Red
         Write-Host "    Os backups desta versão foram preservados em: $versionBackupDir" -ForegroundColor Yellow
     }
-    Pause
+    Wait-IfStandalone
     Exit 1
 }
 try {
@@ -600,8 +658,16 @@ try {
 } catch {
     Write-Host "[x] Não foi possível instalar a tradução do Visualizador Biomolecular: $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "    O pacote principal foi aplicado; os arquivos do visualizador e os backups existentes foram preservados." -ForegroundColor Yellow
-    Pause
+    Wait-IfStandalone
     Exit 1
+}
+$androidSidecarHelper = Join-Path $scriptDir "sync-android-sidecars.ps1"
+if (Test-Path -LiteralPath $androidSidecarHelper -PathType Leaf) {
+    try {
+        $null = & $androidSidecarHelper -Mode Install -AntigravityInstallDir $agyDir
+    } catch {
+        Write-Host "[!] Aviso ao sincronizar painéis Android: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 # 6.1 Limpar os caches após cada execução para carregar traduções atualizadas,
 # inclusive quando o patch principal e o sidecar já estavam instalados.
