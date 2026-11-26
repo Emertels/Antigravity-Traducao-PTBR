@@ -1,4 +1,4 @@
-## Versão atual: 1.7.0 — Antigravity 2.35.1 — 24/11/2026
+## Versão atual: 1.7.0 — Antigravity 2.35.1 — 25/11/2026
 
 Compatibilidade 100% com o Google Antigravity 2.35.1. Solução definitiva para inicialização estável com todos os 541 assets nativos de runtime extraídos (incluindo `workers/shiki_worker.js`, `page_agent_bundle.js`, áudios e ícones). Varredura profunda com tradução integral da Paleta de Comandos (`Ctrl+Shift+P`, 48 comandos), drawer e barra do navegador de Downloads, controles de áudio/gravação e novos status de envio (*"Finalizando..."*, *"Finalizando transcrição..."*, *"Cancelar (Ctrl+D)"*), além de todas as opções de Configurações, totalizando 0 termos sem mapeamento na auditoria.
 
