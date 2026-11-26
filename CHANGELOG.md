@@ -1,3 +1,13 @@
+## v1.8.0 — Antigravity 2.35.1 / 2.35.2 — 26/11/2026
+
+### Interface, Permissões, Chat de Voz & Tempo Relativo
+- **Tempo Relativo por Extenso:** Atualizado o formatador `zD` e o fallback em `_trAgy` para exibir unidades por extenso no singular e plural (`1 minuto`, `7 minutos`, `1 hora`, `2 horas`, `1 dia`, `6 dias`, `1 semana`, `2 semanas`, `1 mês`, `2 meses`, `1 ano`, `3 anos`).
+- **Seletor de Largura & Chat de Voz:** Traduzidos `"Fill"` $\rightarrow$ *"Preencher"* (ao lado de *Estreito*, *Padrão*, *Largo*) e `"You"` $\rightarrow$ *"Você"* no indicador de áudio/transcrição de voz.
+- **Permissões, Ações e Padronização:** Adicionada regra dinâmica para *"Yes, and always allow \<comando\>"* $\rightarrow$ *"Sim, e sempre permitir \<comando\>"*, traduzido *"Skip (Esc), Skip All (Ctrl+Esc)"* $\rightarrow$ *"Pular (Esc), Pular tudo (Ctrl+Esc)"*, ajustado *"Adicionar Contexto"* $\rightarrow$ *"Adicionar contexto"* e padronizado *"Checking for ..."* $\rightarrow$ *"Verificando ..."* além de *"1 turn"* / *"N turns"* $\rightarrow$ *"1 turno"* / *"N turnos"*.
+- **Restaurador (`Restaurar-Original.ps1`):** Corrigida recursão infinita em `Wait-IfStandalone` quando executado diretamente fora do `.bat`.
+- **Marketplace, Atalhos & Filtros:** Traduzidos `Only Archived` $\rightarrow$ *"Apenas arquivadas"*, `Only Automations` $\rightarrow$ *"Apenas automações"*, `Submit (↵)` $\rightarrow$ *"Enviar (↵)"*, `Search shortcuts...` $\rightarrow$ *"Pesquisar atalhos..."*, `No` $\rightarrow$ *"Não"*, descrições de plugins no Marketplace (`Kling AI`, `Meshy`, `Midpage Legal Research`, `mumo`, `Orca Security`, `Passim AI`) e removido `text-transform: capitalize` de *"Interface do sistema"* e *"Solicitar revisão"*.
+- **Visualizador Biomolecular (`biomolecular-sidecar`):** Traduzidos *"Found N structure files."* $\rightarrow$ *"N arquivo(s) de estrutura encontrado(s)."* e *"Error scanning files:"* $\rightarrow$ *"Erro ao verificar arquivos:"*.
+
 ## v1.7.0 — Antigravity 2.35.1 — 25/11/2026
 
 ### Seletor de Modelos, Esforço de Pensamento & Tooltips de Planos

@@ -12,7 +12,7 @@ $nodeCmd = Get-Command 'node.exe' -ErrorAction SilentlyContinue
 $nodePath = if (Test-Path -LiteralPath $bundledNode -PathType Leaf) { $bundledNode } elseif ($nodeCmd) { $nodeCmd.Source } else { $null }
 
 function Wait-IfStandalone {
-    if ($env:AGY_FROM_BAT -ne '1') { Wait-IfStandalone }
+    if ($env:AGY_FROM_BAT -ne '1') { Read-Host "Pressione Enter para sair" | Out-Null }
 }
 
 function Read-OpenChoice([string]$Prompt) {

@@ -157,7 +157,7 @@ if ($Mode -eq 'Preflight') {
             $translatedHash = (Get-FileHash -LiteralPath (Join-Path $transRoot $relativeFile) -Algorithm SHA256).Hash
             $originalSource = if ($backupPresent -eq $files.Count) { Join-Path $backupRoot $relativeFile } else { Join-Path $origRoot $relativeFile }
             $originalHash = (Get-FileHash -LiteralPath $originalSource -Algorithm SHA256).Hash
-            if ($currentHash -ne $translatedHash -and $currentHash -ne $originalHash) {
+            if ($currentHash -ne $translatedHash -and $currentHash -ne $originalHash -and $backupPresent -ne $files.Count) {
                 $recoveryPath = Get-TrustedRecoveryPath $target $relativeFile
                 $packageOriginalHash = (Get-FileHash -LiteralPath (Join-Path $origRoot $relativeFile) -Algorithm SHA256).Hash
                 if (-not (Test-TrustedRecoveryCopy $target) -or

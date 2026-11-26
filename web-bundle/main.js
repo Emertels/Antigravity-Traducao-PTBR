@@ -806,6 +806,7 @@ var _ptAgyDict = {
   "Yes, and always allow when not in a project": "Sim e sempre permitir quando não estiver em um projeto",
   "Yes, and always allow in this project": "Sim e sempre permitir neste projeto",
   "Yes, and always allow in this workspace": "Sim e sempre permitir neste espaço de trabalho",
+  "No": "Não",
   "Yes, and always allow": "Sim e sempre permitir",
   "Yes, save rule in this conversation": "Sim, salvar regra nesta conversa",
   "Yes, save rule when not in a project": "Sim, salvar regra quando não estiver em um projeto",
@@ -1264,6 +1265,8 @@ var _ptAgyDict = {
   "Configure the maximum width of the conversation panel.": "Configure a largura máxima do painel de conversa.",
   "Narrow": "Estreito",
   "Wide": "Largo",
+  "You": "Você",
+  "Fill": "Preencher",
   "Light Theme": "Tema claro",
   "Dark Theme": "Tema escuro",
   "Preset": "Predefinição",
@@ -1314,6 +1317,10 @@ var _ptAgyDict = {
   "now": "agora",
   "Display Options": "Opções de exibição",
   "Display": "Exibição",
+  "Submit (↵)": "Enviar (↵)",
+  "Submit": "Enviar",
+  "Only Archived": "Apenas arquivadas",
+  "Only Automations": "Apenas automações",
   "Archived Only": "Somente arquivados",
   "More Actions": "Mais ações",
   "Group By": "Agrupar por",
@@ -1482,7 +1489,7 @@ var _ptAgyDict = {
   "Record Audio": "Gravar áudio",
   "Stop Recording": "Parar gravação",
   "Recording": "Gravando",
-  "Add Context": "Adicionar Contexto",
+  "Add Context": "Adicionar contexto",
   "Media": "Mídia",
   "Mentions": "Menções",
   "Actions": "Ações",
@@ -4362,6 +4369,7 @@ function _trToolPhrase(p) {
   // Verbs at beginning
   res = res.replace(/^Verifying\s+/i, "Verificando ");
   res = res.replace(/^Verify\s+/i, "Verificar ");
+  res = res.replace(/^Checking\s+for\s+/i, "Verificando ");
   res = res.replace(/^Checking\s+/i, "Verificando ");
   res = res.replace(/^Check\s+/i, "Verificar ");
   res = res.replace(/^Testing\s+/i, "Testando ");
@@ -5087,7 +5095,9 @@ Object.assign(_ptAgyDict, {
   "Draft a reply to the latest thread about launch readiness": "Escrever um rascunho de resposta para a última conversa sobre prontidão de lançamento",
   "Find emails with attachments from last week": "Encontrar e-mails com anexos da semana passada",
   "Introducing Remote Agents": "Apresentando os Agentes Remotos",
-  "Your agents can now run in the cloud and keep working after you close the app. Check on them from any browser at antigravity.google.com. Create a Remote Project to get started.": "Seus agentes agora podem ser executados na nuvem e continuar trabalhando depois que você fechar o aplicativo. Acompanhe-os de qualquer navegador em antigravity.google.com. Crie um projeto remoto para começar."
+  "Your agents can now run in the cloud and keep working after you close the app. Check on them from any browser at antigravity.google.com. Create a Remote Project to get started.": "Seus agentes agora podem ser executados na nuvem e continuar trabalhando depois que você fechar o aplicativo. Acompanhe-os de qualquer navegador em antigravity.google.com. Crie um projeto remoto para começar.",
+  "Adding...": "Adicionando...",
+  "Adding\u2026": "Adicionando…"
 });
 
 // Prefixos para variantes de descrições de skills que chegam do catálogo do Antigravity.
@@ -5144,7 +5154,7 @@ function _trAgy(s) {
   }
   if (/^(\d+)\s*(?:w|sem)$/i.test(t)) {
     var _n = t.match(/^(\d+)/)[1];
-    return _n === "1" ? "1 sem" : (_n + " sem");
+    return _n === "1" ? "1 semana" : (_n + " semanas");
   }
   if (/^(\d+)\s*(?:d|dias?)$/i.test(t)) {
     var _n = t.match(/^(\d+)/)[1];
@@ -5152,11 +5162,11 @@ function _trAgy(s) {
   }
   if (/^(\d+)\s*h$/i.test(t)) {
     var _n = t.match(/^(\d+)/)[1];
-    return _n + " h";
+    return _n === "1" ? "1 hora" : (_n + " horas");
   }
   if (/^(\d+)\s*(?:m|min)$/i.test(t)) {
     var _n = t.match(/^(\d+)/)[1];
-    return _n + " min";
+    return _n === "1" ? "1 minuto" : (_n + " minutos");
   }
   if (/^(\d+)\s*s$/i.test(t)) {
     var _n = t.match(/^(\d+)/)[1];
@@ -5693,6 +5703,27 @@ function _trAgy(s) {
   }
   if (/^No\s*\(tell the agent what to do instead\)$/i.test(t)) {
     return "Não (diga ao agente o que fazer em vez disso)";
+  }
+  
+  // Marketplace plugin descriptions (prefix-aware for truncated cards)
+  if (/^Create and edit images with Kling Image 4\.0/i.test(t)) return "Crie e edite imagens com Kling Image 4.0, gere vídeos e áudio...";
+  if (/^Generate 3D models from text or images with Meshy/i.test(t)) return "Gere modelos 3D a partir de texto ou imagens com o Meshy...";
+  if (/^Research US case law, statutes, and regulations/i.test(t)) return "Pesquise jurisprudência, leis e regulamentos dos EUA...";
+  if (/^Bring Claude, GPT, Muse, Kimi & more into Antigr/i.test(t)) return "Traga Claude, GPT, Muse, Kimi e outros para o Antigravity...";
+  if (/^Investigate cloud risk from your IDE: query Orca al/i.test(t)) return "Investigue riscos na nuvem pelo seu IDE: consulte alertas do Orca...";
+  if (/^U\.S\. immigration law research: published and unp/i.test(t)) return "Pesquisa de direito imigratório dos EUA: decisões publicadas e inéditas...";
+  const _mSubmit = t.match(/^Submit\s*\(([^)]+)\)$/i);
+  if (_mSubmit) {
+    return "Enviar (" + _mSubmit[1] + ")";
+  }
+  const _mTurns = t.match(/^(\d+)\s+turns?$/i);
+  if (_mTurns) {
+    const _n = parseInt(_mTurns[1], 10);
+    return _n + (_n === 1 ? " turno" : " turnos");
+  }
+  const _mAlwaysAllow = t.match(/^Yes, and always allow\s+([\s\S]+)$/);
+  if (_mAlwaysAllow) {
+    return "Sim, e sempre permitir " + _mAlwaysAllow[1];
   }
   if (/^\(tell the agent what to do instead\)$/i.test(t)) {
     return "(diga ao agente o que fazer em vez disso)";
@@ -11471,7 +11502,7 @@ c.quarter(a,{width:"narrow",context:"formatting"})}}validate(a,b){return b>=1&&b
 context:"standalone"})||c.month(a,{width:"narrow",context:"standalone"})}}validate(a,b){return b>=0&&b<=11}set(a,b,c){a.setUTCMonth(c,1);a.setUTCHours(0,0,0,0);return a}};var H4a=class extends tD{constructor(){super(...arguments);this.priority=120}parse(a,b,c){switch(b){case "q":case "qq":return xD(b.length,a);case "qo":return c.ordinalNumber(a,{unit:"quarter"});case "qqq":return c.quarter(a,{width:"abbreviated",context:"standalone"})||c.quarter(a,{width:"narrow",context:"standalone"});case "qqqqq":return c.quarter(a,{width:"narrow",context:"standalone"});default:return c.quarter(a,{width:"wide",context:"standalone"})||c.quarter(a,{width:"abbreviated",context:"standalone"})||
 c.quarter(a,{width:"narrow",context:"standalone"})}}validate(a,b){return b>=1&&b<=4}set(a,b,c){a.setUTCMonth((c-1)*3,1);a.setUTCHours(0,0,0,0);return a}};var I4a=class extends tD{constructor(){super(...arguments);this.priority=20}parse(a){return vD(P3a,a)}set(a,b,c){return[new Date(c),{timestampIsSet:!0}]}};var J4a=class extends tD{constructor(){super(...arguments);this.priority=40}parse(a){return vD(P3a,a)}set(a,b,c){return[new Date(c*1E3),{timestampIsSet:!0}]}};var K4a=class extends tD{constructor(){super(...arguments);this.priority=130}parse(a,b,c){var d=f=>({year:f,isTwoDigitYear:b==="yy"});switch(b){case "y":return uD(xD(4,a),d);case "yo":return uD(c.ordinalNumber(a,{unit:"year"}),d);default:return uD(xD(b.length,a),d)}}validate(a,b){return b.isTwoDigitYear||b.year>0}set(a,b,c){var d=a.getUTCFullYear();if(c.isTwoDigitYear)return a.setUTCFullYear($3a(c.year,d),0,1),a.setUTCHours(0,0,0,0),a;a.setUTCFullYear("era"in b&&b.era!==1?1-c.year:c.year,0,1);a.setUTCHours(0,
 0,0,0);return a}};new class extends tD{constructor(){super(...arguments);this.priority=140}parse(a,b,c){switch(b){case "G":case "GG":case "GGG":return c.era(a,{width:"abbreviated"})||c.era(a,{width:"narrow"});case "GGGGG":return c.era(a,{width:"narrow"});default:return c.era(a,{width:"wide"})||c.era(a,{width:"abbreviated"})||c.era(a,{width:"narrow"})}}set(a,b,c){b.era=c;a.setUTCFullYear(c,0,1);a.setUTCHours(0,0,0,0);return a}};new K4a;new A4a;new w4a;new k4a;new D4a;new H4a;new C4a;new G4a;new z4a;new v4a;new f4a;
-new g4a;new i4a;new x4a;new F4a;new r4a;new c4a;new b4a;new j4a;new p4a;new n4a;new m4a;new o4a;new B4a;new E4a;new l4a;new t4a;new s4a;new J4a;new I4a;function L4a(a){iD(1,arguments);return oD(a,Date.now())};var zD=a=>{a=y3a(a);if(a.endsWith("second")||a.endsWith("seconds"))return"now";if(a.endsWith(" months"))return a.replace(/\s*months$/," meses");if(a.endsWith(" month"))return a.replace(/\s*month$/," mês");if(a.endsWith(" days"))return a.replace(/\s*days$/," dias");if(a.endsWith(" day"))return a.replace(/\s*day$/," dia");if(a.endsWith(" years"))return a.replace(/\s*years$/," anos");if(a.endsWith(" year"))return a.replace(/\s*year$/," ano");var b={hour:" h",week:" sem",minute:" min"};for(let [c,d]of Object.entries(b)){b=c;let f=d;if(a.endsWith(` ${b}s`)||a.endsWith(` ${b}`))return a.replace(new RegExp(`\\s*${b}s?$`),f)}return a},M4a=a=>{a=zD(a);return a==="now"?"agora mesmo":`há ${a}`};const N4a=new Intl.DateTimeFormat(void 0,{dateStyle:"long",timeStyle:"short"}),O4a=new Intl.DateTimeFormat(void 0,{timeStyle:"short"});
+new g4a;new i4a;new x4a;new F4a;new r4a;new c4a;new b4a;new j4a;new p4a;new n4a;new m4a;new o4a;new B4a;new E4a;new l4a;new t4a;new s4a;new J4a;new I4a;function L4a(a){iD(1,arguments);return oD(a,Date.now())};var zD=a=>{a=y3a(a);if(a.endsWith("second")||a.endsWith("seconds"))return"now";if(a.endsWith(" months"))return a.replace(/\s*months$/," meses");if(a.endsWith(" month"))return a.replace(/\s*month$/," mês");if(a.endsWith(" days"))return a.replace(/\s*days$/," dias");if(a.endsWith(" day"))return a.replace(/\s*day$/," dia");if(a.endsWith(" weeks"))return a.replace(/\s*weeks$/," semanas");if(a.endsWith(" week"))return a.replace(/\s*week$/," semana");if(a.endsWith(" hours"))return a.replace(/\s*hours$/," horas");if(a.endsWith(" hour"))return a.replace(/\s*hour$/," hora");if(a.endsWith(" minutes"))return a.replace(/\s*minutes$/," minutos");if(a.endsWith(" minute"))return a.replace(/\s*minute$/," minuto");if(a.endsWith(" years"))return a.replace(/\s*years$/," anos");if(a.endsWith(" year"))return a.replace(/\s*year$/," ano");return a},M4a=a=>{a=zD(a);return a==="now"?"agora mesmo":`há ${a}`};const N4a=new Intl.DateTimeFormat(void 0,{dateStyle:"long",timeStyle:"short"}),O4a=new Intl.DateTimeFormat(void 0,{timeStyle:"short"});
 var AD=a=>L4a(a)?O4a.format(a):N4a.format(a),BD=a=>{if(a)return Number(a.seconds??0)*1E3+Math.floor((a.nanos??0)/1E6)},CD=a=>{a=Math.max(1,Math.floor(a/1E3));if(a<60)return`${a}s`;var b=Math.floor(a/60);if(b<60)return`${b}m`;a=Math.floor(b/60);var c=Math.floor(a/24);b%=60;return c>0?`${c}d ${a%24}h ${b}m`:b>0?`${a}h ${b}m`:`${a}h`};const P4a={[1]:"space",[2]:"thread",[3]:"message"},Q4a={[1]:"space",[2]:"group_chat",[3]:"dm"};function R4a(...a){for(let b of a)if(b?.internalActions?.internal_getRTKQSubscriptions){let c=b.internalActions.internal_getRTKQSubscriptions;b.internalActions.internal_getRTKQSubscriptions=function(...d){return c(...d)||{type:`${b.reducerPath}/subscriptions/internal_getRTKQSubscriptions`}};Object.assign(b.internalActions.internal_getRTKQSubscriptions,c)}};function DD(a,b="",c="",d=!1){return`${a}\x00${b}\x00${c}\x00${d?"1":"0"}`}function S4a(a){var [b="",c="",d=""]=a.split("\x00");return{spaceId:b,threadId:c,messageId:d}}const T4a=new WeakMap,U4a=new WeakMap,V4a=new WeakSet;
 function W4a(a,b){var c=b?U4a:T4a,d=c.get(a);if(!d){let f=g=>new Map(g.map(h=>[h,"unsupported"]));d=dC(async g=>{var h=e,k=e;try{if(V4a.has(a))return f(g);try{let l=k(await h(a({targets:g.map(S4a),includeContent:b})));return new Map(l.infos.map(m=>[DD(m.spaceId,m.threadId,m.messageId,b),{spaceId:m.spaceId,threadId:m.threadId,messageId:m.messageId,linkKind:P4a[m.linkKind]??"unknown",spaceType:Q4a[m.spaceType]??"unknown",displayName:m.displayName,memberCount:m.memberCount,description:m.description,
 singleUserBotDm:m.singleUserBotDm,senderName:m.senderName,createTimeMs:BD(m.createTime),messageText:m.messageText,attachmentNames:[...m.attachmentNames]}]))}catch(l){k();if(l instanceof uh&&l.code===12)return V4a.add(a),f(g);throw l;}}finally{h()}},{maxBatchSize:25});c.set(a,d)}return d}function X4a(a,b,c=!1){return b.spaceId?V4a.has(a)?Promise.resolve("unsupported"):W4a(a,c)(DD(b.spaceId,b.threadId,b.messageId,c)):Promise.resolve(null)}
@@ -17294,7 +17325,7 @@ onBlur:m}):E.createElement("span",{className:"flex-1 truncate text-sm min-w-0",t
 function PV({action:a,label:b,description:c,grants:d,onChangeGrants:f,onItemChange:g,placeholder:h="Enter target...",borderless:k=!1,disabled:l=!1}){var {items:m,addItem:n,removeItem:p,updateItem:q}=OV(a,d,f,g),[r,u]=(0,E.useState)(""),[v,w]=(0,E.useState)("allow"),[x,y]=(0,E.useState)(!1),z=(0,E.useCallback)(()=>{r.trim()&&(n(r.trim(),v),u(""),y(!1))},[r,v,n]);return E.createElement("div",{className:jj("flex flex-col gap-1",k?"":"border rounded-lg py-2 px-3")},E.createElement(aV,{label:b,description:c,
 rightElement:E.createElement(lJ,{variant:"secondary",size:"sm",disabled:l,onClick:()=>{y(!0)}},"Add")}),(m.length>0||x)&&E.createElement("div",{className:"flex flex-col gap-2 pb-3"},x&&E.createElement("div",{className:"flex justify-between items-center text-foreground h-8 gap-2 px-3"},E.createElement("div",{className:"flex flex-1 items-center gap-2 min-w-0"},E.createElement(IV,{nativeOnMobile:!0,value:dUb[v],options:["allow","ask","deny"],displayResolver:A=>dUb[A],onSelect:A=>{w(A)}}),E.createElement("div",
 {className:"flex-1 flex items-center justify-between h-8 px-3 rounded-lg border border-border min-w-0"},E.createElement("input",{type:"text",autoFocus:!0,placeholder:h,value:r,onChange:A=>{u(A.target.value)},className:"!flex-1 !text-sm !bg-transparent !text-foreground !min-w-0 placeholder:!text-placeholder !border-none !outline-none focus:!outline-none focus:!ring-0 !p-0 !shadow-none",onKeyDown:A=>{A.key==="Enter"?z():A.key==="Escape"&&(y(!1),u(""))},onBlur:A=>{A.relatedTarget?.getAttribute("aria-label")===
-"Cancel"?(y(!1),u("")):z()}}),E.createElement("button",{onClick:()=>{y(!1);u("")},className:"text-muted-foreground cursor-pointer text-sm p-0.5 flex items-center justify-center hover:text-foreground transition-colors","aria-label":"Cancel"},E.createElement(sx,{name:"close",size:14}))))),m.map((A,B)=>E.createElement(eUb,{key:A.value,item:A,index:B,onUpdate:q,onRemove:p,borderless:k,placeholder:h}))))};function fUb({query:a,onQueryChange:b,placeholder:c="Search shortcuts...",ariaLabel:d="Search shortcuts"}){return E.createElement("div",{className:"relative flex items-center h-8 grow rounded-lg bg-muted border transition-colors"},E.createElement(sx,{name:"search",size:16,className:"absolute left-2 text-muted-foreground pointer-events-none"}),E.createElement("input",{type:"text",value:a,onChange:f=>b(f.target.value),placeholder:c,"aria-label":d,className:"w-full h-full !pl-7 pr-8 placeholder:text-placeholder bg-transparent outline-none rounded-md"}),
+"Cancel"?(y(!1),u("")):z()}}),E.createElement("button",{onClick:()=>{y(!1);u("")},className:"text-muted-foreground cursor-pointer text-sm p-0.5 flex items-center justify-center hover:text-foreground transition-colors","aria-label":"Cancel"},E.createElement(sx,{name:"close",size:14}))))),m.map((A,B)=>E.createElement(eUb,{key:A.value,item:A,index:B,onUpdate:q,onRemove:p,borderless:k,placeholder:h}))))};function fUb({query:a,onQueryChange:b,placeholder:c="Pesquisar atalhos...",ariaLabel:d="Search shortcuts"}){return E.createElement("div",{className:"relative flex items-center h-8 grow rounded-lg bg-muted border transition-colors"},E.createElement(sx,{name:"search",size:16,className:"absolute left-2 text-muted-foreground pointer-events-none"}),E.createElement("input",{type:"text",value:a,onChange:f=>b(f.target.value),placeholder:c,"aria-label":d,className:"w-full h-full !pl-7 pr-8 placeholder:text-placeholder bg-transparent outline-none rounded-md"}),
 a&&E.createElement("button",{type:"button",onClick:()=>b(""),"aria-label":"Clear search",className:"absolute right-2 text-muted-foreground hover:text-foreground p-1 transition-colors rounded focus-visible:ring-1 focus-visible:ring-primary focus-visible:outline-none"},E.createElement(sx,{name:"close",size:14})))};function gUb(a,b){return Error(`${a} rejected (${b instanceof Error?b.name:typeof b})`)}
 function hUb({bridge:a,partition:b,closeSignal:c=0,onClearHistory:d,webviewPool:f=IN()}){var g=vE(),h=(0,E.useId)(),k=(0,E.useId)(),l=(0,E.useId)(),[m,n]=(0,E.useState)(!1),[p,q]=(0,E.useState)(b),r=`${c}|${b}`,[u,v]=(0,E.useState)(r),[w,x]=(0,E.useState)(null),[y,z]=(0,E.useState)(null),[A,B]=(0,E.useState)(null);r!==u&&(v(r),n(!1),x(null),z(null),B(null));c=w===r;var C=y===r,D=A===r,[F,H]=(0,E.useState)(!0),[I,J]=(0,E.useState)(!0),[L,M]=(0,E.useState)(!1),N=()=>{C||(x(null),B(null))},O=async()=>
 {var P=e,R=e;try{if(!C&&(F||I)){if(I){z(r);B(null);let Q=!1;try{(Q=R(await P(a.clearAllData(b))))||g(Pg.BUILTIN_BROWSER_SITE_DATA_CLEAR_FAILED,Error("clearAllWebviewData resolved false"))}catch(S){R(),g(Pg.BUILTIN_BROWSER_SITE_DATA_CLEAR_FAILED,gUb("clearAllWebviewData",S))}z(S=>S===r?null:S);if(!Q){B(r);return}Hsb(f,b)}F&&d();x(Q=>Q===r?null:Q);Hm(I?"Cleared built-in browser data":"Cleared built-in browser history")}}finally{P()}};return E.createElement(E.Fragment,null,E.createElement(aV,{"data-testid":"browsing-data-row",
@@ -23190,7 +23221,7 @@ Ta.ctrlKey&&!kb,Ta.key==="Escape"||kb?(Ta.preventDefault(),Ta.metaKey||Ta.ctrlKe
 (Ta.preventDefault(),na.current&&Ta.repeat||pa.current?.has(bb.id)||(fb(),Ta=ka.current?.[ba.current]?.includes(bb.id),ta.current?.(bb.id),kb.isMultiSelect||(ua.current?.(!1),Ta?qa.current():setTimeout(()=>{fa.current?.()},200))))}else{Ta.preventDefault();let Xa=(ka.current?.[ba.current]??[])[0];wb=ia.current(ba.current);rb=-1;wb?rb=kb.options.length:Xa&&(rb=kb.options.findIndex(jb=>jb.id===Xa));let mb=Ta.key==="ArrowDown"?1:-1,gb=rb;for(rb===-1?gb=Ta.key==="ArrowDown"?0:bb-1:gb=rb+mb;gb>=0&&gb<kb.options.length&&
 pa.current?.has(kb.options[gb].id);)gb+=mb;if(gb<0||gb>bb-1)gb=rb;gb!==rb&&(gb===kb.options.length?(ua.current?.(!0),ya.current?.(),setTimeout(()=>{W.current?.querySelector('[data-testid="ask-question-writein"]')?.focus()},0)):(fb(),Ta=kb.options[gb].id,ta.current?.(Ta),wb&&(ua.current?.(!1),Ta=document.activeElement,(Ta instanceof HTMLInputElement&&Ta.type==="text"||Ta instanceof HTMLTextAreaElement)&&W.current?.contains(Ta)&&Ta.blur())))}}}}};document.addEventListener("keydown",Va);return()=>{document.removeEventListener("keydown",
 Va);if(document.hasFocus()&&document.activeElement===document.body){let Ta=Ea();Ta&&xz(Ta)}}}},[W,da,ha,ea,Z,ba,oa,qa,ja,va,ya,fa,ta,ua,ka,xa,ia,wa,pa,na,Aa,Ea,J]);a=a[g];if(!a)return null;var Sa=(d[g]?.length??0)>0||(f[g]??"")!=="",Oa=g===h-1,Za=()=>{Oa?n():l()},Ra=a.isMultiSelect?"md":"sm";p=E.createElement(E.Fragment,null,E.createElement(lJ,{variant:"ghost",size:Ra,onClick:p,"data-testid":"interaction-skip-button","data-tooltip-id":T},"Skip"),E.createElement(lJ,{variant:"primary",size:Ra,onClick:Za,
-disabled:!Sa,"data-testid":"interaction-continue-button","data-tooltip-id":Y},Oa?"Submit":"Continue",J&&E.createElement("span",{className:"text-sm opacity-50 font-normal tracking-tight"},Sj({key:"Enter"}))),E.createElement(jJ,{id:Y,place:"top"},Oa?`Submit${J?` (${Sj({key:"Enter"})})`:""}`:`Continue${J?` (${Sj({key:"Enter"})})`:""}`),E.createElement(jJ,{id:T,place:"top"},J?`Skip (${Sj({key:"Escape"})}), Skip All (${Sj({mod:!0,key:"Escape"})})`:"Skip"));N=N??(F==="ask_permission"||!!H);return E.createElement("div",
+disabled:!Sa,"data-testid":"interaction-continue-button","data-tooltip-id":Y},Oa?"Submit":"Continue",J&&E.createElement("span",{className:"text-sm opacity-50 font-normal tracking-tight"},Sj({key:"Enter"}))),E.createElement(jJ,{id:Y,place:"top"},Oa?`Submit${J?` (${Sj({key:"Enter"})})`:""}`:`Continue${J?` (${Sj({key:"Enter"})})`:""}`),E.createElement(jJ,{id:T,place:"top"},J?`Pular (${Sj({key:"Escape"})}), Pular tudo (${Sj({mod:!0,key:"Escape"})})`:"Pular"));N=N??(F==="ask_permission"||!!H);return E.createElement("div",
 {ref:W,className:jj("outline-none flex flex-col no-focus-ring no-focus-agent-input",ca?"gap-0":"gap-2"),tabIndex:-1},E.createElement("div",{className:"flex flex-col gap-1 py-1"},E.createElement("div",{className:jj("flex justify-between gap-1 px-1",ca?"items-center":"items-start")},E.createElement("div",{className:jj("flex-1 flex gap-1.5 min-w-0",ca?"items-center":"items-start")},(C||F)&&E.createElement("div",{"data-testid":"ask-question-header-icon",className:"p-0.5 flex items-center justify-center min-h-[21px]"},
 C??E.createElement(G1,{isPendingUserInteraction:!0,toolName:F,permissionAction:H,isLoading:!1,isUnread:!1,showPingAnimation:!1})),E.createElement("div",{className:jj("flex-1 flex items-baseline gap-x-1.5 min-w-0",ca?"flex-nowrap overflow-hidden":"flex-wrap")},E.createElement("div",{"data-testid":"ask-question-header-text",className:jj("min-w-0 break-words [&_p]:!my-0 [&_ol]:!my-0 [&_ul]:!my-0 [&_li]:!my-0 [&_h1]:!my-0 [&_h2]:!my-0 [&_h3]:!my-0 [&_h4]:!my-0",ca?"line-clamp-1":"flex")},b?.[g]??E.createElement(S,
 {className:jj("min-w-0 break-words",ca&&"!contents"),disableMath:!0},a.question??"")),a.isMultiSelect&&E.createElement("span",{className:"bg-secondary rounded-full px-1.5 h-5 text-sm font-medium text-secondary-foreground whitespace-nowrap shrink-0 flex items-center"},"Multi-select"))),h>1&&E.createElement("div",{className:"flex items-center gap-1 shrink-0"},E.createElement(lJ,{variant:"ghost",size:"icon",onClick:k,disabled:g===0,"aria-label":"Previous question"},E.createElement(sx,{name:"arrow_back",
@@ -24800,7 +24831,7 @@ description:h?"Run in a new jj workspace or Fig share":"Run in a new git worktre
 size:14}),E.createElement("span",{className:"text-sm select-none"},d)),y&&E.createElement(jJ,{id:x,place:c?.includes("top")?"top":"bottom",content:"This is a CitC workspace (Fig share)"}))}return E.createElement(E.Fragment,null,E.createElement(JQ,{open:l,onOpenChange:m,placement:c,openOnMouseDown:!0},E.createElement(KQ,{asChild:!0},E.createElement(IJ,{"data-tooltip-id":y?x:p,"aria-label":f?"Creating environment...":`Environment: ${v}`},f?E.createElement(QE,{size:14}):E.createElement(sx,{name:u.icon,
 size:14}),E.createElement("span",{className:"select-none"},v),E.createElement(sx,{name:"keyboard_arrow_down",size:14}))),E.createElement(LQ,{className:"border-border w-max"},E.createElement("div",{className:"flex flex-col items-start rounded-bg p-1 max-w-xs gap-px"},E.createElement("div",{className:"text-sm px-2 pb-1 text-muted-foreground font-medium"},"Environment"),r.map(z=>E.createElement(IQ,{key:z.environment,selected:z.environment===a,onClick:()=>w(z.environment),className:"gap-0.5",icon:E.createElement(sx,
 {name:z.icon,size:14,className:"shrink-0"}),subtitle:z.description},z.label))))),y&&E.createElement(jJ,{id:x,place:c?.includes("top")?"top":"bottom",content:"This is a CitC workspace (Fig share)"}),!y&&E.createElement(jJ,{id:p,place:"top"},E.createElement("div",{className:"text-sm"},E.createElement("span",null,"Select Environment"),n&&E.createElement("span",{className:"ml-1 opacity-50"},n))))};var Eed=({items:a,dropdownPlacement:b,onOpenChange:c})=>{var [d,f]=(0,E.useState)(!1),g=(0,E.useId)(),{getLexicalEditor:h}=(0,E.useContext)(cM),k=qT(),l=(0,E.useCallback)(()=>h()?.getRootElement()??!0,[h]),m=(0,E.useCallback)(()=>{f(!1)},[f]),n=(0,E.useCallback)(q=>{f(q);c?.(q)},[f,c]),p=b?.startsWith("top")?"top":"bottom";b=b?.endsWith("end")?"end":"start";return E.createElement(E.Fragment,null,E.createElement(hW,{open:d,onOpenChange:n},E.createElement(iW,{asChild:!0},E.createElement("button",{"aria-label":"Adicionar contexto",
-"data-tooltip-id":g,className:"p-1.5 rounded-full text-secondary-foreground hover:bg-secondary cursor-pointer"},E.createElement(sx,{name:"add",size:16,className:"w-4 h-4"}))),E.createElement(jW,{side:p,align:b,finalFocus:k?l:void 0,className:"border-border w-max p-1 flex flex-col gap-px"},a.map((q,r)=>E.createElement(E.Fragment,{key:r},r>0&&E.createElement(oW,{className:"my-1"}),E.createElement(pW,null,r===0&&E.createElement(qW,null,"Adicionar Contexto"),q.map(u=>u.submenu?E.createElement(E.Fragment,{key:u.label},
+"data-tooltip-id":g,className:"p-1.5 rounded-full text-secondary-foreground hover:bg-secondary cursor-pointer"},E.createElement(sx,{name:"add",size:16,className:"w-4 h-4"}))),E.createElement(jW,{side:p,align:b,finalFocus:k?l:void 0,className:"border-border w-max p-1 flex flex-col gap-px"},a.map((q,r)=>E.createElement(E.Fragment,{key:r},r>0&&E.createElement(oW,{className:"my-1"}),E.createElement(pW,null,r===0&&E.createElement(qW,null,"Adicionar contexto"),q.map(u=>u.submenu?E.createElement(E.Fragment,{key:u.label},
 u.submenu):E.createElement(kW,{key:u.label,disabled:u.disabled,className:"min-w-[120px]",onClick:()=>{u.onClick();m()}},E.createElement(u.icon,{width:14,height:14,strokeWidth:1.5,className:jj("shrink-0 text-secondary-foreground w-3.5 h-3.5",u.iconClassNames)}),E.createElement("span",{className:"truncate"},u.label),u.trailingComponent))))))),E.createElement(jJ,{id:g,place:"top"},"Add Context"))};function Fed({link:a,className:b}){var [c,d]=E.useState(()=>Date.now());E.useEffect(()=>{var f=window.setInterval(()=>{d(Date.now())},1E3);return()=>{window.clearInterval(f)}},[]);return E.createElement("span",{role:"status","data-testid":"voice-link-status",className:jj("flex items-center justify-center",b)},E.createElement(QE,{size:14,className:"w-3.5 h-3.5"}),E.createElement(zm,null,CYa(a,c)))};function Ged(a){return a?`voice-mic-option-${a}`:"voice-mic-option-default"};const Hed={id:"",label:"Padrão do sistema"};function Ied(a){var b=new Map;return a.map(c=>{var d=(b.get(c.label)??0)+1;b.set(c.label,d);return d===1?c:{...c,label:`${c.label} (${d})`}})}
 function Jed(a){var b=a.find(d=>d.kind==="audioinput"&&d.deviceId==="default"),c=(b?.label?.trim()??"").replace(/^Default\s*-\s*/i,"").trim();c=c&&c.toLowerCase()!=="default"?c:void 0;b=b&&(b.groupId||c)?`${b.groupId}:${c??""}`:void 0;a=a.filter(d=>d.kind==="audioinput"&&!!d.deviceId&&d.deviceId!=="default"&&d.deviceId!=="communications"&&!!d.label?.trim()).map(d=>({id:d.deviceId,label:d.label.trim().replace(/^Communications\s*-\s*/i,"Comunicações - ")}));return{options:[c?{id:"",label:`Padrão do sistema (${c})`}:Hed,...Ied(a)],defaultMicName:c,defaultSignature:b}}
 function Ked(a,b){return a.defaultMicName!==b.defaultMicName||a.defaultSignature!==b.defaultSignature||a.options.length!==b.options.length?!1:a.options.every((c,d)=>c.id===b.options[d]?.id&&c.label===b.options[d]?.label)}
