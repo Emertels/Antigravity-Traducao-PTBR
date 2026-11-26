@@ -11,7 +11,7 @@ Instalação, restauração e reinstalação foram conferidas na versão indicad
 ---
 
 # 🌐 Google Antigravity — Tradução para Português do Brasil (PT-BR) 🇧🇷
-### Versão de tradução 1.7.0 — Antigravity 2.35.2 — 24/11/2026
+### Versão de tradução 1.7.0 — Antigravity 2.35.2 — 25/11/2026
 Atualização completa para Antigravity 2.35.2: suporte oficial sem downgrade, tradução completa da Paleta de Comandos (`Ctrl+Shift+P`), controles do navegador e downloads, gravação de voz e status de envio, opções de configurações e preferências, e sistema de backup responsivo com reversão 100% limpa para o inglês de fábrica.
 Correção local de 19/10/2026: o tooltip do ícone de configurações do projeto agora é traduzido como “Configurações do projeto”; a ação dinâmica recebe o texto localizado diretamente.
 Localizados os textos das capturas e das descrições de plugins: visualizador biomolecular, Google Workspace, Firebase, Android CLI, Google Developer Knowledge, Google Cloud Developer, Google Maps Platform, Dart e Flutter, Data Agent Kit e Modern Web Guidance, além de limites, histórico, projetos, seletor de ambiente e ajuda jurídica. A revisão do texto copiado de Modern Web Guidance abrangeu 441 linhas e 5.016 palavras; 382 entradas de mapeamento foram acrescentadas ou ampliadas no catálogo desta revisão. Esse número conta mapeamentos, não palavras traduzidas. A compatibilidade estrutural do patch foi conferida no `app.asar` local 2.24.0; o frontend embarcado no pacote segue baseado em 2.23.0.
